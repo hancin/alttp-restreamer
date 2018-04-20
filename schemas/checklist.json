@@ -1,0 +1,65 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+
+	"definitions": {
+		"checklistGroup": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"properties": {
+					"name": {
+						"type": "string",
+						"required": true
+					},
+					"shortName": {
+						"type": "string",
+						"required": false
+					},
+					"complete": {
+						"type": "boolean",
+						"required": true
+					}
+				}
+			}
+		}
+	},
+
+	"type": "object",
+	"properties": {
+		"extraContent": {
+			"$ref": "#/definitions/checklistGroup"
+		},
+		"techStationDuties": {
+			"$ref": "#/definitions/checklistGroup"
+		},
+		"stageTechDuties": {
+			"$ref": "#/definitions/checklistGroup"
+		}
+	},
+
+	"default": {
+		"extraContent": [
+			{"name": "Start commentary restream", "complete": false},
+			{"name": "Validate correct functionality", "complete": false},
+			{"name": "Check stream title", "complete": false},
+			{"name": "Check commands !c !r", "complete": false},
+			{"name": "Ping @restream_moderator if changes req.", "complete": false}
+		],
+		"techStationDuties": [
+			{"name": "Disable unwanted audio", "complete": false},
+			{"name": "Create tracker rooms", "complete": false},
+			{"name": "Send link to tracker", "complete": false},
+			{"name": "$RestreamRace Player1 Player2 in #restreamer", "complete": false},
+			{"name": "Update race information", "complete": false},
+			{"name": "Send copypasta to runners", "complete": false}
+		],
+		"stageTechDuties": [
+			{"name": "Start live twitch stream", "complete": false},
+			{"name": "Verify live status", "complete": false},
+			{"name": "Wait for commentator introductions", "complete": false},
+			{"name": "Wait for runners to be ready", "complete": false},
+			{"name": "$StartRace SRTV-GUID in #restreamer", "complete": false}
+		]
+	}
+}

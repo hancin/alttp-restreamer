@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ALTTP Graphics</title>
+	<link href="https://fonts.googleapis.com/css?family=Teko:600&amp;subset=latin-ext" rel="stylesheet">
+	<link rel="stylesheet" href="style/layout.css">
+	<link rel="import" href="../shared/imports/gsap.html">
+
+	<link rel="import" href="elements/molecules/gdq-runner-nameplate/gdq-runner-nameplate.html">
+</head>
+<body>
+	<div id="container">
+		<img id="background" src="assets/backgrounds/bg2-blank.png">
+		<layout-app></layout-app>
+	</div>
+
+	<dom-module id="layout-app">
+		<template>
+			<link href="style/restream.css" rel="stylesheet" type="text/css" >
+			<style>
+				#matchInfo{
+					position:absolute;
+					top: 13px;
+					width:1280px;
+					text-align: center;
+					font-size: 24px;
+				}
+			</style>
+			<template is="dom-repeat" items="[[runners]]" as="runner">
+				<div id="runner[[index]]">
+					<div class="runnerName">
+						[[runner.name]]
+					</div>
+					<div class="runnerTimer">
+						[[calcRunnerStatus(results, index)]]
+					</div>
+					<div class="runnerTracker">
+						<!--<iframe scrolling="no" src="https://lttp-tracker-fortourneyonly.firebaseapp.com/[[runner.tracker]]">
+						</iframe>-->
+					</div>
+					<div class="runnerStream">
+						
+					</div>
+					<div class="runnerExtra">
+						<img src="[[calcStatusGraph(results, index)]]" />
+					</div>
+				</div>
+			</template>
+			<div id="category">
+				[[category]]
+			</div>
+			<div id="commentators">
+				<img src="assets/images/commentator.png" /> [[commentators]]
+			</div>
+			<div id="matchInfo">
+				Swiss Round 2 <br />
+				1-0
+			</div>
+		</template>
+
+		<script>
+			const runnerInfoClass = ["runnerOne", "runnerTwo"];
+			const currentRun = nodecg.Replicant('currentRun');
+			const stopwatch = nodecg.Replicant('stopwatch');
+
+			Polymer({
+				is: 'layout-app',
+
+				properties: {
+					numRunners: {
+						type: Number,
+						reflectToAttribute: true,
+						value: 1
+					},
+					runners: Array,
+					results: Array,
+					time: String,
+					commentators: String,
+					category: String
+				},
+
+				ready() {
+					stopwatch.on('change', this.stopwatchChanged.bind(this));
+					currentRun.on('change', newVal => {
+						if (!newVal) {
+							return;
+						}
+						this.commentators = newVal.commentators;
+						this.runners = newVal.runners;
+						this.category = newVal.category;
+						if (newVal.runners.length !== 3 && newVal.runners.length <= 4) {
+							this.numRunners = newVal.runners.length;
+						}
+					});
+				},
+				stopwatchChanged(newVal) {
+					this.time = newVal.time.formatted;
+					this.results = newVal.results.slice(0);
+				},
+				calcRunnerStatus(results, index){
+					if (!results) {
+						return;
+					}
+					if(results[index] && results[index].forfeit)
+						return '';
+
+					if (results[index] && results[index].time) {
+						return results[index].time.formatted;
+					}
+
+					if(this.time)
+						return this.time;
+					
+					return '00:00';
+				},
+				calcStatusGraph(results, index) {
+					if (!results) {
+						return "assets/images/standby.png";
+					}
+
+					if(results[index] && results[index].forfeit)
+						return "assets/images/forfeit.png"; 
+					
+					if(results[index] && results[index].place === 1)
+						return "assets/images/winner.png"; 
+
+					return "assets/images/standby.png";
+
+
+				}
+			});
+		</script>
+	</dom-module>
+
+	<script>
+		window.addEventListener('DOMContentLoaded', () => {
+			TweenLite.to(document.body, 0.333, {
+				opacity: 1,
+				ease: Power1.easeOut
+			});
+		});
+	</script>
+</body>
+</html>
