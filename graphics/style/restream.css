@@ -76,7 +76,9 @@
     background: #000;
     width: 178px;
     height: 47px;
-    font-size: 30px;
+    font-family: "Century Gothic", sans-serif;
+    font-weight: bold;
+    font-size: 40px;
     text-align: right;
     line-height: 41px;
     padding:3px 10px;
