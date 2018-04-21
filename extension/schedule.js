@@ -165,7 +165,7 @@ function update() {
 	const runnersPromise = request({
 		uri: nodecg.bundleConfig.useMockData ?
 			'https://www.dropbox.com/s/mbr6p9zn4piek1j/players.json' :
-			'https://private.gamesdonequick.com/tracker/search',
+			'https://www.dropbox.com/s/mbr6p9zn4piek1j/players.json',
 		qs: {
 			dl: 1 // For Dropbox only
 		},
@@ -175,7 +175,7 @@ function update() {
 	const runsPromise = request({
 		uri: nodecg.bundleConfig.useMockData ?
 			'https://www.dropbox.com/s/fghcrrst55c5qsi/schedule.json' :
-			'https://private.gamesdonequick.com/tracker/search',
+			'https://www.dropbox.com/s/fghcrrst55c5qsi/schedule.json',
 		qs: {
 			dl: 1 // For Dropbox only
 		},
