@@ -1,4 +1,4 @@
-/* Run this on a sign up page to get a list of players/twitch/discords*/
+/* Run this on a sign up page to create players.json*/
 (function playerList(){
     var list = document.querySelectorAll("option");
     var finalList = [];
