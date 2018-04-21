@@ -1,0 +1,127 @@
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/nodecg-toast/nodecg-toast.html">
+<link rel="import" href="../../../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
+
+<dom-module id="alttp-obssetup">
+	<template>
+		<style>
+			:host {
+				padding: 22px 24px;
+				@apply --layout-vertical;
+			}
+
+			#selection-ctrls {
+				@apply --layout-horizontal;
+				@apply --layout-start;
+				margin-bottom: 16px;
+			}
+
+			#selection-ctrls > paper-button {
+				@apply --layout-flex;
+			}
+
+			#typeahead-container {
+				@apply --layout-vertical;
+				@apply --layout-end;
+			}
+
+			#typeahead {
+				width: 240px;
+				margin-top: -26px;
+			}
+
+			#take {
+				font-size: 14px;
+				height: 24px;
+				padding-right: 0;
+				--paper-button: {
+					background-color: #5BA664;
+					color: white;
+				};
+			}
+
+			#runs {
+				@apply --layout-horizontal;
+			}
+
+			#runs-spacer {
+				width: 24px;
+			}
+
+			#edit-ctrls {
+				@apply --layout-horizontal;
+				margin-top: 32px;
+			}
+
+			#previous,
+			#next {
+				--paper-button: {
+					background-color: #645BA6;
+					color: white;
+				};
+			}
+
+			#previous,
+			#editCurrent {
+				margin-left: 0;
+			}
+
+			#next,
+			#editNext {
+				margin-right: 0;
+			}
+
+			#editCurrent,
+			#editCurrent2,
+			#editNext {
+				--paper-button: {
+					background-color: #A50074;
+					color: white;
+				};
+				@apply --layout-flex-3;
+			}
+
+			#fetchLatestSchedule {
+				@apply --layout-flex-6;
+			}
+
+			paper-button, paper-dropdown-menu {
+				@apply --layout-horizontal;
+				@apply --layout-center-center;
+			}
+
+			paper-dropdown-menu, paper-listbox {
+				width: 250px;
+			}
+			paper-dropdown-menu {
+				height: 200px;
+				display: block;
+			}
+
+		</style>
+
+		<nodecg-toast id="toast"></nodecg-toast>
+
+		<div id="runs">
+			<paper-dropdown-menu label="Restream scene">
+				<paper-listbox slot="dropdown-content" selected="1">
+					<paper-item>Test</paper-item>
+				</paper-listbox>
+			</paper-dropdown-menu>
+		</div>
+
+		<div id="edit-ctrls">
+			<paper-button id="editCurrent" raised on-tap="editCurrent">Apply changes</paper-button>
+		</div>
+
+	</template>
+
+	<script src="alttp-obssetup.js"></script>
+</dom-module>

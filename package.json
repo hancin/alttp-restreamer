@@ -63,6 +63,14 @@
         "file": "obs.html",
         "headerColor": "#2d4e8a",
         "workspace": "Setup"
+      },
+      {
+        "name": "alttp-obssetup",
+        "title": "OBS Setup",
+        "width": 3,
+        "file": "obs-setup.html",
+        "headerColor": "#2d4e8a",
+        "workspace": "Setup"
       }
     ],
     "graphics": [
