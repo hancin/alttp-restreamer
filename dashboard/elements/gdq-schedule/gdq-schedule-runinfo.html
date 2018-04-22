@@ -51,7 +51,7 @@
 				-webkit-box-orient: vertical;
 			}
 
-			#runners {
+			#runners, #commentators, #trackers {
 				@apply --layout-horizontal;
 				@apply --layout-wrap;
 			}
@@ -146,9 +146,22 @@
 
 		<div class="divider"></div>
 
-		<section  class$="padded [[calcModified(originalValues.commentators)]]">
-			<label>Commentators</label>
-			<span title="[[commentators]]" class="value">[[commentators]]&#8203;</span>
+		<section id="commentators" >
+			<template is="dom-repeat" items="[[commentators]]" as="commentator">
+				<div class="padded runner" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+					<label>Commentator</label>
+					<span class="value" title="[[commentator.name]]">[[commentator.name]]&#8203;</span>
+				</div>
+			</template>
+		</section>
+		<div class="divider"></div>
+		<section id="trackers" >
+			<template is="dom-repeat" items="[[trackers]]" as="tracker">
+				<div class="padded runner" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+					<label>Tracker</label>
+					<span class="value" title="[[tracker.name]]">[[tracker.name]]&#8203;</span>
+				</div>
+			</template>
 		</section>
 
 		<div class="divider"></div>

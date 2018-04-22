@@ -380,6 +380,43 @@ function calcFormattedSchedule({rawRuns, formattedRunners}) {
  */
 function formatRun(run, formattedRunners) {
 	const runners = run.runners.slice(0, 4).map(runnerId => {
+		if(formattedRunners[runnerId] === undefined){
+			return {
+				name: runnerId,
+				stream: "???",
+				discord: "???"
+			}
+		}
+		return {
+			name: formattedRunners[runnerId].name,
+			stream: formattedRunners[runnerId].stream,
+			discord: formattedRunners[runnerId].discord
+		};
+	});
+
+	const commentators = run.commentators.map(runnerId => {
+		if(formattedRunners[runnerId] === undefined){
+			return {
+				name: runnerId,
+				stream: "???",
+				discord: "???"
+			}
+		}
+		return {
+			name: formattedRunners[runnerId].name,
+			stream: formattedRunners[runnerId].stream,
+			discord: formattedRunners[runnerId].discord
+		};
+	});
+
+	const trackers = run.trackers.map(runnerId => {
+		if(formattedRunners[runnerId] === undefined){
+			return {
+				name: runnerId,
+				stream: "???",
+				discord: "???"
+			}
+		}
 		return {
 			name: formattedRunners[runnerId].name,
 			stream: formattedRunners[runnerId].stream,
@@ -390,7 +427,8 @@ function formatRun(run, formattedRunners) {
 	return {
 		name: run.name || 'Unknown',
 		longName: run.name || 'Unknown',
-		commentators: run.commentary || 'Unknown',
+		commentators,
+		trackers,
 		setupTime: run.time,
 		order: run.order,
 		notes: run.channel +"\r\n" + run.time,

@@ -14,8 +14,9 @@ class GdqScheduleRuninfo extends Polymer.Element {
 				reflectToAttribute: true
 			},
 			releaseYear: String,
-			commentators: String,
-			estimate: String,
+			commentators: Array,
+			trackers: Array,
+			runners: Array,
 			category: String,
 			name: String,
 			originalValues: Object,
@@ -34,6 +35,7 @@ class GdqScheduleRuninfo extends Polymer.Element {
 	setRun(run) {
 		this.name = run.name;
 		this.commentators = run.commentators;
+		this.trackers = run.trackers;
 		this.runners = run.runners;
 		this.category = run.category;
 		this.order = run.order;
