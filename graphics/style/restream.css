@@ -11,33 +11,33 @@
         -4px 4px 8px #000,
         1px 1px 8px #000;*/
     text-shadow:
-        4px  0px 0 rgba(0,0,0,0.25),
-        4px  1px 0 rgba(0,0,0,0.25),
-        3px  2px 0 rgba(0,0,0,0.25),
-        3px  3px 0 rgba(0,0,0,0.25),
-        2px  3px 0 rgba(0,0,0,0.25),
-        1px  4px 0 rgba(0,0,0,0.25),
+        4px  0px 0 rgba(0,0,0,0.4),
+        4px  1px 0 rgba(0,0,0,0.4),
+        3px  2px 0 rgba(0,0,0,0.4),
+        3px  3px 0 rgba(0,0,0,0.4),
+        2px  3px 0 rgba(0,0,0,0.4),
+        1px  4px 0 rgba(0,0,0,0.4),
 
-        0px  4px 0 rgba(0,0,0,0.25),
-        -1px  4px 0 rgba(0,0,0,0.25),
-        -2px  3px 0 rgba(0,0,0,0.25),
-        -3px  3px 0 rgba(0,0,0,0.25),
-        -3px  2px 0 rgba(0,0,0,0.25),
-        -4px  1px 0 rgba(0,0,0,0.25),
+        0px  4px 0 rgba(0,0,0,0.4),
+        -1px  4px 0 rgba(0,0,0,0.4),
+        -2px  3px 0 rgba(0,0,0,0.4),
+        -3px  3px 0 rgba(0,0,0,0.4),
+        -3px  2px 0 rgba(0,0,0,0.4),
+        -4px  1px 0 rgba(0,0,0,0.4),
 
-        -4px  0px 0 rgba(0,0,0,0.25),
-        -4px -1px 0 rgba(0,0,0,0.25),
-        -3px -2px 0 rgba(0,0,0,0.25),
-        -3px -3px 0 rgba(0,0,0,0.25),
-        -2px -3px 0 rgba(0,0,0,0.25),
-        -1px -4px 0 rgba(0,0,0,0.25),
+        -4px  0px 0 rgba(0,0,0,0.4),
+        -4px -1px 0 rgba(0,0,0,0.4),
+        -3px -2px 0 rgba(0,0,0,0.4),
+        -3px -3px 0 rgba(0,0,0,0.4),
+        -2px -3px 0 rgba(0,0,0,0.4),
+        -1px -4px 0 rgba(0,0,0,0.4),
 
-        0px -4px 0 rgba(0,0,0,0.25),
-        1px -4px 0 rgba(0,0,0,0.25),
-        2px -3px 0 rgba(0,0,0,0.25),
-        3px -3px 0 rgba(0,0,0,0.25),
-        3px -2px 0 rgba(0,0,0,0.25),
-        4px -1px 0 rgba(0,0,0,0.25);
+        0px -4px 0 rgba(0,0,0,0.4),
+        1px -4px 0 rgba(0,0,0,0.4),
+        2px -3px 0 rgba(0,0,0,0.4),
+        3px -3px 0 rgba(0,0,0,0.4),
+        3px -2px 0 rgba(0,0,0,0.4),
+        4px -1px 0 rgba(0,0,0,0.4);
     
     letter-spacing: 1px;
 }
