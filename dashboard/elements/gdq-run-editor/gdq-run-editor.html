@@ -19,6 +19,7 @@
 			}
 
 			#run,
+			#runPasta,
 			#runners,
 			#trackers,
 			#commentators {
@@ -30,7 +31,7 @@
 				width:100%;
 			}
 
-			#run {
+			#run, #runPasta {
 				@apply --layout-flex;
 				margin-right: 4px;
 				padding-left: 0;
@@ -147,6 +148,16 @@
 					disabled>
 				</paper-input>
 
+
+				<paper-input
+					label="ID"
+					value="[[pk]]"
+				 	hidden$=""
+					always-float-label
+					readonly>
+				</paper-input>
+
+				<textarea rows="4" cols="30" readonly>[[restreamRacePasta]]</textarea>
 			</div>
 
 			<div id="runners">
@@ -410,8 +421,8 @@
 			</div>
 		</div>
 		<div class="row">
-			<div id="run">
-
+			<div id="runPasta">
+				<textarea rows="8" cols="30" readonly>[[uglyCopyPasta]]</textarea>
 			</div>
 			<div id="commentators">
 				<template id="commentators-content" is="dom-repeat" items="[[commentators]]" as="commentator">

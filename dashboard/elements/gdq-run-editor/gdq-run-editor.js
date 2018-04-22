@@ -13,6 +13,8 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 			commentators: Array,
 			trackers: Array,
 			originalValues: Object,
+			uglyCopyPasta: String,
+			restreamRacePasta: String,
 			name: String
 		};
 	}
@@ -42,7 +44,14 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 			return undefined;
 		});
 		this.originalValues = run.originalValues;
-		console.log(this.originalValues);
+		
+		const fixedNames = run.runners.map(x=>x.name.replace(" ","")).join(" ");
+		this.uglyCopyPasta = "@restream_moderator Setting up for stream now.  Could I get the following commands run on "+run.notes.split("\r\n")[0]+" when someone gets a chance? \r\n" +
+	    "!editr "+run.runners.map(x=>x.stream).join(" ")+"\r\n" +
+		"!editc "+run.commentators.map(x=>x.stream).join(" ")+" "+run.trackers.map(x=>x.stream).join(" ")+" Hancin \r\n"+
+		"!springtitle "+fixedNames;
+
+		this.restreamRacePasta = "$RestreamRace " + fixedNames +"\r\n!RestreamRace " + run.pk; 
 		this.pk = run.pk;
 	}
 
