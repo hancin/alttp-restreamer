@@ -37,8 +37,8 @@
             time: line.cells[0].innerText,
             runners: line.cells[1].innerText.split(" vs "),
             channel: line.cells[2].innerText,
-            commentary: line.cells[3].innerText,
-            tracking: line.cells[4].innerText,
+            commentators: line.cells[3].innerText.split(', '),
+            trackers: line.cells[4].innerText.split(', '),
             pk: parseInt(line.cells[0].querySelector("a").id.substr(1))
         };
         
