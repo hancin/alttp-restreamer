@@ -11,16 +11,14 @@ const OBSUtility = require('nodecg-utility-obs');
 // Ours
 const nodecg = require('./util/nodecg-api-context').get();
 
-// We track what _layout_ is active, not necessarily what _scene_ is active.
-// A given layout can be on multiple scenes.
-const currentLayout = nodecg.Replicant('gdq:currentLayout');
 
-//const obsScenes = nodecg.Replicant('obs:scenes');
+const commentatorOBS = new OBSUtility(nodecg, {namespace: 'commentatorOBS'});
+const restreamOBS = new OBSUtility(nodecg, {namespace: 'restreamOBS'});
 
-const streamingOBS = new OBSUtility(nodecg, {namespace: 'streamingOBS'});
-const recordingOBS = new OBSUtility(nodecg, {namespace: 'recordingOBS'});
-
-streamingOBS.replicants.programScene.on('change', newVal => {
+commentatorOBS.replicants.sceneList.on('change', newVal => {
+	console.log(newVal);
+});
+commentatorOBS.replicants.programScene.on('change', newVal => {
 	if (!newVal) {
 		return;
 	}
@@ -28,12 +26,6 @@ streamingOBS.replicants.programScene.on('change', newVal => {
 	newVal.sources.some(source => {
 		if (!source.name) {
 			return false;
-		}
-
-		const lowercaseSourceName = source.name.toLowerCase();
-		if (lowercaseSourceName.indexOf('layout') === 0) {
-			currentLayout.value = lowercaseSourceName.replace(/ /g, '_').replace('layout_', '');
-			return true;
 		}
 
 		/*if(source.name === "Left Runner"){
@@ -68,27 +60,28 @@ streamingOBS.replicants.programScene.on('change', newVal => {
 
 module.exports = {
 	updateRestream() {
-		/*streamingOBS.getCurrentScene().then(res => {
-			console.log(res);
-
-		});*/
+		
 	
 		return "ok";
 	},
 
 	resetCropping() {
-		return streamingOBS.send('ResetCropping').catch(error => {
+		return commentatorOBS.send('ResetCropping').catch(error => {
 			nodecg.log.error('resetCropping error:', error);
 		});
 	},
 
 	setCurrentScene(sceneName) {
-		return streamingOBS.setCurrentScene({
+		return commentatorOBS.setCurrentScene({
 			'scene-name': sceneName
 		});
 	},
 
-	get streamingOBSConnected() {
-		return streamingOBS._connected;
+	get commentatorOBSConnected() {
+		return commentatorOBS._connected;
+	},
+	
+	get restreamOBSConnected() {
+		return restreamOBS._connected;
 	}
 };
