@@ -5,7 +5,7 @@
 	const currentRun = nodecg.Replicant('currentRun');
 	const nextRun = nodecg.Replicant('nextRun');
 	const schedule = nodecg.Replicant('schedule');
-
+	const sceneList = nodecg.Replicant('commentatorOBS:sceneList');
 	/**
 	 * @customElement
 	 * @polymer
@@ -15,11 +15,25 @@
 			return 'alttp-obssetup';
 		}
 
+		static get properties() {
+			return {
+				currentScene: String,
+				scenes: Array
+			}
+		}
+
 		ready() {
 			super.ready();
 
-			
+			sceneList.on('change', newVal => {
+				if(!newVal)
+					return;	
+				this.scenes = newVal;
+			});
+
+
 		}
+
 
 
 	}

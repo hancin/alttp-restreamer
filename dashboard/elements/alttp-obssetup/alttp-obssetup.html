@@ -111,8 +111,10 @@
 
 		<div id="runs">
 			<paper-dropdown-menu label="Restream scene">
-				<paper-listbox slot="dropdown-content" selected="1">
-					<paper-item>Test</paper-item>
+				<paper-listbox slot="dropdown-content" selected="0" >
+					<template is="dom-repeat" items="[[scenes]]" as="scene">
+							<paper-item>[[scene]]</paper-item>
+					</template>
 				</paper-listbox>
 			</paper-dropdown-menu>
 		</div>
