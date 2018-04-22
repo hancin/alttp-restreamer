@@ -147,20 +147,6 @@
 					disabled>
 				</paper-input>
 
-				<paper-input
-					label="Category"
-					value="{{category}}"
-				 	hidden$="[[calcHide('category', showingOriginal)]]"
-					always-float-label>
-				</paper-input>
-				<paper-input
-					label="Category"
-					value="[[originalValues.category]]"
-				 	hidden$="[[!calcHide('category', showingOriginal)]]"
-					always-float-label
-					disabled>
-				</paper-input>
-
 			</div>
 
 			<div id="runners">
@@ -425,6 +411,7 @@
 		</div>
 		<div class="row">
 			<div id="run">
+
 			</div>
 			<div id="commentators">
 				<template id="commentators-content" is="dom-repeat" items="[[commentators]]" as="commentator">

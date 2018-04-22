@@ -73,7 +73,6 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 
 		nodecg.sendMessage('modifyRun', {
 			name: this.name,
-			category: this.category,
 			commentators: this.commentators,
 			trackers: this.trackers,
 			runners,
