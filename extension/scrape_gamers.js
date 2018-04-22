@@ -12,7 +12,7 @@
             pk: parseInt(option.value),
             name: splits[0],
             twitch: splits[1].substr(splits[1].indexOf("= ")+2),
-            discord: splits[2].substr(splits[1].indexOf("= ")+2)
+            discord: splits[2].substr(splits[2].indexOf("= ")+2)
         });
     });
     
