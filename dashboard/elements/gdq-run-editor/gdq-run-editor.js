@@ -9,8 +9,9 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 				type: Boolean,
 				value: false
 			},
-			commentators: String,
 			category: String,
+			commentators: Array,
+			trackers: Array,
 			originalValues: Object,
 			name: String
 		};
@@ -19,7 +20,20 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 	loadRun(run) {
 		this.name = run.name;
 		this.category = run.category;
-		this.commentators = run.commentators;
+		this.commentators = run.commentators.map(runner => {
+			if (runner) {
+				return {name: runner.name, stream: runner.stream, discord: runner.discord};
+			}
+
+			return undefined;
+		});
+		this.trackers = run.trackers.map(runner => {
+			if (runner) {
+				return {name: runner.name, stream: runner.stream, discord: runner.discord};
+			}
+
+			return undefined;
+		});
 		this.runners = run.runners.map(runner => {
 			if (runner) {
 				return {name: runner.name, stream: runner.stream, discord: runner.discord};
@@ -28,16 +42,19 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 			return undefined;
 		});
 		this.originalValues = run.originalValues;
+		console.log(this.originalValues);
 		this.pk = run.pk;
 	}
 
-	applyChanges() {
-		// We have to build a new runners object.
+
+	helperRetrieveValue(source){
 		const runners = [];
-		const runnerNameInputs = this.$.runners.querySelectorAll('paper-input[label^="Runner"]:not([disabled])');
-		const runnerStreamInputs = this.$.runners.querySelectorAll('paper-input[label="Twitch Channel"]:not([disabled])');
-		const runnerDiscordInputs = this.$.runners.querySelectorAll('paper-input[label="Discord"]:not([disabled])');
-		for (let i = 0; i < 4; i++) {
+		const runnerNameInputs = source.querySelectorAll('paper-input[label^="Runner"]:not([disabled])');
+		const runnerStreamInputs = source.querySelectorAll('paper-input[label="Twitch Channel"]:not([disabled])');
+		const runnerDiscordInputs = source.querySelectorAll('paper-input[label="Discord"]:not([disabled])');
+
+		console.log(runnerNameInputs);
+		for (let i = 0; i < runnerNameInputs.length; i++) {
 			if (runnerNameInputs[i].value || runnerStreamInputs[i].value || runnerDiscordInputs[i].value) {
 				runners[i] = {
 					name: runnerNameInputs[i].value,
@@ -46,11 +63,19 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 				};
 			}
 		}
+		
+		return runners;
+	}
+
+	applyChanges() {
+		// We have to build a new runners object.
+		const runners = this.helperRetrieveValue(this.$.runners);
 
 		nodecg.sendMessage('modifyRun', {
 			name: this.name,
 			category: this.category,
 			commentators: this.commentators,
+			trackers: this.trackers,
 			runners,
 			pk: this.pk
 		}, () => {
@@ -64,6 +89,25 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 		});
 	}
 
+	calcDisabledIndex(index, count, last){
+
+		var realLast = last === 1;
+		if(!realLast && index === 0)
+			return true;
+		if(realLast && index === count-1)
+			return true;
+		return false;
+	}
+
+	calcVal(path, index, otherPath){
+		path = path.split('.');
+		path[1]= index+"";
+		path[2] = otherPath;
+		const originalPath = path.slice(0);
+		originalPath.unshift('originalValues');
+		return this.get(originalPath);
+	}
+
 	calcHide(path, showingOriginal) {
 		path = path.split('.');
 		const originalPath = path.slice(0);
@@ -71,6 +115,9 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 		const originalValue = this.get(originalPath);
 		const hasOriginal = typeof originalValue !== 'undefined';
 		return showingOriginal && hasOriginal;
+	}
+	calcHide2(path1, path2, path3, showingOriginal){
+		return this.calcHide(path1 + "." + path2 + "." + path3, showingOriginal);
 	}
 
 	showOriginal() {
@@ -91,6 +138,27 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 		this.runners = this._moveRunner(this.runners, index, 'up');
 	}
 
+	_moveCommentatorDown(e) {
+		const index = parseInt(e.target.closest('[data-index]').getAttribute('data-index'), 10);
+		this.commentators = this._moveRunner(this.commentators, index, 'down');
+	}
+
+	_moveCommentatorUp(e) {
+		const index = parseInt(e.target.closest('[data-index]').getAttribute('data-index'), 10);
+		this.commentators = this._moveRunner(this.commentators, index, 'up');
+	}
+
+
+	_moveTrackerDown(e) {
+		const index = parseInt(e.target.closest('[data-index]').getAttribute('data-index'), 10);
+		this.trackers = this._moveRunner(this.trackers, index, 'down');
+	}
+
+	_moveTrackerUp(e) {
+		const index = parseInt(e.target.closest('[data-index]').getAttribute('data-index'), 10);
+		this.trackers = this._moveRunner(this.trackers, index, 'up');
+	}
+
 	/**
 	 * Moves a runner up or down in the runners array.
 	 * @param {Array} runnersArray - The array of runners to base these changes on.
@@ -108,9 +176,6 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 		}
 
 		const newRunnersArray = runnersArray.slice(0);
-		while (newRunnersArray.length < 4) {
-			newRunnersArray.push(undefined);
-		}
 
 		const runnerToMove = newRunnersArray.splice(index, 1)[0];
 		newRunnersArray.splice(index + (direction === 'up' ? -1 : 1), 0, runnerToMove);

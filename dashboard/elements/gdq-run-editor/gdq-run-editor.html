@@ -19,9 +19,15 @@
 			}
 
 			#run,
-			#runners {
+			#runners,
+			#trackers,
+			#commentators {
 				@apply --layout-vertical;
 				padding: 16px;
+			}
+
+			.row{
+				width:100%;
 			}
 
 			#run {
@@ -30,7 +36,7 @@
 				padding-left: 0;
 			}
 
-			#runners {
+			#runners, #commentators, #trackers {
 				@apply --layout-flex-2;
 				border: 1px solid #C1C1C1;
 				margin-left: 4px;
@@ -151,22 +157,6 @@
 					label="Category"
 					value="[[originalValues.category]]"
 				 	hidden$="[[!calcHide('category', showingOriginal)]]"
-					always-float-label
-					disabled>
-				</paper-input>
-
-
-
-				<paper-input
-					label="Commentators"
-					value="{{commentators}}"
-				 	hidden$="[[calcHide('commentators', showingOriginal)]]"
-					always-float-label>
-				</paper-input>
-				<paper-input
-					label="Commentators"
-					value="[[originalValues.commentators]]"
-					hidden$="[[!calcHide('commentators', showingOriginal)]]"
 					always-float-label
 					disabled>
 				</paper-input>
@@ -431,6 +421,152 @@
 						</paper-button>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div id="run">
+			</div>
+			<div id="commentators">
+				<template id="commentators-content" is="dom-repeat" items="[[commentators]]" as="commentator">
+					<div class="row" data-index$="[[index]]">
+						<div>
+							<paper-input
+								label="Commentator [[index]]"
+								value="{{commentator.name}}"
+								hidden$="[[calcHide2('commentators',index,'name', showingOriginal)]]"
+								always-float-label>
+							</paper-input>
+							<paper-input
+								label="Commentator [[index]]"
+								value="[[calcVal('commentators', index, 'name')]]"
+								hidden$="[[!calcHide2('commentators',index,'name', showingOriginal)]]"
+								always-float-label
+								disabled>
+							</paper-input>
+						</div>
+	
+						<div>
+							<paper-input
+								label="Twitch Channel"
+								value="{{commentator.stream}}"
+								hidden$="[[calcHide2('commentators',index,'stream', showingOriginal)]]"
+								always-float-label>
+							</paper-input>
+							<paper-input
+								label="Twitch Channel"
+								value="[[calcVal('commentators', index, 'stream')]]"
+								hidden$="[[!calcHide2('commentators',index,'stream', showingOriginal)]]"
+								always-float-label
+								disabled>
+							</paper-input>
+						</div>
+						<div>
+							<paper-input
+								label="Discord"
+								value="{{commentator.discord}}"
+									hidden$="[[calcHide2('commentators',index,'discord', showingOriginal)]]"
+								always-float-label>
+							</paper-input>
+							<paper-input
+								label="Discord"
+									value="[[calcVal('commentators', index, 'discord')]]"
+								hidden$="[[!calcHide2('commentators',index,'discord', showingOriginal)]]"
+								always-float-label
+								disabled>
+							</paper-input>
+						</div>
+	
+						<div class="runner-buttons">
+							<paper-button
+								class="runner-up-button"
+								on-tap="_moveCommentatorUp"
+								raised
+								disabled$="[[calcDisabledIndex(index, commentators.length, 0)]]">
+								<iron-icon icon="arrow-upward"></iron-icon>
+							</paper-button>
+							<paper-button
+								class="runner-down-button"
+								on-tap="_moveCommentatorDown"
+								raised
+								disabled$="[[calcDisabledIndex(index, commentators.length, 1)]]">
+								<iron-icon icon="arrow-downward"></iron-icon>
+							</paper-button>
+						</div>
+					</div>
+				</template>
+			</div>
+		</div>
+		<div class="row">
+			<div id="run">
+			</div>
+			<div id="trackers">
+				<template id="trackers-content" is="dom-repeat" items="[[trackers]]" as="tracker">
+					<div class="row" data-index$="[[index]]">
+						<div>
+							<paper-input
+								label="Tracker [[index]]"
+								value="{{tracker.name}}"
+								hidden$="[[calcHide2('trackers',index,'name', showingOriginal)]]"
+								always-float-label>
+							</paper-input>
+							<paper-input
+								label="Tracker [[index]]"
+								value="[[calcVal('trackers', index, 'name')]]"
+								hidden$="[[!calcHide2('trackers',index,'name', showingOriginal)]]"
+								always-float-label
+								disabled>
+							</paper-input>
+						</div>
+	
+						<div>
+							<paper-input
+								label="Twitch Channel"
+								value="{{tracker.stream}}"
+								hidden$="[[calcHide2('trackers',index,'stream', showingOriginal)]]"
+								always-float-label>
+							</paper-input>
+							<paper-input
+								label="Twitch Channel"
+								value="[[calcVal('trackers', index, 'stream')]]"
+								hidden$="[[!calcHide2('trackers',index,'stream', showingOriginal)]]"
+								always-float-label
+								disabled>
+							</paper-input>
+						</div>
+						<div>
+							<paper-input
+								label="Discord"
+								value="{{tracker.discord}}"
+									hidden$="[[calcHide2('trackers',index,'discord', showingOriginal)]]"
+								always-float-label>
+							</paper-input>
+							<paper-input
+								label="Discord"
+									value="[[calcVal('trackers', index, 'discord')]]"
+								hidden$="[[!calcHide2('trackers',index,'discord', showingOriginal)]]"
+								always-float-label
+								disabled>
+							</paper-input>
+						</div>
+	
+						<div class="runner-buttons">
+							<paper-button
+								class="runner-up-button"
+								on-tap="_moveTrackerUp"
+								raised
+								disabled$="[[calcDisabledIndex(index, trackers.length, 0)]]">
+								<iron-icon icon="arrow-upward"></iron-icon>
+							</paper-button>
+							<paper-button
+								class="runner-down-button"
+								on-tap="_moveTrackerDown"
+								raised
+								disabled$="[[calcDisabledIndex(index, trackers.length, 1)]]">
+								<iron-icon icon="arrow-downward"></iron-icon>
+							</paper-button>
+						</div>
+					</div>
+				</template>
 			</div>
 		</div>
 

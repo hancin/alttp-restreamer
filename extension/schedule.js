@@ -84,26 +84,28 @@ nodecg.listenFor('setCurrentRunByOrder', (order, cb) => {
 
 	cb();
 });
+function scrubItem(runner){
+	if (!runner || typeof runner !== 'object') {
+		runner = {};
+	}
 
+	if (!{}.hasOwnProperty.call(runner, 'name')) {
+		runner.name = undefined;
+	}
+
+	if (!{}.hasOwnProperty.call(runner, 'stream')) {
+		runner.stream = undefined;
+	}
+
+	return runner;
+}
 nodecg.listenFor('modifyRun', (data, cb) => {
 	// We lose any properties that have an explicit value of `undefined` in the serialization process.
 	// We need those properties to still exist so our diffing code can work as expected.
 	// A property not existing is not the same thing as a property existing but having a value of undefined.
-	data.runners = data.runners.map(runner => {
-		if (!runner || typeof runner !== 'object') {
-			runner = {};
-		}
-
-		if (!{}.hasOwnProperty.call(runner, 'name')) {
-			runner.name = undefined;
-		}
-
-		if (!{}.hasOwnProperty.call(runner, 'stream')) {
-			runner.stream = undefined;
-		}
-
-		return runner;
-	});
+	data.runners = data.runners.map(scrubItem);
+	data.commentators = data.commentators.map(scrubItem);
+	data.trackers = data.trackers.map(scrubItem);
 
 	let run;
 	if (currentRunRep.value.pk === data.pk) {

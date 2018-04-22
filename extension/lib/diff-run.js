@@ -32,6 +32,18 @@ function calcOriginalValues(run, original) {
 					}
 
 					objectPath.set(originalValues, difference.path, '');
+				} else if(difference.path[0] === 'commentators'){
+					if (!originalValues.commentators) {
+						originalValues.commentators = [];
+					}
+
+					objectPath.set(originalValues, difference.path, '');
+				} else if(difference.path[0] === 'trackers'){
+					if (!originalValues.trackers) {
+						originalValues.trackers = [];
+					}
+
+					objectPath.set(originalValues, difference.path, '');
 				} else {
 					throw new Error(`Unexpected difference:\n${JSON.stringify(difference)}`);
 				}
@@ -43,6 +55,18 @@ function calcOriginalValues(run, original) {
 				if (difference.path[0] === 'runners') {
 					if (!originalValues.runners) {
 						originalValues.runners = [];
+					}
+
+					objectPath.set(originalValues, difference.path, difference.lhs);
+				} else if(difference.path[0] === 'commentators'){
+					if (!originalValues.commentators) {
+						originalValues.commentators = [];
+					}
+
+					objectPath.set(originalValues, difference.path, difference.lhs);
+				} else if(difference.path[0] === 'trackers'){
+					if (!originalValues.trackers) {
+						originalValues.trackers = [];
 					}
 
 					objectPath.set(originalValues, difference.path, difference.lhs);
@@ -61,10 +85,42 @@ function calcOriginalValues(run, original) {
 
 					switch (difference.item.kind) {
 						case 'N':
-							originalValues.runners[difference.index] = {name: '', stream: ''};
+							originalValues.runners[difference.index] = {name: '', stream: '', discord: ''};
 							break;
 						case 'D':
 							originalValues.runners[difference.index] = clone(original.runners[difference.index]);
+							break;
+						/* istanbul ignore next: shouldn't be possible to enter default path */
+						default:
+							throw new Error(`Unexpected difference:\n${JSON.stringify(difference)}`);
+					}
+				} else if(difference.path[0] === 'commentators'){
+					if (!originalValues.commentators) {
+						originalValues.commentators = [];
+					}
+
+					switch (difference.item.kind) {
+						case 'N':
+							originalValues.commentators[difference.index] = {name: '', stream: '', discord: ''};
+							break;
+						case 'D':
+							originalValues.commentators[difference.index] = clone(original.commentators[difference.index]);
+							break;
+						/* istanbul ignore next: shouldn't be possible to enter default path */
+						default:
+							throw new Error(`Unexpected difference:\n${JSON.stringify(difference)}`);
+					}
+				} else if(difference.path[0] === 'trackers'){
+					if (!originalValues.trackers) {
+						originalValues.trackers = [];
+					}
+
+					switch (difference.item.kind) {
+						case 'N':
+							originalValues.trackers[difference.index] = {name: '', stream: '', discord: ''};
+							break;
+						case 'D':
+							originalValues.trackers[difference.index] = clone(original.trackers[difference.index]);
 							break;
 						/* istanbul ignore next: shouldn't be possible to enter default path */
 						default:
@@ -178,14 +234,53 @@ function mergeChangesFromTracker(run, unmodifiedRun) {
 			}
 		}
 
+		if (run.originalValues.commentators) {
+			for (let i = 0; i < run.originalValues.commentators.length; i++) {
+				if (typeof run.originalValues.commentators[i] === 'object' &&
+					Object.keys(run.originalValues.commentators[i]).length === 0) {
+					delete run.originalValues.commentators[i];
+				}
+			}
+
+			if (Object.keys(run.originalValues.commentators).length === 0) {
+				delete run.originalValues.commentators;
+			}
+		}
+
+		if (run.originalValues.trackers) {
+			for (let i = 0; i < run.originalValues.trackers.length; i++) {
+				if (typeof run.originalValues.trackers[i] === 'object' &&
+					Object.keys(run.originalValues.trackers[i]).length === 0) {
+					delete run.originalValues.trackers[i];
+				}
+			}
+
+			if (Object.keys(run.originalValues.trackers).length === 0) {
+				delete run.originalValues.trackers;
+			}
+		}
+
 		if (Object.keys(run.originalValues).length === 0) {
 			delete run.originalValues;
 		}
+
 	}
 
 	if (run.runners) {
 		run.runners = run.runners.filter(runner => {
-			return runner.name || runner.stream;
+			return runner.name || runner.stream || runner.discord;
+		});
+	}
+
+	if (run.commentators) {
+		run.commentators = run.commentators.filter(runner => {
+			return runner.name || runner.stream || runner.discord;
+		});
+	}
+
+	if (run.trackers) {
+		run.trackers = run.trackers.filter(runner => {
+			return runner.name || runner.stream || runner.discord;
 		});
 	}
 
