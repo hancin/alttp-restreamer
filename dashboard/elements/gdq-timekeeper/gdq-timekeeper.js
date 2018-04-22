@@ -26,7 +26,6 @@
 					reflectToAttribute: true
 				},
 				results: Array,
-				coop: Boolean,
 				runners: Array,
 				time: String
 			};
@@ -42,7 +41,6 @@
 					runners[i] = runners[i] || false;
 				}
 				this.runners = runners;
-				this.coop = newVal.coop;
 			});
 			checklistComplete.on('change', newVal => {
 				this.checklistIncomplete = !newVal;
@@ -112,12 +110,6 @@
 			this.$.editDialog.open();
 		}
 
-		editCoopTime() {
-			this.$['editDialog-text'].innerHTML = `Enter a new final time for <b>all runners.</b>`;
-			this.$.editDialog.setAttribute('data-index', 0);
-			this.$['editDialog-input'].value = this.results[0].time.formatted;
-			this.$.editDialog.open();
-		}
 	}
 
 	customElements.define(GdqTimekeeper.is, GdqTimekeeper);
