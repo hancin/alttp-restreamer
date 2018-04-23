@@ -9,6 +9,11 @@
 			"description": "Whether or not to use mock data instead of the real API. If true, pulls from Dropbox.",
 			"default": false
 		},
+		"operatorTwitch": {
+			"type": "string",
+			"description": "Who's the restreamer using this?",
+			"default": false
+		},
 		"tracker": {
 			"type": ["object", "null"],
 			"properties": {
