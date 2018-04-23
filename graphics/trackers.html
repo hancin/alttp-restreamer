@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ALTTP Trackers</title>
+	<link rel="import" href="../shared/imports/gsap.html">
+
+	<link rel="import" href="elements/molecules/gdq-runner-nameplate/gdq-runner-nameplate.html">
+</head>
+<body>
+	<div id="container">
+		<layout-trackers></layout-trackers>
+	</div>
+
+	<dom-module id="layout-trackers">
+		<template>
+            <style type="text/css">
+                iframe{
+                    display: block;
+                    width:1050px;
+                    height: 350px;
+
+                    margin-bottom:10px;
+                    border: 1px solid pink;
+                }
+            </style>
+            <template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">
+                <div style="position:relative">
+                        <iframe src$="[[baseUrl]]/[[itemTracker.url]]" title="[[itemTracker.runnerName]]" scrolling="no"></iframe>
+                        <div style="position:absolute;left:10px; bottom:55px;color: #fff">[[itemTracker.runnerName]]</div>
+                </div>
+            </template>
+		</template>
+
+		<script>
+			const currentRunExtra = nodecg.Replicant('currentRunExtra');
+
+			Polymer({
+				is: 'layout-trackers',
+
+				properties: {
+                    itemTrackers: Array,
+                    baseUrl: String
+				},
+
+				ready() {
+                    const currentRunExtra = nodecg.Replicant('currentRunExtra');
+
+					currentRunExtra.on('change', newVal => {
+                        this.itemTrackers = newVal.itemTrackers;
+			            this.baseUrl = nodecg.bundleConfig.tracker.url;
+					});
+				}
+			});
+		</script>
+    </dom-module>
+    
+</body>
+</html>
