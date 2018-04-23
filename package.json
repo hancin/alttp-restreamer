@@ -83,6 +83,11 @@
         "file": "trackers.html",
         "width": 1052,
         "height": 724
+      },
+      {
+        "file": "twitch.html",
+        "width": 1280,
+        "height": 720
       }
     ],
     "assetCategories": [
