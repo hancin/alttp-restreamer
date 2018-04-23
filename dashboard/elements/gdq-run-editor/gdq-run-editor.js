@@ -51,7 +51,7 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 		"!editc "+run.commentators.map(x=>x.stream).join(" ")+" "+run.trackers.map(x=>x.stream).join(" ")+" "+nodecg.bundleConfig.operatorTwitch+" \r\n"+
 		"!springtitle "+fixedNames;
 
-		this.restreamRacePasta = "$RestreamRace " + fixedNames +"\r\n!RestreamRace " + run.pk; 
+		this.restreamRacePasta = "$RestreamRace " + run.pk; 
 		this.pk = run.pk;
 	}
 
