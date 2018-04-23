@@ -18,6 +18,7 @@ let updateInterval;
 const checklist = require('./checklist');
 const canSeekScheduleRep = nodecg.Replicant('canSeekSchedule');
 const currentRunRep = nodecg.Replicant('currentRun');
+const currentRunExtraRep = nodecg.Replicant('currentRunExtra');
 const nextRunRep = nodecg.Replicant('nextRun');
 const runnersRep = nodecg.Replicant('runners', {defaultValue: {}, persistent: false});
 const runOrderMap = nodecg.Replicant('runOrderMap', {defaultValue: {}, persistent: false});
@@ -27,6 +28,40 @@ module.exports = emitter;
 module.exports.update = update;
 
 update();
+
+currentRunRep.on('change', newVal => {
+	
+	if(!newVal) 
+		return;
+	
+		
+	if(newVal.pk != currentRunExtraRep.value.pk || currentRunExtraRep.value.itemTrackers === undefined){
+
+		const updatedItem = {
+			itemTrackers: newVal.runners.map(runner => {
+				return {
+					'runnerName': runner.name,
+					'url': ''
+				}
+			}),
+			password: '',
+			twitchChannel: newVal.notes.split("\r\n")[0],
+			mixerChannel: '',
+			standings: '',
+			round: '',
+			srtvPage: '',
+			pk: newVal.pk
+		}
+		
+		updatedItem.mixerChannel = updatedItem.twitchChannel;
+
+		if(updatedItem.twitchChannel == "ALTTPRandomizer")
+			updatedItem.mixerChannel += "1";
+
+		currentRunExtraRep.value = clone(updatedItem);
+	}
+
+});
 
 // Get latest schedule data every POLL_INTERVAL milliseconds
 updateInterval = setInterval(update, POLL_INTERVAL);
@@ -48,6 +83,7 @@ nodecg.listenFor('updateSchedule', (data, cb) => {
 		cb(error);
 	});
 });
+
 
 nodecg.listenFor('nextRun', (data, cb) => {
 	if (!canSeekScheduleRep.value) {
@@ -134,6 +170,23 @@ nodecg.listenFor('modifyRun', (data, cb) => {
 		cb();
 	}
 });
+
+nodecg.listenFor('modifyRunExtra', (data, cb) => {
+	assign(currentRunExtraRep.value, {
+		itemTrackers: data.itemTrackers,
+		twitchChannel: data.twitchChannel,
+		mixerChannel: data.mixerChannel,
+		password: data.password,
+		standings: data.standings,
+		round: data.round,
+		srtvPage: data.srtvPage,
+		pk: data.pk
+	});
+
+	if (typeof cb === 'function') {
+		cb();
+	}
+})
 
 nodecg.listenFor('resetRun', (pk, cb) => {
 	let runRep;

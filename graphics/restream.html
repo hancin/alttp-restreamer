@@ -55,13 +55,14 @@
 				<img src="assets/images/commentator.png" /> [[commentators]]
 			</div>
 			<div id="matchInfo">
-				Swiss Round 2 <br />
-				0-1
+				[[round]] <br />
+				[[standings]]
 			</div>
 		</template>
 
 		<script>
 			const currentRun = nodecg.Replicant('currentRun');
+			const currentRunExtra = nodecg.Replicant('currentRunExtra');
 			const stopwatch = nodecg.Replicant('stopwatch');
 
 			Polymer({
@@ -77,7 +78,9 @@
 					results: Array,
 					time: String,
 					commentators: String,
-					category: String
+					category: String,
+					round: String,
+					standings: String
 				},
 
 				ready() {
@@ -92,6 +95,11 @@
 						if (newVal.runners.length !== 3 && newVal.runners.length <= 4) {
 							this.numRunners = newVal.runners.length;
 						}
+					});
+
+					currentRunExtra.on('change', newVal => {
+						this.round = newVal.round;
+						this.standings = newVal.standings;
 					});
 				},
 				stopwatchChanged(newVal) {

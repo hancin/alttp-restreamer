@@ -13,7 +13,6 @@ class GdqScheduleRuninfo extends Polymer.Element {
 				type: String,
 				reflectToAttribute: true
 			},
-			releaseYear: String,
 			commentators: Array,
 			trackers: Array,
 			runners: Array,

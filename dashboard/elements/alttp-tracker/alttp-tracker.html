@@ -1,6 +1,7 @@
 <link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../../bower_components/nodecg-toast/nodecg-toast.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
@@ -57,6 +58,19 @@
 				margin-top: 32px;
 			}
 
+			#extraInfo .row{
+				@apply --layout-horizontal;
+				margin-top: 12px;
+			}
+			#extraInfo .row paper-input{
+				@apply --layout-flex-3;
+			}
+			#extraInfo .row a{
+				display:block;
+				margin-top:2em;
+				margin-left: 10px;
+			}
+
 			#previous,
 			#next {
 				--paper-button: {
@@ -75,8 +89,8 @@
 				margin-right: 0;
 			}
 
-			#editCurrent,
-			#editCurrent2,
+			#generateTrackers,
+			#saveChanges,
 			#editNext {
 				--paper-button: {
 					background-color: #A50074;
@@ -96,17 +110,63 @@
 
 		</style>
 
-		<nodecg-toast id="toast"></nodecg-toast>
+		<div id="extraInfo">
+			
 
-		<div id="runs">
-			<div id="runs-spacer"></div>
+				<div class="row">
+					<paper-input
+						label="SR.TV page"
+						value="{{srtvPage}}"
+						always-float-label>
+					</paper-input>
+					
+					<a href="[[srtvPage]]" target="_blank">View</a>
+					
+				</div>
+
+				<template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">
+					<div class="row">
+						<paper-input 
+						label$="[[itemTracker.runnerName]]'s Tracker"
+						value="{{itemTracker.url}}"
+						on-input="_updateGenerateButton"
+						always-float-label>
+						</paper-input>
+
+						<a href="[[baseUrl]]/[[itemTracker.url]]" target="_blank">View</a>
+					</div>
+				</template>
+
+				<div class="row">
+					<paper-input
+						label="Password"
+						value="{{password}}"
+						always-float-label>
+					</paper-input>&nbsp;&nbsp;&nbsp;&nbsp;
+					<paper-input
+						label="Round"
+						value="{{round}}"
+						always-float-label>
+					</paper-input>&nbsp;&nbsp;&nbsp;&nbsp;
+					<paper-input
+						label="Standings"
+						value="{{standings}}"
+						always-float-label>
+					</paper-input>
+					
+				</div>
+	
+				<div>
+					<h4>Links</h4>
+					<a href="https://twitch.tv/[[twitchChannel]]" target="_blank">[[twitchChannel]] Twitch</a><br />
+					<a href="https://mixer.com/[[mixerChannel]]" target="_blank">[[mixerChannel]] Mixer</a>
+				</div>
 		</div>
 
 		<div id="edit-ctrls">
-			<paper-button id="editCurrent" raised on-tap="editCurrent">Generate trackers</paper-button>
-			<paper-button id="editCurrent2" raised on-tap="editCurrent">Update OBS</paper-button>
-			<paper-button id="fetchLatestSchedule" raised on-tap="fetchLatestSchedule">FETCH LATEST SCHEDULE</paper-button>
-			<paper-button id="editNext" raised on-tap="editNext">EDIT NEXT</paper-button>
+			<paper-button id="generateTrackers" raised on-tap="generateItemTrackers">Generate trackers</paper-button>
+			<paper-button id="saveChanges" raised on-tap="saveChanges">Save Changes</paper-button>
+			<!--<paper-button id="editCurrent2" raised on-tap="editCurrent">Update OBS</paper-button>-->
 		</div>
 
 	</template>
