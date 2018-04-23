@@ -5,6 +5,7 @@ const assign = require('lodash.assign');
 const clone = require('clone');
 const deepEqual = require('deep-equal');
 const EventEmitter = require('events');
+const cheerio = require('cheerio');
 const request = require('request-promise').defaults({jar: true}); // <= Automatically saves and re-uses cookies.
 
 // Ours
@@ -230,16 +231,64 @@ function update() {
 	const runsPromise = request({
 		uri: nodecg.bundleConfig.useMockData ?
 			'https://www.dropbox.com/s/fghcrrst55c5qsi/schedule.json' :
-			'https://www.dropbox.com/s/fghcrrst55c5qsi/schedule.json',
+			'http://speedgaming.org/alttpr/',
 		qs: {
+			showid: 1,
+			/*past: 1,*/
 			dl: 1 // For Dropbox only
 		},
-		json: true
+		json: nodecg.bundleConfig.useMockData
 	});
 
+	const runsPromiseProd = nodecg.bundleConfig.useMockData? null : 
+		runsPromise.then(response=>{
+			const $ = cheerio.load(response);
+			var entries = $("tr");
+			var valid = [];
+			var order = 0;
+		
+			entries.each((index, line) => {
+
+				const cells = $(line).children("td");
+
+				const cellPk = cells.eq(0).first().text().trim();
+				const cellTime = cells.eq(1).first().text().trim().replace(/\s\s+/g, " ");
+				const cellRunners = cells.eq(2).first().text().trim();
+				const cellChannel = cells.eq(3).first().text().trim();
+				const cellCommentators = cells.eq(4).first().text().trim();
+				const cellTrackers = cells.eq(5).first().text().trim();
+
+				//This is not restreamed by us.
+				if(cellChannel.indexOf("ALTTPRandomizer") === -1){
+					return;
+				}
+		
+				var run = {
+					order: order,
+					name: cellRunners,
+					time: cellTime,
+					runners: cellRunners.split(" vs "),
+					channel: cellChannel,
+					commentators: cellCommentators.split(', '),
+					trackers: cellTrackers.split(', '),
+					pk: parseInt(cellPk)
+				};
+				
+				order += 1;
+		
+				valid.push(run);
+
+			});
+			return Promise.resolve(valid);
+		});
+
+
 	return Promise.all([
-		runnersPromise, runsPromise
+		runnersPromise, nodecg.bundleConfig.useMockData? runsPromise : runsPromiseProd
 	]).then(([runnersJSON, runsJSON]) => {
+
+
+
 		const formattedRunners = {};
 		runnersJSON.forEach(obj => {
 			formattedRunners[obj.name] = {
