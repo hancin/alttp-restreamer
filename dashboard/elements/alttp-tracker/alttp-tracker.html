@@ -91,6 +91,7 @@
 
 			#generateTrackers,
 			#saveChanges,
+			.copy,
 			#editNext {
 				--paper-button: {
 					background-color: #A50074;
@@ -106,6 +107,10 @@
 			paper-button {
 				@apply --layout-horizontal;
 				@apply --layout-center-center;
+			}
+
+			pre{
+				overflow-x: scroll;
 			}
 
 		</style>
@@ -159,7 +164,8 @@
 				<div>
 					<h4>Links</h4>
 					<a href="https://twitch.tv/[[twitchChannel]]" target="_blank">[[twitchChannel]] Twitch</a><br />
-					<a href="https://mixer.com/[[mixerChannel]]" target="_blank">[[mixerChannel]] Mixer</a>
+					<a href="https://mixer.com/[[mixerChannel]]" target="_blank">[[mixerChannel]] Mixer</a> <br />
+					
 				</div>
 		</div>
 
@@ -167,6 +173,45 @@
 			<paper-button id="generateTrackers" raised on-tap="generateItemTrackers">Generate trackers</paper-button>
 			<paper-button id="saveChanges" raised on-tap="saveChanges">Save Changes</paper-button>
 			<!--<paper-button id="editCurrent2" raised on-tap="editCurrent">Update OBS</paper-button>-->
+		</div>
+		<div>
+			<hr>
+				<h4>Paste To Tracker</h4>
+				<pre>Hi there, here is the information for the upcoming race!
+
+[[srtvPage]]
+ALTTP Randomizer Spring 2018 Tournament - [[runName]]
+
+Here's the item trackers for the different runners:
+<template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">[[itemTracker.runnerName]]: [[baseUrl]]/[[itemTracker.url]]
+</template>
+Password: [[password]]
+
+Commentary restream: https://mixer.com/[[mixerChannel]]
+</pre>
+<hr>
+				<h4>Paste To Commentators</h4>
+				<pre>Hi there, here is the information for the upcoming race!
+
+[[srtvPage]]
+ALTTP Randomizer Spring 2018 Tournament - [[runName]]
+
+Commentary restream: https://mixer.com/[[mixerChannel]]
+</pre>
+<hr>
+				<h4>Paste To Runners</h4>
+				<pre>Hi there, here is the information for the upcoming race!
+
+[[srtvPage]]
+ALTTP Randomizer Spring 2018 Tournament - [[runName]]
+
+Some things to note to help expedite the setup process:
+1) Please inform me if you have anything other then the original ALttP sound track and game sounds playing on your stream.  This would include MSU-1 music, SR.TV notifications, Twitch alerts, etc.
+2) It is recommended that you go live on Twitch.tv 15 minutes prior to race start.  In addition make sure that your stream has a game running or otherwise clearly marks where the game will be located on your layout.  This will expedite the cropping process and allow us to get the race started on time.
+3) Verify that both your timer and game are clearly visible, with no Twitch alerts or other stream elements set to overlap them.
+
+You will receive the seed in the SR.TV chat at the latest 10 minutes prior to race start.
+</pre>
 		</div>
 
 	</template>

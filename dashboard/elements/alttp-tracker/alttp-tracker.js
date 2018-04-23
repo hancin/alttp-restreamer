@@ -24,7 +24,8 @@
 				'mixerChannel': String,
 				'srtvPage': String,
 				'standings': String,
-				'round': String
+				'round': String,
+				'runName': String,
 			}
 		}
 
@@ -54,6 +55,10 @@
 
 
 				this._updateGenerateButton();
+			});
+
+			currentRun.on('change', newVal => {
+				this.runName = newVal.name;
 			});
 			
 		}
