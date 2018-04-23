@@ -56,7 +56,7 @@
 
 		<div id="columns">
 			<section>
-				<div class="header">Stream Tech Duties</div>
+				<div class="header">Preparation</div>
 				<div class="group">
 					<template is="dom-repeat" items="[[techStationDuties]]" mutable-data>
 						<paper-checkbox category="techStationDuties" checked="[[item.complete]]">[[item.name]]</paper-checkbox>
@@ -65,14 +65,14 @@
 			</section>
 
 			<section>
-				<div class="header">Extra Content</div>
+				<div class="header">Pre-Commentary live</div>
 				<div class="group horizontal">
 					<template is="dom-repeat" items="[[extraContent]]" mutable-data>
 						<paper-checkbox category="extraContent" checked="[[item.complete]]">[[item.name]]</paper-checkbox>
 					</template>
 				</div>
 
-				<div class="header" style="margin-top: 21px;">Stage Tech Duties</div>
+				<div class="header" style="margin-top: 21px;">Pre-Restream Live</div>
 				<div class="group">
 					<template is="dom-repeat" items="[[stageTechDuties]]" mutable-data>
 						<paper-checkbox category="stageTechDuties" checked="[[item.complete]]">[[item.name]]</paper-checkbox>

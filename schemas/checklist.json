@@ -39,26 +39,34 @@
 	},
 
 	"default": {
-		"extraContent": [
-			{"name": "Start commentary restream", "complete": false},
-			{"name": "Validate correct functionality", "complete": false},
-			{"name": "Check stream title", "complete": false},
-			{"name": "Check commands !c !r", "complete": false},
-			{"name": "Ping @restream_moderator if changes req.", "complete": false}
-		],
 		"techStationDuties": [
-			{"name": "Disable unwanted audio", "complete": false},
-			{"name": "Create tracker rooms", "complete": false},
-			{"name": "Send link to tracker", "complete": false},
-			{"name": "$RestreamRace Player1 Player2 in #restreamer", "complete": false},
-			{"name": "Update race information", "complete": false},
-			{"name": "Send copypasta to runners", "complete": false}
+			{"name": "All unwanted audio is off", "complete": false},
+			{"name": "Commentator/Live profiles have correct stream keys", "complete": false},
+			{"name": "Select correct race in schedule (or manually)", "complete": false},
+			{"name": "Verified that OBS is updated.", "complete": false},
+			{"name": "Generated trackers & hit View", "complete": false},
+			{"name": "Entered passwords, round, standings & Saved", "complete": false},
+			{"name": "Ran $RestreamRace #### in #restreamer [Edit Current]", "complete": false},
+			{"name": "Entered SRTV link in box, Saved.", "complete": false},
+			{"name": "Send pastes to runners/crew", "complete": false},
+			{"name": "Crop runners that are live early", "complete": false},
+			{"name": "Checked twitch stream title & !c !r", "complete": false},
+			{"name": "Sent paste to mods if changes req. [Edit Current]", "complete": false}
+		],
+		"extraContent": [
+			{"name": "Started commentary restream", "complete": false},
+			{"name": "Commentary restream live, commentators agreed.", "complete": false},
+			{"name": "Did Discord sound check w/ comms", "complete": false},
+			{"name": "Sent seed to runners.", "complete": false},
+			{"name": "Ensured all runners are cropped.", "complete": false},
+			{"name": "Did runner/YT audio check.", "complete": false}
 		],
 		"stageTechDuties": [
-			{"name": "Start live twitch stream", "complete": false},
-			{"name": "Verify live status", "complete": false},
-			{"name": "Wait for commentator introductions", "complete": false},
-			{"name": "Wait for runners to be ready", "complete": false},
+			{"name": "Gave 30s/15s/10/5/now prep notice in Mixer", "complete": false},
+			{"name": "Went live on Twitch", "complete": false},
+			{"name": "Twitch stream live, confirmed.", "complete": false},
+			{"name": "Confirmed runners are ready.", "complete": false},
+			{"name": "Commentator introductions did their introductions", "complete": false},
 			{"name": "$StartRace SRTV-GUID in #restreamer", "complete": false}
 		]
 	}
