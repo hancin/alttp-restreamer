@@ -34,7 +34,9 @@ currentRunRep.on('change', newVal => {
 	
 	if(!newVal) 
 		return;
-	
+
+	if(newVal.pk === undefined)
+		return;
 		
 	if(newVal.pk != currentRunExtraRep.value.pk || currentRunExtraRep.value.itemTrackers === undefined){
 
@@ -245,7 +247,7 @@ function update() {
 			const $ = cheerio.load(response);
 			var entries = $("tr");
 			var valid = [];
-			var order = 0;
+			var order = 1;
 		
 			entries.each((index, line) => {
 
