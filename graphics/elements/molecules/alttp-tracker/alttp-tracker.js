@@ -1,10 +1,6 @@
 (function () {
 	'use strict';
 
-	const currentRunExtra = nodecg.Replicant('currentRunExtra');
-	const questionSortMap = nodecg.Replicant('interview:questionSortMap');
-	const questionShowing = nodecg.Replicant('interview:questionShowing');
-
 	class AlttpTracker extends Polymer.Element {
 		static get is() {
 			return 'alttp-tracker';
