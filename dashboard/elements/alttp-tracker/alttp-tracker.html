@@ -4,6 +4,8 @@
 <link rel="import" href="../../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
 <link rel="import" href="../gdq-run-editor/gdq-run-editor.html">
 
@@ -13,6 +15,7 @@
 			:host {
 				padding: 22px 24px;
 				@apply --layout-vertical;
+				--paper-tabs-selection-bar-color: blue;
 			}
 
 			#selection-ctrls {
@@ -56,6 +59,9 @@
 			#edit-ctrls {
 				@apply --layout-horizontal;
 				margin-top: 32px;
+				margin-bottom:5px;
+				padding-bottom: 5px;
+				border-bottom:1px solid black;
 			}
 
 			#extraInfo .row{
@@ -174,10 +180,13 @@
 			<paper-button id="saveChanges" raised on-tap="saveChanges">Save Changes</paper-button>
 			<!--<paper-button id="editCurrent2" raised on-tap="editCurrent">Update OBS</paper-button>-->
 		</div>
-		<div>
-			<hr>
-				<h4>Paste To Tracker</h4>
-				<pre>Hi there, here is the information for the upcoming race!
+		<paper-tabs selected="{{selectedInfoTab}}" no-slide>
+			<paper-tab>Trackers</paper-tab>
+			<paper-tab>Commentators</paper-tab>	
+			<paper-tab>Runners</paper-tab>	
+		</paper-tabs>
+		<iron-pages selected="{{selectedInfoTab}}">
+		<pre id="Trackers">Hi there, here is the information for the upcoming race!
 
 [[srtvPage]]
 ALTTP Randomizer Spring 2018 Tournament - [[runName]]
@@ -189,18 +198,14 @@ Password: [[password]]
 
 Commentary restream: https://mixer.com/[[mixerChannel]]
 </pre>
-<hr>
-				<h4>Paste To Commentators</h4>
-				<pre>Hi there, here is the information for the upcoming race!
+<pre id="Commentators">Hi there, here is the information for the upcoming race!
 
 [[srtvPage]]
 ALTTP Randomizer Spring 2018 Tournament - [[runName]]
 
 Commentary restream: https://mixer.com/[[mixerChannel]]
 </pre>
-<hr>
-				<h4>Paste To Runners</h4>
-				<pre>Hi there, here is the information for the upcoming race!
+<pre id="Runners">Hi there, here is the information for the upcoming race!
 
 [[srtvPage]]
 ALTTP Randomizer Spring 2018 Tournament - [[runName]]
@@ -212,8 +217,7 @@ Some things to note to help expedite the setup process:
 
 You will receive the seed in the SR.TV chat at the latest 10 minutes prior to race start.
 </pre>
-		</div>
-
+	</iron-pages>
 	</template>
 
 	<script src="alttp-tracker.js"></script>

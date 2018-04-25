@@ -25,7 +25,11 @@
 				'srtvPage': String,
 				'standings': String,
 				'round': String,
-				'runName': String,
+				'runName': String, 
+				'selectedInfoTab': {
+					"type": String,
+					"value": "0"
+				}
 			}
 		}
 
