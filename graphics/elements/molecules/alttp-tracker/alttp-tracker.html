@@ -1,0 +1,31 @@
+<link rel="import" href="../../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../molecules/gdq-tweet/gdq-tweet.html">
+
+<dom-module id="alttp-tracker">
+	<template>
+		<style>
+			:host{
+				position: absolute;
+				background: #000;
+				width: 320px;
+				height: 128px;
+				font-size: 35px;
+				line-height: 128px;
+				overflow: hidden;
+			}
+			iframe{
+				border:none;
+				position: absolute;
+				left: -1px;
+				transform: scaleX(0.5) scaleY(0.47);
+				transform-origin: left top;
+				-webkit-backface-visibility: hidden; /* Chrome, Safari, Opera */
+				backface-visibility: hidden;
+			}
+		</style>
+		<iframe width="1050" height="350" src="[[baseUrl]]/[[getTrackerInfo(itemTrackers, index)]]" scrolling="no"></iframe>
+	</template>
+
+	<script src="alttp-tracker.js"></script>
+</dom-module>

@@ -8,6 +8,7 @@
 	<link rel="import" href="../shared/imports/gsap.html">
 
 	<link rel="import" href="elements/molecules/gdq-runner-nameplate/gdq-runner-nameplate.html">
+	<link rel="import" href="elements/molecules/alttp-tracker/alttp-tracker.html">
 </head>
 <body>
 	<div id="container">
@@ -27,6 +28,7 @@
 					text-align: center;
 					font-size: 24px;
 				}
+
 			</style>
 			<template is="dom-repeat" items="[[runners]]" as="runner">
 				<div id="runner[[index]]">
@@ -36,18 +38,17 @@
 					<div class="runnerTimer">
 						[[calcRunnerStatus(results, index)]]
 					</div>
-					<div class="runnerTracker">
-						<!--<iframe scrolling="no" src="https://lttp-tracker-fortourneyonly.firebaseapp.com/[[runner.tracker]]">
-						</iframe>-->
-					</div>
+					<alttp-tracker 
+						item-trackers="[[itemTrackers]]" 
+						index="[[index]]"></alttp-tracker>
 					<div class="runnerStream">
-						
 					</div>
 					<div class="runnerExtra">
 						<img src="[[calcStatusGraph(results, index)]]" />
 					</div>
 				</div>
 			</template>
+
 			<div id="category">
 				[[category]]
 			</div>
@@ -59,6 +60,8 @@
 				[[standings]]
 			</div>
 		</template>
+
+
 
 		<script>
 			const currentRun = nodecg.Replicant('currentRun');
@@ -80,10 +83,13 @@
 					commentators: String,
 					category: String,
 					round: String,
-					standings: String
+					standings: String,
+					baseUrl: String,
+					itemTrackers: Array
 				},
 
 				ready() {
+
 					stopwatch.on('change', this.stopwatchChanged.bind(this));
 					currentRun.on('change', newVal => {
 						if (!newVal) {
@@ -100,12 +106,16 @@
 					currentRunExtra.on('change', newVal => {
 						this.round = newVal.round;
 						this.standings = newVal.standings;
+						this.set('itemTrackers', newVal.itemTrackers.slice(0));
 					});
+
 				},
+
 				stopwatchChanged(newVal) {
 					this.time = newVal.time.formatted;
 					this.results = newVal.results.slice(0);
 				},
+
 				calcRunnerStatus(results, index){
 					if (!results) {
 						return;

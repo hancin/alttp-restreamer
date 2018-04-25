@@ -93,25 +93,11 @@
     top: 24px;
 }
 
-.runnerTracker{
-    position: absolute;
-    background: #000;
-    width: 320px;
-    height: 128px;
-    font-size: 35px;
-    line-height: 128px;
-}
-.runnerTracker iframe{
-    border:none;
-    width: 320px;
-    height: 128px;
-    overflow: hidden;
-}
-#runner0 .runnerTracker {
+#runner0 alttp-tracker {
     left: 48px;
     top: 564px;
 }
-#runner1 .runnerTracker {
+#runner1 alttp-tracker {
     left: 912px;
     top: 564px;
 }
