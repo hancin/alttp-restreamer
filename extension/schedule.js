@@ -13,7 +13,7 @@ const nodecg = require('./util/nodecg-api-context').get();
 const timer = require('./timekeeping');
 const {calcOriginalValues, mergeChangesFromTracker} = require('./lib/diff-run');
 
-const POLL_INTERVAL = 60 * 1000;
+const POLL_INTERVAL = 60 * 60 * 1000;
 let updateInterval;
 
 const checklist = require('./checklist');
@@ -236,7 +236,7 @@ function update() {
 			'http://speedgaming.org/alttpr/',
 		qs: {
 			showid: 1,
-			/*past: 1,*/
+			past: 1,
 			dl: 1 // For Dropbox only
 		},
 		json: nodecg.bundleConfig.useMockData
