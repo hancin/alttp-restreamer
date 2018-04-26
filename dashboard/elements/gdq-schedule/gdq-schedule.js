@@ -26,6 +26,10 @@
 				if (!newVal) {
 					return;
 				}
+
+				this.$.typeahead.items = newVal
+					.filter(item => item.type === 'run')
+					.map(speedrun => speedrun.name);
 				this._checkButtons();
 			});
 
@@ -50,6 +54,44 @@
 
 				this._checkButtons();
 			});
+		}
+
+		/**
+		 * Takes the current value of the typeahead and loads that as the current speedrun.
+		 * Shows a helpful error toast if no matching speedrun could be found.
+		 * @returns {undefined}
+		 */
+		takeTypeahead() {
+			if (!this.$.typeahead.value) {
+				return;
+			}
+
+			const nameToFind = this.$.typeahead.value;
+
+			// Find the run based on the name.
+			const matched = schedule.value.some(run => {
+				if (run.type !== 'run') {
+					return false;
+				}
+
+				if (run.name.toLowerCase() === nameToFind.toLowerCase()) {
+					this._pendingSetCurrentRunByOrderMessageResponse = true;
+					this._checkButtons();
+					nodecg.sendMessage('setCurrentRunByOrder', run.order, () => {
+						this._pendingSetCurrentRunByOrderMessageResponse = false;
+						this.$.typeahead.value = '';
+						this.$.typeahead._suggestions = [];
+						this._checkButtons();
+					});
+					return true;
+				}
+
+				return false;
+			});
+
+			if (!matched) {
+				this.$.toast.show(`Could not find speedrun with name "${nameToFind}".`);
+			}
 		}
 
 		fetchLatestSchedule() {
@@ -116,12 +158,14 @@
 
 			let shouldDisableNext = false;
 			let shouldDisablePrev = false;
+			let shouldDisableTake = false;
 			if (!canSeekSchedule.value ||
 				this._pendingSetCurrentRunByOrderMessageResponse ||
 				this._pendingPreviousRunMessageResponse ||
 				this._pendingNextRunMessageResponse) {
 				shouldDisableNext = true;
 				shouldDisablePrev = true;
+				shouldDisableTake = true;
 			}
 
 			// Disable nextRun button if there is no next run.
@@ -143,6 +187,10 @@
 				shouldDisablePrev = true;
 			}
 
+			// Disable take button if there's no takeTypeahead value.
+			if (!this.$.typeahead.value) {
+				shouldDisableTake = true;
+			}
 
 			if (shouldDisableNext) {
 				this.$.next.setAttribute('disabled', 'true');
@@ -156,6 +204,18 @@
 				this.$.previous.removeAttribute('disabled');
 			}
 
+			if (shouldDisableTake) {
+				this.$.take.setAttribute('disabled', 'true');
+			} else {
+				this.$.take.removeAttribute('disabled');
+			}
+		}
+
+		_typeaheadKeyup(e) {
+			// Enter key
+			if (e.which === 13 && this.$.typeahead.inputValue) {
+				this.takeTypeahead();
+			}
 		}
 
 	}

@@ -113,7 +113,17 @@
 			</paper-button>
 
 			<div id="typeahead-container">
-				&mdash;
+				<vaadin-combo-box
+					id="typeahead"
+					placeholder="Search"
+					on-keyup="_typeaheadKeyup"
+					on-change="_checkButtons">
+				</vaadin-combo-box>
+
+				<paper-button id="take" on-tap="takeTypeahead" raised>
+					<span>Take</span>
+					<iron-icon icon="chevron-right"></iron-icon>
+				</paper-button>
 			</div>
 
 			<paper-button id="next" on-tap="next" raised>
