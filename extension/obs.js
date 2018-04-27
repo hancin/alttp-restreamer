@@ -28,6 +28,12 @@ commentatorOBS.replicants.programScene.on('change', newVal => {
 			return false;
 		}
 
+		console.log(source);
+
+		/*commentatorOBS.send('GetSceneItemProperties', {"item": "Left Runner"}).then(res=>{
+			console.log(res);
+		});*/
+
 		/*if(source.name === "Left Runner"){
 			const crop = {
 				'top' : 23,
