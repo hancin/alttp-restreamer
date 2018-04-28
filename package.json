@@ -8,13 +8,10 @@
   "dependencies": {
     "bluebird": "^3.4.0",
     "bower-npm-resolver": "^0.8.2",
-    "casparcg-connection": "^3.0.1",
     "cheerio": "^1.0.0-rc.1",
     "clone": "^2.1.1",
     "deep-diff": "^0.3.4",
     "deep-equal": "^1.0.1",
-    "firebase-admin": "^5.6.0",
-    "gamepad": "^1.4.2",
     "json-schema-defaults": "^0.3.0",
     "livesplit-core": "^0.8.1",
     "lodash.assign": "^4.0.9",
@@ -25,24 +22,14 @@
     "nodecg-widget-obs": "^4.0.0",
     "numeral": "^2.0.6",
     "object-path": "^0.11.3",
-    "osc": "^2.1.0",
     "parse-ms": "^1.0.1",
     "q": "^1.4.1",
     "request": "^2.67.0",
     "request-promise": "^4.2.1",
     "socket.io-client": "^2.0.1",
-    "twemoji": "^2.0.5",
-    "twitchps": "^0.5.5",
-    "twitter-stream-api": "^0.5.0",
-    "usb-detection": "^2.1.0"
+    "twemoji": "^2.0.5"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "eslint": "^4.12.1",
-    "eslint-config-xo": "^0.19.0",
-    "eslint-plugin-html": "^4.0.1",
-    "istanbul": "^0.4.3",
-    "mocha": "^4.0.1"
   },
   "homepage": "https://gamesdonequick.com/",
   "license": "Apache-2.0",
@@ -105,6 +92,6 @@
     "url": "git://github.com/hancin/alttp-restreamer.git"
   },
   "scripts": {
-    "static": "eslint ./**/*.js ./**/*.html --ignore-path .eslintignore"
+    "static": "echo yes"
   }
 }
