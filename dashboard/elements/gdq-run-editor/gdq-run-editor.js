@@ -51,6 +51,11 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 		"!editc "+run.commentators.map(x=>x.stream).join(" ")+" "+run.trackers.map(x=>x.stream).join(" ")+" "+nodecg.bundleConfig.operatorTwitch+" \r\n"+
 		"!springtitle "+fixedNames;
 
+		this.uglyCopyPasta2 = "!redit "+run.runners.map(x=>x.stream).join(" ")+"\r\n" +
+		"!cedit "+run.commentators.map(x=>x.stream).join(" ")+" "+run.trackers.map(x=>x.stream).join(" ")+" "+nodecg.bundleConfig.operatorTwitch+" \r\n"+
+		"!retitle "+fixedNames;
+
+
 		this.restreamRacePasta = "$RestreamRace " + run.pk; 
 		this.pk = run.pk;
 	}

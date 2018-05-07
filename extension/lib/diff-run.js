@@ -3,7 +3,6 @@
 // Packages
 const clone = require('clone');
 const diff = require('deep-diff').diff;
-const merge = require('lodash.merge');
 const objectPath = require('object-path');
 
 /**
@@ -191,9 +190,9 @@ function mergeChangesFromTracker(run, unmodifiedRun) {
 			case 'N':
 				if (typeof difference.rhs === 'object') {
 					if (difference.path) {
-						merge(objectPath.get(run, pathBase)[pathTip], difference.rhs);
+						Object.assign(objectPath.get(run, pathBase)[pathTip], ...difference.rhs);
 					} else {
-						merge(run, difference.rhs);
+						Object.assign(run, ...difference.rhs);
 					}
 				} else {
 					objectPath.set(run, difference.path, difference.rhs);

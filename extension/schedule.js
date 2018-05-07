@@ -1,7 +1,6 @@
 'use strict';
 
 // Packages
-const assign = require('lodash.assign');
 const clone = require('clone');
 const deepEqual = require('deep-equal');
 const EventEmitter = require('events');
@@ -160,7 +159,7 @@ nodecg.listenFor('modifyRun', (data, cb) => {
 				nodecg.log.error('[schedule:modifyRun] run and original are same object!');
 				return;
 			}
-			assign(run, data);
+			Object.assign(run, data);
 			run.originalValues = calcOriginalValues(run, original);
 		} else {
 			nodecg.log.error('[modifyRun] Found current/next run, but couldn\'t find original in schedule. Aborting.');
@@ -175,7 +174,7 @@ nodecg.listenFor('modifyRun', (data, cb) => {
 });
 
 nodecg.listenFor('modifyRunExtra', (data, cb) => {
-	assign(currentRunExtraRep.value, {
+	Object.assign(currentRunExtraRep.value, {
 		itemTrackers: data.itemTrackers,
 		twitchChannel: data.twitchChannel,
 		mixerChannel: data.mixerChannel,
@@ -252,18 +251,22 @@ function update() {
 			entries.each((index, line) => {
 
 				const cells = $(line).children("td");
+				const cellTime = cells.eq(1).first().text().trim().replace(/\s\s+/g, " ");
+				//Let's clean the schedule a bit.
+				if(cellTime.indexOf("Apr") !== -1){
+					return;
+				}
 
 				const cellPk = cells.eq(0).first().text().trim();
-				const cellTime = cells.eq(1).first().text().trim().replace(/\s\s+/g, " ");
 				const cellRunners = cells.eq(2).first().text().trim();
 				const cellChannel = cells.eq(3).first().text().trim();
 				const cellCommentators = cells.eq(4).first().text().trim();
 				const cellTrackers = cells.eq(5).first().text().trim();
 
 				//This is not restreamed by us.
-				if(cellChannel.indexOf("ALTTPRandomizer") === -1){
+				/*if(cellChannel.indexOf("ALTTPRandomizer") === -1){
 					return;
-				}
+				}*/
 		
 				var run = {
 					order: order,
