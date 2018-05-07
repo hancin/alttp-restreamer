@@ -27,6 +27,19 @@
 					"description": "The URL for the tracker used on stream."
 				}
 			}
+		},
+		"speedgaming": {
+			"type": ["object", "null"],
+			"properties": {
+				"schedule":{
+					"type":"string",
+					"description": "The URL to fetch the schedule from."
+				},
+				"players":{
+					"type":"string",
+					"description": "The URL to fetch players from."
+				}
+			}
 		}
 	},
 	"required": ["tracker"]

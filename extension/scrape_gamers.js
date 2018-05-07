@@ -1,6 +1,6 @@
 /* Run this on a sign up page to create players.json*/
 (function playerList(){
-    var list = document.querySelectorAll("option");
+    var list = document.querySelectorAll("select[name=personid] option");
     var finalList = [];
     list.forEach(option => {
         var splits = option.text.split(" | ");

@@ -222,17 +222,17 @@ function update() {
 	const runnersPromise = request({
 		uri: nodecg.bundleConfig.useMockData ?
 			'https://www.dropbox.com/s/mbr6p9zn4piek1j/players.json' :
-			'https://www.dropbox.com/s/mbr6p9zn4piek1j/players.json',
+			nodecg.bundleConfig.speedgaming.players,
 		qs: {
 			dl: 1 // For Dropbox only
 		},
-		json: true
+		json: nodecg.bundleConfig.useMockData
 	});
 
 	const runsPromise = request({
 		uri: nodecg.bundleConfig.useMockData ?
 			'https://www.dropbox.com/s/fghcrrst55c5qsi/schedule.json' :
-			'http://speedgaming.org/alttpr/',
+			nodecg.bundleConfig.speedgaming.schedule,
 		qs: {
 			showid: 1,
 			past: 1,
@@ -241,7 +241,7 @@ function update() {
 		json: nodecg.bundleConfig.useMockData
 	});
 
-	const runsPromiseProd = nodecg.bundleConfig.useMockData? null : 
+	const runsPromisePreprocessed = nodecg.bundleConfig.useMockData? runsPromise : 
 		runsPromise.then(response=>{
 			const $ = cheerio.load(response);
 			var entries = $("tr");
@@ -287,9 +287,35 @@ function update() {
 			return Promise.resolve(valid);
 		});
 
+	const runnersPromisePreprocessed = nodecg.bundleConfig.useMockData? runnersPromise : 
+		runnersPromise.then(response=>{
+			const $ = cheerio.load(response);
+			var entries = $("select[name=personid] option");
+			var valid = [];
+		
+			entries.each((index, line) => {
+				var sanitizedText = $(line).text();
+				sanitizedText = sanitizedText.replace(/\s+/g," ").trim();
+				var splits = sanitizedText.split(' | ');
+				if(splits.length != 3)
+				return;
+
+				let runner = {
+					pk: parseInt($(line).val()),
+					name: splits[0],
+					twitch: splits[1].substr(splits[1].indexOf("= ")+2),
+					discord: splits[2].substr(splits[2].indexOf("= ")+2)
+				};
+
+				valid.push(runner);
+
+			});
+			return Promise.resolve(valid);
+		});
+
 
 	return Promise.all([
-		runnersPromise, nodecg.bundleConfig.useMockData? runsPromise : runsPromiseProd
+		runnersPromisePreprocessed, runsPromisePreprocessed
 	]).then(([runnersJSON, runsJSON]) => {
 
 
