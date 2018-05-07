@@ -1,8 +1,12 @@
-@import 'base.css';
-
 body {
-	font-family: 'Source Code Pro';
+	margin: 0;
 }
+
+#container {
+	position: absolute;
+	overflow: hidden;
+}
+
 
 #container {
 	position: relative;
