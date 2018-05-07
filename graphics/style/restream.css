@@ -167,3 +167,11 @@
     max-height:24px;
     vertical-align: middle;
 }
+#matchInfo{
+    position:absolute;
+    top: 23px;
+    width:1280px;
+    text-align: center;
+    font-size: 24px;
+    line-height: 1em;
+}

@@ -20,17 +20,6 @@
 		<template>
 			<link href="style/restream.css" rel="stylesheet" type="text/css" >
 			
-			<style>
-				#matchInfo{
-					position:absolute;
-					top: 23px;
-					width:1280px;
-					text-align: center;
-					font-size: 24px;
-					line-height: 1em;
-				}
-
-			</style>
 			<template is="dom-repeat" items="[[runners]]" as="runner">
 				<div id="runner[[index]]">
 					<div class="runnerName">
@@ -124,14 +113,13 @@
 					if(results[index] && results[index].forfeit)
 						return '';
 
-					if (results[index] && results[index].time) {
+					if (results[index] && results[index].time && results[index].time.formatted !== "00:00") {
 						return results[index].time.formatted;
 					}
 
-					if(this.time)
+					if(this.time && this.time !== "00:00")
 						return this.time;
 					
-					return '00:00';
 				},
 				calcStatusGraph(results, index) {
 					if (!results) {
