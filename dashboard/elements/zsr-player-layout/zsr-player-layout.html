@@ -75,7 +75,7 @@
 				position: relative;
 				border-style: dashed;
 				border-width: 2px;
-				width:480px;
+				width:338px;
 				height:270px;
 				background-color: lightgrey;
 				overflow: hidden;
@@ -93,24 +93,21 @@
 		</style>	
 		<paper-tabs selected="{{selected}}" no-slide>
 			<paper-tab raised>Player 1</paper-tab>
-			<paper-tab raised>Player 2</paper-tab>	
-			<paper-tab raised>Player 3</paper-tab>	
-			<paper-tab raised>Player 4</paper-tab>	
 		</paper-tabs>
 		<iron-pages selected="{{selected}}">
 			<div id="Player1">
 				<div id="values" class="layout horizontal">	
 					<div id="inputs" class="layout vertical">	
-						<paper-input label="Top1" id="Top1" type="number" value="{{p1T}}" on-value-changed="_confirmTop1"></paper-input>
-						<paper-input label="Left1" id="Left1" type="number" value="{{p1L}}" on-value-changed="_confirmLeft1"></paper-input>
-						<paper-input label="Width1" id="Width1" type="number" value="{{p1W}}" on-value-changed="_recalcHeight1"></paper-input>
-						<paper-input label="Height1" id="Height1" type="number" value="{{p1H}}" on-value-changed="_recalcWidth1"></paper-input>
+						<paper-input label="Top" id="Top1" type="number" value="{{p1T}}" min="0" on-value-changed="_confirmTop1"></paper-input>
+						<paper-input label="Left" id="Left1" type="number" value="{{p1L}}" min="0" on-value-changed="_confirmLeft1"></paper-input>
+						<paper-input label="Right" id="Right1" type="number" value="{{p1R}}" min="0" on-value-changed="_recalcHeight1"></paper-input>
+						<paper-input label="Bottom" id="Bottom1" type="number" value="{{p1B}}" min="0" on-value-changed="_recalcWidth1"></paper-input>
 					</div>	
 					<div class="box">
-						<the-grid cell-height="1" cell-width="1" col-count="480" row-count="270" cell-margin="0">
-							<div style="z-index: 2;"id="selectboxp1" col="0" row="0" class="tile" height="270" width="480"></div>
+						<the-grid cell-height="1" cell-width="1" col-count="338" row-count="270" cell-margin="0">
+							<div style="z-index: 2;"id="selectboxp1" col="0" row="0" class="tile" height="270" width="338"></div>
 						</the-grid>
-						<img class="screenshot" style="z-index: 0; opacity: 1;" id="screenshot1" width="480" height="270" src="../graphics/img/streamSnaps/0.jpg">
+						<img class="screenshot" style="z-index: 0; opacity: 1;" id="screenshot1" on-load="_imageLoad" width="338" height="270" src="../graphics/img/streamSnaps/0.jpg">
 					</div>
 				</div>
 				<div id="buttons" class="layout horizontal">
@@ -121,87 +118,6 @@
 						<div align=center>Screenshot Stream</div>
 					</paper-button>	
 					<paper-button id="reset1" class="flex" on-tap="_reset1" raised>
-						<div align=center>Reset Default</div>
-					</paper-button>	
-				</div>
-			</div>
-			<div id="Player2">
-				<div id="values" class="layout horizontal">	
-					<div id="inputs" class="layout vertical">	
-						<paper-input label="Top2" id="Top2" type="number" value="{{p2T}}" on-value-changed="_confirmTop2"></paper-input>
-						<paper-input label="Left2" id="Left2" type="number" value="{{p2L}}" on-value-changed="_confirmLeft2"></paper-input>
-						<paper-input label="Width2" id="Width2" type="number" value="{{p2W}}" on-value-changed="_recalcHeight2"></paper-input>
-						<paper-input label="Height2" id="Height2" type="number" value="{{p2H}}" on-value-changed="_recalcWidth2"></paper-input>
-					</div>	
-					<div class="box">
-						<the-grid cell-height="1" cell-width="1" col-count="480" row-count="270" cell-margin="0">
-							<div style="z-index: 2;"id="selectboxp2" col="0" row="0" class="tile" height="270" width="480"></div>
-						</the-grid>
-						<img class="screenshot" style="z-index: 0; opacity: 1;" id="screenshot2" width="480" height="270" src="../graphics/img/streamSnaps/1.jpg">
-					</div>
-				</div>
-				<div id="buttons" class="layout horizontal">
-					<paper-button id="submit2" class="flex" on-tap="_submit2" raised>
-						<div align=left>Submit Changes</div>
-					</paper-button>
-					<paper-button id="screentake2" class="flex" on-tap="_screenstream2" raised>
-						<div align=center>Screenshot Stream</div>
-					</paper-button>	
-					<paper-button id="reset2" class="flex" on-tap="_reset2" raised>
-						<div align=center>Reset Default</div>
-					</paper-button>	
-				</div>
-			</div>
-			<div id="Player3">
-				<div id="values" class="layout horizontal">	
-					<div id="inputs" class="layout vertical">	
-						<paper-input label="Top3" id="Top3" type="number" value="{{p3T}}" on-value-changed="_confirmTop3"></paper-input>
-						<paper-input label="Left3" id="Left3" type="number" value="{{p3L}}" on-value-changed="_confirmLeft3"></paper-input>
-						<paper-input label="Width3" id="Width3" type="number" value="{{p3W}}" on-value-changed="_recalcHeight3"></paper-input>
-						<paper-input label="Height3" id="Height3" type="number" value="{{p3H}}" on-value-changed="_recalcWidth3"></paper-input>
-					</div>	
-					<div class="box">
-						<the-grid cell-height="1" cell-width="1" col-count="480" row-count="270" cell-margin="0">
-							<div style="z-index: 2;"id="selectboxp3" col="0" row="0" class="tile" height="270" width="480"></div>
-						</the-grid>
-						<img class="screenshot" style="z-index: 0; opacity: 1;" id="screenshot3" width="480" height="270" src="../graphics/img/streamSnaps/2.jpg">
-					</div>
-				</div>
-				<div id="buttons" class="layout horizontal">
-					<paper-button id="submit3" class="flex" on-tap="_submit3" raised>
-						<div align=left>Submit Changes</div>
-					</paper-button>
-					<paper-button id="screentake3" class="flex" on-tap="_screenstream3" raised>
-						<div align=center>Screenshot Stream</div>
-					</paper-button>	
-					<paper-button id="reset3" class="flex" on-tap="_reset3" raised>
-						<div align=center>Reset Default</div>
-					</paper-button>	
-				</div>
-			</div>
-			<div id="Player4">
-				<div id="values" class="layout horizontal">	
-					<div id="inputs" class="layout vertical">	
-						<paper-input label="Top4" id="Top4" type="number" value="{{p4T}}" on-value-changed="_confirmTop4"></paper-input>
-						<paper-input label="Left4" id="Left4" type="number" value="{{p4L}}" on-value-changed="_confirmLeft4"></paper-input>
-						<paper-input label="Width4" id="Width4" type="number" value="{{p4W}}" on-value-changed="_recalcHeight4"></paper-input>
-						<paper-input label="Height4" id="Height4" type="number" value="{{p4H}}" on-value-changed="_recalcWidth4"></paper-input>
-					</div>	
-					<div class="box">
-						<the-grid cell-height="1" cell-width="1" col-count="480" row-count="270" cell-margin="0">
-							<div style="z-index: 2;"id="selectboxp4" col="0" row="0" class="tile" height="270" width="480"></div>
-						</the-grid>
-						<img class="screenshot" style="z-index: 0; opacity: 1;" id="screenshot4" width="480" height="270" src="../graphics/img/streamSnaps/3.jpg">
-					</div>
-				</div>
-				<div id="buttons" class="layout horizontal">
-					<paper-button id="submit4" class="flex" on-tap="_submit4" raised>
-						<div align=left>Submit Changes</div>
-					</paper-button>
-					<paper-button id="screentake4" class="flex" on-tap="_screenstream4" raised>
-						<div align=center>Screenshot Stream</div>
-					</paper-button>	
-					<paper-button id="reset4" class="flex" on-tap="_reset4" raised>
 						<div align=center>Reset Default</div>
 					</paper-button>	
 				</div>

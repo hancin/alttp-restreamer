@@ -186,13 +186,29 @@
 	}
 	*/
 
-	function positionPlayer(iFrame, playerID)
+	function positionPlayer(iFrame, playerID, ratioX, ratioY, ratio)
 	{
 		iFrame.style.position = "relative";
 
+		let left = twitchPlayer.value.streamALeft;
+		let top = twitchPlayer.value.streamATop;
+		top = top * ratio * ratioY;
+		left = left * ratio * ratioX;
+		console.log({ratioX,ratioY,ratio});
+
+		if(ratioX == 1 && ratioY != 1){
+			iFrame.style.transform = "scaleY("+ratioY+")";
+		}else if(ratioY == 1 && ratioX != 1){
+			iFrame.style.transform = "scaleX("+ratioX+")";
+		}else if(ratioX != 1 && ratioY != 1){
+			iFrame.style.transform = "scaleX("+ratioX+")"+", scaleY("+ratioY+")";
+		}
+
+
+
 		if (playerID == 0) {
-			iFrame.style.left = twitchPlayer.value.streamALeft.toString() + "px";
-			iFrame.style.top = twitchPlayer.value.streamATop.toString() + "px";
+			iFrame.style.left = (-left).toString() + "px";
+			iFrame.style.top = (-top).toString() + "px";
 		}
 		else if (playerID == 1) {
 			iFrame.style.left = twitchPlayer.value.streamBLeft.toString() + "px";
@@ -497,13 +513,26 @@
 	        }
 	    });
 
+		var optionsStreamAExtra = {
+			ratioX: (558 / (1280 - twitchPlayer.value.streamAWidth - twitchPlayer.value.streamALeft)),
+			ratioY: (446 / (720 - twitchPlayer.value.streamAHeight - twitchPlayer.value.streamATop)),
+		}
+		var ratio = Math.max(optionsStreamAExtra.ratioX, optionsStreamAExtra.ratioY);
+
+		optionsStreamAExtra.ratioX = optionsStreamAExtra.ratioX / ratio;
+		optionsStreamAExtra.ratioY = optionsStreamAExtra.ratioY / ratio;
+
+		console.log(optionsStreamAExtra);
+
 	    var optionsStreamA =
         {
-			width: twitchPlayer.value.streamAWidth,
-			height: twitchPlayer.value.streamAHeight,
+			width: 1280 * ratio,
+			height: 720 * ratio,
             channel: currentPlayerInfo.streamAURL,
             controls: false,
-        };
+		};
+		
+		console.log(optionsStreamA);
 
 	    var optionsStreamB =
         {
@@ -545,7 +574,7 @@
 	            doesPlayerAExist = true;
 	            aPlayerContainer = a.parentNode;
 
-	            positionPlayer(a.children[0], 0);
+	            positionPlayer(a.children[0], 0, optionsStreamAExtra.ratioX, optionsStreamAExtra.ratioY, ratio);
 
 	            playerA.addEventListener(Twitch.Player.READY, function () {
 	                console.log("PLAYER A READY!!");

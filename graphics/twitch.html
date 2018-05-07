@@ -4,8 +4,13 @@
 	<meta charset="UTF-8">
 	<title>ALTTP Trackers</title>
 	<link rel="import" href="../shared/imports/gsap.html">
-	<script src= "http://player.twitch.tv/js/embed/v1.js"></script>
 	<link rel="import" href="elements/molecules/gdq-runner-nameplate/gdq-runner-nameplate.html">
+	<link rel="import" href="elements/twitch-player/twitch-player.html">
+	<style type="text/css">
+	iframe{
+		transform-origin: left top;
+	}
+	</style>
 </head>
 <body>
 	<div id="container">
@@ -14,22 +19,12 @@
 
 	<dom-module id="layout-twitch">
 		<template>
-            <style type="text/css">
-                iframe{
-                    display: block;
-                    width:1050px;
-                    height: 350px;
-
-                    margin-bottom:10px;
-                    border: 1px solid pink;
-                }
-			</style>
 			
+			<twitch-player></twitch-player>
 		</template>
 
-		<div id="twitch-player">
-				
-		</div>
+		
+		<div style="width: 558px; height: 446px; overflow: hidden; position: absolute; z-index: -20"><div id="twitch-streamA"></div></div>
 		<script>
 
 			Polymer({
@@ -41,13 +36,6 @@
 				},
 
 				ready() {
-					var options = {
-						width: 1280,
-						height: 720,
-						channel: "drlupo"
-					};
-					var player = new Twitch.Player("twitch-player", options);
-					player.setVolume(0.5);
 				}
 			});
 		</script>

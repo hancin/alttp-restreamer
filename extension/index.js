@@ -2,9 +2,14 @@
 
 // Packages
 const request = require('request-promise').defaults({jar: true}); // <= Automatically saves and re-uses cookies.
-
+const path = require('path');
 // Ours
 const nodecgApiContext = require('./util/nodecg-api-context');
+
+
+const ffmpeg_path = path.resolve(process.env.NODECG_ROOT, `vendor/ffmpeg/ffmpeg.exe`);
+console.log(ffmpeg_path);
+process.env.FFMPEG_PATH = ffmpeg_path;
 
 module.exports = function (nodecg) {
 	// Store a reference to this nodecg API context in a place where other libs can easily access it.
@@ -19,5 +24,7 @@ module.exports = function (nodecg) {
 	const obs = require('./obs');
 	require('./countdown');
 
-	console.log(obs.updateRestream());
+
+	require('./twitch-module');
+
 };
