@@ -15,7 +15,7 @@ cache:
 install:
   - ps: Install-Product node 9 x64
   - git reset --hard HEAD
-  - npm install -g bower polymer-cli pkg
+  - npm install -g bower pkg
   - npm install
   - bower install
 
