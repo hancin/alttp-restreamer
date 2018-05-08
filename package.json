@@ -106,15 +106,6 @@
         "width": 1280,
         "height": 720
       }
-    ],
-    "assetCategories": [
-      {
-        "name": "thumbnails",
-        "title": "Thumbnails",
-        "allowedTypes": [
-          "png"
-        ]
-      }
     ]
   },
   "repository": {
