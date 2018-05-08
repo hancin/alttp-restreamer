@@ -8,7 +8,7 @@ const nodecgApiContext = require('./util/nodecg-api-context');
 
 
 const ffmpeg_path = path.resolve(process.env.NODECG_ROOT, `vendor/ffmpeg/ffmpeg.exe`);
-console.log(ffmpeg_path);
+
 process.env.FFMPEG_PATH = ffmpeg_path;
 
 module.exports = function (nodecg) {

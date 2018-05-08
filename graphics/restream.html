@@ -5,9 +5,7 @@
 	<title>ALTTP Graphics</title>
 	<link href="https://fonts.googleapis.com/css?family=Teko:600&amp;subset=latin-ext" rel="stylesheet">
 	<link rel="stylesheet" href="style/layout.css">
-	<link rel="import" href="../shared/imports/gsap.html">
 
-	<link rel="import" href="elements/molecules/gdq-runner-nameplate/gdq-runner-nameplate.html">
 	<link rel="import" href="elements/molecules/alttp-tracker/alttp-tracker.html">
 </head>
 <body>
@@ -143,14 +141,5 @@
 			});
 		</script>
 	</dom-module>
-
-	<script>
-		window.addEventListener('DOMContentLoaded', () => {
-			TweenLite.to(document.body, 0.333, {
-				opacity: 1,
-				ease: Power1.easeOut
-			});
-		});
-	</script>
 </body>
 </html>
