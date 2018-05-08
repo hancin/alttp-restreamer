@@ -13,6 +13,7 @@
 					value: nodecg.bundleConfig.tracker.url
 				},
 				itemTrackers: {type:Array, value: []},
+				password: Number,
 				index: Number
 			};
 		}

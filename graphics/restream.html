@@ -30,7 +30,8 @@
 					</div>
 					<alttp-tracker 
 						item-trackers="[[itemTrackers]]" 
-						index="[[index]]"></alttp-tracker>
+						index="[[index]]"
+						password="[[password]]"></alttp-tracker>
 					<div class="runnerStream">
 					</div>
 					<div class="runnerExtra">
@@ -94,8 +95,11 @@
 					});
 
 					currentRunExtra.on('change', newVal => {
+						if(!newVal)
+							return;
 						this.round = newVal.round;
 						this.standings = newVal.standings;
+						this.password = newVal.password;
 						this.set('itemTrackers', newVal.itemTrackers.slice(0));
 					});
 

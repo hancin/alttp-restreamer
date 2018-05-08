@@ -15,7 +15,7 @@
 			return 'alttp-tracker';
 		}
 
-		static get properties(){
+		static get properties() {
 			return {
 				'itemTrackers': Array,
 				'baseUrl': String,
@@ -25,7 +25,7 @@
 				'srtvPage': String,
 				'standings': String,
 				'round': String,
-				'runName': String, 
+				'runName': String,
 				'selectedInfoTab': {
 					"type": String,
 					"value": "0"
@@ -46,12 +46,12 @@
 			});
 
 
-			currentRunExtraRep.on('change', newVal =>{
+			currentRunExtraRep.on('change', newVal => {
 
-				if(!newVal)
+				if (!newVal)
 					return;
 				/* I think? this is causing on-input to not work??*/
-				this.itemTrackers = newVal.itemTrackers.map(x=>Object.assign({}, x));
+				this.itemTrackers = newVal.itemTrackers.map(x => Object.assign({}, x));
 				this.twitchChannel = newVal.twitchChannel;
 				this.mixerChannel = newVal.mixerChannel;
 				this.password = newVal.password;
@@ -67,25 +67,28 @@
 			currentRun.on('change', newVal => {
 				this.runName = newVal.name;
 			});
-			
+
 		}
 
 		makeID() {
 			var text = "";
 			var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
-		  
+
 			for (var i = 0; i < 12; i++)
-			  text += possible.charAt(Math.floor(Math.random() * possible.length));
-		  
+				text += possible.charAt(Math.floor(Math.random() * possible.length));
+
 			return text;
-		  }
-		  
+		}
 
 
-		saveChanges(){
+		randomIntFromInterval(min, max) {
+			return Math.floor(Math.random() * (max - min + 1) + min);
+		}
+
+		saveChanges() {
 
 			nodecg.sendMessage('modifyRunExtra', {
-				itemTrackers: this.itemTrackers.map(x=>Object.assign({}, x)),
+				itemTrackers: this.itemTrackers.map(x => Object.assign({}, x)),
 				twitchChannel: this.twitchChannel,
 				mixerChannel: this.mixerChannel,
 				password: this.password,
@@ -98,18 +101,19 @@
 			});
 		}
 
-		generateItemTrackers(){
-			for(var i =0; i<this.itemTrackers.length; i++){
-				this.set('itemTrackers.'+i+'.url', this.makeID());
+		generateItemTrackers() {
+			this.password = this.randomIntFromInterval(1, 9999).toString().padStart(4, "0");
+			for (var i = 0; i < this.itemTrackers.length; i++) {
+				this.set('itemTrackers.' + i + '.url', this.makeID());
 			}
 
 			this._updateGenerateButton();
 		}
 
-		_updateGenerateButton(){
-			if(!this.itemTrackers);
-				return true;
-			this.$.generateTrackers.disabled = this.itemTrackers.find(itemThing=>{
+		_updateGenerateButton() {
+			if (!this.itemTrackers);
+			return true;
+			this.$.generateTrackers.disabled = this.itemTrackers.find(itemThing => {
 				return itemThing.url !== "";
 			}) !== undefined;
 		}
