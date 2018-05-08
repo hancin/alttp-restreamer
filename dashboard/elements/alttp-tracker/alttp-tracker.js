@@ -47,6 +47,9 @@
 
 
 			currentRunExtraRep.on('change', newVal =>{
+
+				if(!newVal)
+					return;
 				/* I think? this is causing on-input to not work??*/
 				this.itemTrackers = newVal.itemTrackers.map(x=>Object.assign({}, x));
 				this.twitchChannel = newVal.twitchChannel;

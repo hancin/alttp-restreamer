@@ -1,0 +1,24 @@
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<dom-module id="alttp-twitchviewer">
+	<template>
+		<style>
+			:host {
+				padding: 0;
+				margin: 0;
+				@apply --layout-vertical;
+				overflow: hidden;
+			}
+			iframe{
+				width:100vw;
+				min-height: 720px;
+				height: 100vh;
+			}
+		</style>
+
+		<iframe src="[[_mapToUrl(runners)]]" width="1280"></iframe>
+
+	</template>
+
+	<script src="alttp-twitchviewer.js"></script>
+</dom-module>
