@@ -27,10 +27,9 @@ build_script:
   - cd ..
   - git clone https://github.com/nodecg/nodecg.git
   - cd nodecg
-  - git checkout pkg
+  - mkdir instrumented
   - npm i && bower install
   - 'move %APPVEYOR_BUILD_FOLDER% bundles\%APPVEYOR_PROJECT_SLUG%'
-  - mkdir instrumented
   - pkg . --targets node9-win-x64 --public
   - if not exist cfg mkdir cfg
   - 'echo {"logging": {"console": {"level": "info"},"file": {"enabled": true,"level": "debug"},"replicants": false}} >> cfg/nodecg.json'
