@@ -1,4 +1,5 @@
 'use strict';
+const { exec } = require('child_process');
 
 // Packages
 const request = require('request-promise').defaults({jar: true}); // <= Automatically saves and re-uses cookies.
@@ -27,4 +28,16 @@ module.exports = function (nodecg) {
 
 	require('./twitch-module');
 
+	console.log("============================");
+	console.log("Welcome to ALTTP Restreamer!");
+	console.log("============================");
+	console.log(" ");
+	console.log("Please leave this window open while you're using the program.");
+	console.log("To access the application, please type http://localhost:9090/ in your browser.");
+	console.log(" ");
+	console.log("============================");
+	console.log("If you have any questions, do contact @hancin on discord!");
+	console.log("============================");
+
+	exec("start http://localhost:9090");
 };
