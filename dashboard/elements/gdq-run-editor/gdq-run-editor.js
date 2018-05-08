@@ -1,3 +1,4 @@
+const currentOperator = nodecg.Replicant('currentOperator');
 class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 	static get is() {
 		return 'gdq-run-editor';
@@ -44,20 +45,43 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 			return undefined;
 		});
 		this.originalValues = run.originalValues;
+
+		this.notes = run.notes;
 		
-		const fixedNames = run.runners.map(x=>x.name.replace(" ","")).join(" ");
-		this.uglyCopyPasta = "@restream_moderator Setting up for stream now.  Could I get the following commands run on "+run.notes.split("\r\n")[0]+" when someone gets a chance? \r\n" +
-	    "!editr "+run.runners.map(x=>x.stream).join(" ")+"\r\n" +
-		"!editc "+run.commentators.map(x=>x.stream).join(" ")+" "+run.trackers.map(x=>x.stream).join(" ")+" "+nodecg.bundleConfig.operatorTwitch+" \r\n"+
-		"!springtitle "+fixedNames;
+		this.updateCopyPastes();
 
-		this.uglyCopyPasta2 = "!redit "+run.runners.map(x=>x.stream).join(" ")+"\r\n" +
-		"!cedit "+run.commentators.map(x=>x.stream).join(" ")+" "+run.trackers.map(x=>x.stream).join(" ")+" "+nodecg.bundleConfig.operatorTwitch+" \r\n"+
-		"!retitle "+fixedNames;
-
-
-		this.restreamRacePasta = "$RestreamRace " + run.pk; 
 		this.pk = run.pk;
+	}
+
+	ready(){
+		super.ready();
+
+		currentOperator.on('change', newVal => {
+			if(!newVal)
+				return;
+
+			this.operatorTwitch = newVal.stream;
+			this.updateCopyPastes();
+		});
+
+	}
+
+	updateCopyPastes(){
+		const sanitizedRunnerNames = (!this.runners) ? "" : this.runners.map(x=>x.name.replace(" ","")).join(" ");
+		const commentatorTwitches = (!this.commentators) ? "" : this.commentators.map(x=>x.stream).join(" ");
+		const runnerTwitches = (!this.runners) ? "" : this.runners.map(x=>x.stream).join(" ");
+		const trackerTwitches = (!this.trackers) ? "" : this.trackers.map(x=>x.stream).join(" ");
+		const channel = (!this.notes) ? "" : this.notes.split("\r\n")[0];
+		
+		this.restreamRacePasta = `$RestreamRace ${this.pk}`; 
+
+		this.uglyCopyPasta = `@restream_moderator Setting up for stream now.  Could I get the following commands run on ${channel} when someone gets a chance?
+!editr ${sanitizedRunnerNames}
+!editc ${commentatorTwitches} ${trackerTwitches} ${this.operatorTwitch}
+!springtitle ${sanitizedRunnerNames}`;
+		this.uglyCopyPasta2 = `!redit ${sanitizedRunnerNames}
+!cedit ${commentatorTwitches} ${trackerTwitches} ${this.operatorTwitch}
+!retitle ${sanitizedRunnerNames}`;
 	}
 
 

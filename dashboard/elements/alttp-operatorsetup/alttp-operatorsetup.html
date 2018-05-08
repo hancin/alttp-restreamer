@@ -1,0 +1,93 @@
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/nodecg-toast/nodecg-toast.html">
+<link rel="import" href="../../../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
+
+<dom-module id="alttp-operatorsetup">
+	<template>
+		<style>
+			:host {
+				padding: 22px 24px;
+				@apply --layout-vertical;
+			}
+
+			#runs {
+				@apply --layout-horizontal;
+			}
+
+			#runs-spacer {
+				width: 24px;
+			}
+
+			#edit-ctrls {
+				@apply --layout-horizontal;
+				margin-top: 32px;
+			}
+
+			#previous,
+			#next {
+				--paper-button: {
+					background-color: #645BA6;
+					color: white;
+				};
+			}
+
+			#previous,
+			#editCurrent {
+				margin-left: 0;
+			}
+
+			#next,
+			#editNext {
+				margin-right: 0;
+			}
+
+			#save {
+				--paper-button: {
+					background-color: #A50074;
+					color: white;
+				};
+				@apply --layout-flex-3;
+			}
+
+			#fetchLatestSchedule {
+				@apply --layout-flex-6;
+			}
+
+			paper-button, paper-dropdown-menu {
+				@apply --layout-horizontal;
+				width: 400px;
+			}
+
+			paper-dropdown-menu, paper-listbox {
+				height: 200px;
+			}
+
+		</style>
+
+		<nodecg-toast id="toast"></nodecg-toast>
+
+		<div id="runs">
+			<paper-dropdown-menu label="Current operator">
+				<paper-listbox slot="dropdown-content" selected="{{operatorName}}" attr-for-selected="value" >
+					<template is="dom-repeat" items="[[runners]]" as="runner">
+							<paper-item value="[[runner.name]]">[[runner.name]]</paper-item>
+					</template>
+				</paper-listbox>
+			</paper-dropdown-menu>
+		</div>
+
+		<div id="edit-ctrls">
+			<paper-button id="save" raised on-tap="saveSettings">Save settings</paper-button>
+		</div>
+
+	</template>
+
+	<script src="alttp-operatorsetup.js"></script>
+</dom-module>
