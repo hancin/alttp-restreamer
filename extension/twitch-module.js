@@ -67,33 +67,7 @@ twitchPlayer.value =
 };
 
 function _askReloadLayoutConfig() {
-	const layoutFilePath = path.resolve(process.env.NODECG_ROOT, 'twitchPlayerSetup.json');
-	const layoutFileExists = fs.existsSync(layoutFilePath);
-
-	if (layoutFileExists) {
-		const rawLayoutFile = fs.readFileSync(layoutFilePath, 'utf8');
-
-		let layoutFile;
-		try {
-			layoutFile = JSON.parse(rawLayoutFile);
-		} catch (e) {
-			throw new Error(`Failed to parse ${layoutFilePath}. Please ensure that it contains only valid JSON.`);
-		}
-
-		if (layoutFile) {
-			twitchPlayer.value.layoutSetup = layoutFile;
-
-			log.info("Twitch Player Layout file parsed/updated!");
-
-			if (initialLayoutFileLoaded)
-				_setPlayerDefaults(nextGame.value);
-
-			initialLayoutFileLoaded = true;
-		}
-	}
-	else {
-		throw new Error("Twitch Player Layout file could not be found!");
-	}
+	_setPlayerDefaults(nextGame.value);
 }
 
 _askReloadLayoutConfig();
