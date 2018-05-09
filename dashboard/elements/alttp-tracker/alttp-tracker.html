@@ -118,6 +118,11 @@
 			pre{
 				overflow-x: scroll;
 			}
+			#Commands pre{
+				overflow:hidden;
+				background-color:#efefef;
+				cursor: pointer;
+			}
 
 		</style>
 
@@ -181,11 +186,30 @@
 			<!--<paper-button id="editCurrent2" raised on-tap="editCurrent">Update OBS</paper-button>-->
 		</div>
 		<paper-tabs selected="{{selectedInfoTab}}" no-slide>
+			<paper-tab>Commands</paper-tab>	
 			<paper-tab>Trackers</paper-tab>
 			<paper-tab>Commentators</paper-tab>	
 			<paper-tab>Runners</paper-tab>	
 		</paper-tabs>
 		<iron-pages selected="{{selectedInfoTab}}">
+		<div id="Commands"><b>Start race setup: (#restreamer)</b>
+<pre onclick="copy">$RestreamRace [[runPk]]</pre>
+
+<b>Twitch commands for restreamers</b>
+<pre on-tap="copyTextToClipboard">!redit [[textRunnerStreams]]</pre>
+<pre on-tap="copyTextToClipboard">!cedit [[textCommentatorStreams]] [[textTrackerStreams]] [[textOperatorStream]]</pre>
+<pre on-tap="copyTextToClipboard">!retitle [[textRunnerNames]]</pre>
+
+<b>Twitch commands for moderators</b>
+<pre>@restream_moderator Setting up for stream now.  
+Could I please get these commands run on twitch.tv/[[twitchChannel]]?
+!editr [[textRunnerStreams]]
+!editc [[textCommentatorStreams]] [[textTrackerStreams]] [[textOperatorStream]]
+!springtitle [[textRunnerNames]]</pre>
+
+<b>Start the race: (#restreamer)</b>
+<pre>$StartRace [[_srtvGuid(srtvPage)]]</pre>
+		</div>
 		<pre id="Trackers">Hi there, here is the information for the upcoming race!
 
 [[srtvPage]]

@@ -47,43 +47,13 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 		this.originalValues = run.originalValues;
 
 		this.notes = run.notes;
-		
-		this.updateCopyPastes();
-
 		this.pk = run.pk;
+		
 	}
 
 	ready(){
 		super.ready();
-
-		currentOperator.on('change', newVal => {
-			if(!newVal)
-				return;
-
-			this.operatorTwitch = newVal.stream;
-			this.updateCopyPastes();
-		});
-
 	}
-
-	updateCopyPastes(){
-		const sanitizedRunnerNames = (!this.runners) ? "" : this.runners.map(x=>x.name.replace(" ","")).join(" ");
-		const commentatorTwitches = (!this.commentators) ? "" : this.commentators.map(x=>x.stream).join(" ");
-		const runnerTwitches = (!this.runners) ? "" : this.runners.map(x=>x.stream).join(" ");
-		const trackerTwitches = (!this.trackers) ? "" : this.trackers.map(x=>x.stream).join(" ");
-		const channel = (!this.notes) ? "" : this.notes.split("\r\n")[0];
-		
-		this.restreamRacePasta = `$RestreamRace ${this.pk}`; 
-
-		this.uglyCopyPasta = `@restream_moderator Setting up for stream now.  Could I get the following commands run on ${channel} when someone gets a chance?
-!editr ${runnerTwitches}
-!editc ${commentatorTwitches} ${trackerTwitches} ${this.operatorTwitch}
-!springtitle ${sanitizedRunnerNames}`;
-		this.uglyCopyPasta2 = `!redit ${runnerTwitches}
-!cedit ${commentatorTwitches} ${trackerTwitches} ${this.operatorTwitch}
-!retitle ${sanitizedRunnerNames}`;
-	}
-
 
 	helperRetrieveValue(source){
 		const runners = [];

@@ -2,6 +2,7 @@
 	'use strict';
 
 	const currentRun = nodecg.Replicant('currentRun');
+	const currentOperator = nodecg.Replicant('currentOperator');
 	const schedule = nodecg.Replicant('schedule');
 	const currentRunExtraRep = nodecg.Replicant('currentRunExtra');
 
@@ -42,12 +43,15 @@
 				if (!newVal) {
 					return;
 				}
-				this._updateGenerateButton();
+				this.updateRunInfo(newVal);
 			});
-
-
+			currentOperator.on('change', newVal => {
+				if (!newVal) {
+					return;
+				}
+				this.textOperatorStream = newVal.stream;
+			});
 			currentRunExtraRep.on('change', newVal => {
-
 				if (!newVal)
 					return;
 				/* I think? this is causing on-input to not work??*/
@@ -64,10 +68,28 @@
 				this._updateGenerateButton();
 			});
 
-			currentRun.on('change', newVal => {
-				this.runName = newVal.name;
-			});
 
+		}
+
+		updateRunInfo(run) {
+			this.runName = run.name;
+			this.textRunnerNames = (!run.runners) ? "" : run.runners.map(x=>x.name.replace(" ","")).join(" ");
+			this.textCommentatorStreams = (!run.commentators) ? "" : run.commentators.map(x=>x.stream).join(" ");
+			this.textRunnerStreams = (!run.runners) ? "" : run.runners.map(x=>x.stream).join(" ");
+			this.textTrackerStreams = (!run.trackers) ? "" : run.trackers.map(x=>x.stream).join(" ");
+			this.runPk = run.pk;
+
+			this._updateGenerateButton();
+		}
+
+		copyTextToClipboard(e){
+			
+		}
+
+		_srtvGuid(srtvUrl){
+			if(!srtvUrl)
+				return "";
+			return srtvUrl.replace("https://speedracing.tv/races/", "");
 		}
 
 		makeID() {
