@@ -12,6 +12,30 @@ const ffmpeg_path = path.resolve(process.env.NODECG_ROOT, `vendor/ffmpeg/ffmpeg.
 
 process.env.FFMPEG_PATH = ffmpeg_path;
 
+
+function waitForNonEmptySchedule(scheduleRep){
+	const hasStarted = false;
+	scheduleRep.on('change', newVal => {
+		if(!newVal || newVal.length == 0){
+			console.log(" ");
+			console.log("=========================================================================");
+			console.log("[SCHEDULE] Waiting for update to complete, this can take a few minutes...");
+			console.log("NOTE: We'll open after the schedule is loaded.");
+			console.log("=========================================================================");
+			console.log(" ");
+			return;
+		}
+
+		console.log(" ");
+		console.log("=========================================================================");
+		console.log("[SCHEDULE] Schedule loaded, opening browser...");
+		console.log("=========================================================================");
+		console.log(" ");
+		exec("start http://localhost:9090");
+		return;
+	});
+}
+
 module.exports = function (nodecg) {
 	// Store a reference to this nodecg API context in a place where other libs can easily access it.
 	// This must be done before any other files are `require`d.
@@ -39,5 +63,7 @@ module.exports = function (nodecg) {
 	console.log("If you have any questions, do contact @hancin on discord!");
 	console.log("============================");
 
-	exec("start http://localhost:9090");
+	const scheduleRep = nodecg.Replicant("schedule");
+	waitForNonEmptySchedule(scheduleRep);
+
 };
