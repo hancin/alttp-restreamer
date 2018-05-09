@@ -40,7 +40,7 @@
 			this.baseUrl = nodecg.bundleConfig.tracker.url;
 
 			currentRun.on('change', newVal => {
-				if (!newVal) {
+				if (!newVal || !newVal.runners) {
 					return;
 				}
 				this.updateRunInfo(newVal);
@@ -52,7 +52,7 @@
 				this.textOperatorStream = newVal.stream;
 			});
 			currentRunExtraRep.on('change', newVal => {
-				if (!newVal)
+				if (!newVal || !newVal.itemTrackers)
 					return;
 				/* I think? this is causing on-input to not work??*/
 				this.itemTrackers = newVal.itemTrackers.map(x => Object.assign({}, x));
@@ -75,8 +75,11 @@
 			this.runName = run.name;
 			this.textRunnerNames = (!run.runners) ? "" : run.runners.map(x=>x.name.replace(" ","")).join(" ");
 			this.textCommentatorStreams = (!run.commentators) ? "" : run.commentators.map(x=>x.stream).join(" ");
+			this.textCommentatorDiscords = (!run.commentators) ? "" : run.commentators.map(x=>x.discord).join(", ");
 			this.textRunnerStreams = (!run.runners) ? "" : run.runners.map(x=>x.stream).join(" ");
+			this.textRunnerDiscords = (!run.runners) ? "" : run.runners.map(x=>x.discord).join(", ");
 			this.textTrackerStreams = (!run.trackers) ? "" : run.trackers.map(x=>x.stream).join(" ");
+			this.textTrackerDiscords = (!run.trackers) ? "" : run.trackers.map(x=>x.discord).join(", ");
 			this.runPk = run.pk;
 
 			this._updateGenerateButton();
