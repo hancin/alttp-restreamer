@@ -35,6 +35,9 @@
 			super.ready();
 			stopwatch.on('change', this.stopwatchChanged.bind(this));
 			currentRun.on('change', newVal => {
+				if(!newVal || !newVal.runners){
+					return;
+				}
 				const runners = newVal.runners.slice(0);
 				runners.length = 4;
 				for (let i = 0; i < 4; i++) {
