@@ -114,14 +114,12 @@
 				@apply --layout-horizontal;
 				@apply --layout-center-center;
 			}
-
-			pre{
-				overflow-x: scroll;
+			iron-pages div {
+				padding-top:1em;
 			}
-			#Commands pre{
-				overflow:hidden;
+			iron-pages div pre{
+				overflow: auto;
 				background-color:#efefef;
-				cursor: pointer;
 			}
 
 		</style>
@@ -185,6 +183,9 @@
 			<paper-button id="saveChanges" raised on-tap="saveChanges">Save Changes</paper-button>
 			<!--<paper-button id="editCurrent2" raised on-tap="editCurrent">Update OBS</paper-button>-->
 		</div>
+		<template is="dom-if" if="{{!textOperatorStream}}">
+			<em style="color: red;display:block;">You haven't entered your name! Please go to the SETUP tab and select your name.</em>
+		</template>
 		<paper-tabs selected="{{selectedInfoTab}}" no-slide>
 			<paper-tab>Commands</paper-tab>	
 			<paper-tab>Trackers</paper-tab>
@@ -192,13 +193,14 @@
 			<paper-tab>Runners</paper-tab>	
 		</paper-tabs>
 		<iron-pages selected="{{selectedInfoTab}}">
-		<div id="Commands"><b>Start race setup: (#restreamer)</b>
-<pre onclick="copy">$RestreamRace [[runPk]]</pre>
+		<div id="Commands">
+		<b>Start race setup: (#restreamer)</b>
+<pre>$RestreamRace [[runPk]]</pre>
 
 <b>Twitch commands for restreamers</b>
-<pre on-tap="copyTextToClipboard">!redit [[textRunnerStreams]]</pre>
-<pre on-tap="copyTextToClipboard">!cedit [[textCommentatorStreams]] [[textTrackerStreams]] [[textOperatorStream]]</pre>
-<pre on-tap="copyTextToClipboard">!retitle [[textRunnerNames]]</pre>
+<pre>!redit [[textRunnerStreams]]</pre>
+<pre>!cedit [[textCommentatorStreams]] [[textTrackerStreams]] [[textOperatorStream]]</pre>
+<pre>!retitle [[textRunnerNames]]</pre>
 
 <b>Twitch commands for moderators</b>
 <pre>@restream_moderator Setting up for stream now.  

@@ -30,10 +30,14 @@
 				'selectedInfoTab': {
 					"type": String,
 					"value": "0"
+				},
+				'textOperatorStream': {
+					"type": String,
+					"value": ""
 				}
 			}
 		}
-
+		
 		ready() {
 			super.ready();
 
