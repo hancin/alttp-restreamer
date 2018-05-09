@@ -14,8 +14,10 @@ process.env.FFMPEG_PATH = ffmpeg_path;
 
 
 function waitForNonEmptySchedule(scheduleRep){
-	const hasStarted = false;
+	let hasStarted = false;
 	scheduleRep.on('change', newVal => {
+		if(hasStarted)
+			return;
 		if(!newVal || newVal.length == 0){
 			console.log(" ");
 			console.log("=========================================================================");
@@ -26,6 +28,7 @@ function waitForNonEmptySchedule(scheduleRep){
 			return;
 		}
 
+		hasStarted = true;
 		console.log(" ");
 		console.log("=========================================================================");
 		console.log("[SCHEDULE] Schedule loaded, opening browser...");
