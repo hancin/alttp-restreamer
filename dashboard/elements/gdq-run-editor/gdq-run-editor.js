@@ -76,10 +76,10 @@ class GdqRunEditor extends Polymer.MutableData(Polymer.Element) {
 		this.restreamRacePasta = `$RestreamRace ${this.pk}`; 
 
 		this.uglyCopyPasta = `@restream_moderator Setting up for stream now.  Could I get the following commands run on ${channel} when someone gets a chance?
-!editr ${sanitizedRunnerNames}
+!editr ${runnerTwitches}
 !editc ${commentatorTwitches} ${trackerTwitches} ${this.operatorTwitch}
 !springtitle ${sanitizedRunnerNames}`;
-		this.uglyCopyPasta2 = `!redit ${sanitizedRunnerNames}
+		this.uglyCopyPasta2 = `!redit ${runnerTwitches}
 !cedit ${commentatorTwitches} ${trackerTwitches} ${this.operatorTwitch}
 !retitle ${sanitizedRunnerNames}`;
 	}
