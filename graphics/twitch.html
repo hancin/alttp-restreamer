@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>ALTTP Trackers</title>
-	<link rel="import" href="../shared/imports/gsap.html">
-	<link rel="import" href="elements/molecules/gdq-runner-nameplate/gdq-runner-nameplate.html">
-	<link rel="import" href="elements/twitch-player/twitch-player.html">
+	<title>ALTTP Twitch Tests</title>
+	<link rel="import" href="elements/molecules/twitch-player/twitch-player.html">
 	<style type="text/css">
 	iframe{
 		transform-origin: left top;
@@ -19,23 +17,29 @@
 
 	<dom-module id="layout-twitch">
 		<template>
-			
-			<twitch-player></twitch-player>
+			<template is="dom-repeat" items="[[runners]]" as="runner">
+				<twitch-player runner-stream="[[runner.stream]]"></twitch-player>
+			</template>
 		</template>
 
-		
-		<div style="width: 558px; height: 446px; overflow: hidden; position: absolute; z-index: -20"><div id="twitch-streamA"></div></div>
 		<script>
-
+			const currentRun = nodecg.Replicant("currentRun");
 			Polymer({
 				is: 'layout-twitch',
 
 				properties: {
                     itemTrackers: Array,
-                    baseUrl: String
+					baseUrl: String,
+					runners: Array
 				},
 
 				ready() {
+					currentRun.on('change', newVal =>{
+						if(!newVal || !newVal.runners)
+							return;
+						
+						this.runners = newVal.runners.slice(0);
+					});
 				}
 			});
 		</script>

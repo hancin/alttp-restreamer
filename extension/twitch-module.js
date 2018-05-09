@@ -9,6 +9,8 @@ const fs = require('fs');
 const path = require('path');
 
 const twitchPlayer = nodecg.Replicant('twitchPlayer', {defaultValue: {}, persistent: true});
+const twitchPlayerStreams = nodecg.Replicant('twitchPlayerStreams', {defaultValue: {}, persistent: false});
+const currentRun = nodecg.Replicant('currentRun');
 const nextGame = nodecg.Replicant('currentRun');
 const runners = nodecg.Replicant('runners');
 const log = new nodecg.Logger(`${nodecg.bundleName}:twitch-module`);
@@ -108,7 +110,37 @@ runners.on('change', newVal => { //this is probably called too often and should 
 		_setPlayerDefaults(nextGame.value);
 	}
 });
+let intervals = {};
 
+currentRun.on('change', newVal => {
+	if(!newVal || !newVal.runners)
+		return;
+
+	Object.values(intervals).forEach((item) => clearInterval(item));
+	intervals = {};
+
+	newVal.runners.forEach(runner => {
+		intervals[runner.stream] = setInterval(() => fetchStreamData(runner), 30000);
+	});
+});
+
+function fetchStreamData(runner){
+	console.log(runner);
+
+	twitchStreams.get(runner.stream).then(function(streams){
+		console.log(streams);
+		if(!streams || streams.length == 0)
+			return;
+
+		twitchPlayerStreams.value[runner.stream] = streams[0];
+
+		clearInterval(intervals[runner.stream]);
+		intervals[runner.stream] = undefined;
+	}).catch(function (ex) {
+
+		console.log("Exception in twitchStreams: ", ex);
+	});
+}
 
 function _setPlayerDefaults(currentRunInfo)
 {
