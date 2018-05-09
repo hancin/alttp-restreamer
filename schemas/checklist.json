@@ -43,27 +43,25 @@
 			{"name": "Commentator/Live profiles have correct stream keys", "complete": false},
 			{"name": "Selected race in schedule, and OBS is correct.", "complete": false},
 			{"name": "Generated trackers, enter round & standings. Saved.", "complete": false},
-			{"name": "Ran $RestreamRace #### in #restreamer [Edit Current]", "complete": false},
-			{"name": "Entered SRTV link in box, Saved.", "complete": false},
-			{"name": "Send pastes to runners/crew", "complete": false},
+			{"name": "Commands: Did Start setup", "complete": false},
+			{"name": "TourneyBot: Copy SRTV info, Saved.", "complete": false},
+			{"name": "Sent info to runners/crew", "complete": false},
 			{"name": "Crop runners that are live early", "complete": false},
-			{"name": "Checked twitch stream title & !c !r", "complete": false},
-			{"name": "Sent paste to mods if changes req. [Edit Current]", "complete": false}
+			{"name": "Commands: Did Twitch commands", "complete": false}
 		],
 		"extraContent": [
 			{"name": "Started commentary restream", "complete": false},
-			{"name": "Commentary restream live, commentators agreed.", "complete": false},
 			{"name": "Did Discord sound check w/ comms", "complete": false},
 			{"name": "Sent seed to runners.", "complete": false},
 			{"name": "Ensured all runners are cropped.", "complete": false},
-			{"name": "Did runner/YT audio check.", "complete": false}
+			{"name": "Did runner/YT audio check.", "complete": false},
+			{"name": "Verify runners are ready, give instructions if req.", "complete": false}
 		],
 		"stageTechDuties": [
 			{"name": "Did 1-Minute Live Warning to Commentators", "complete": false},
 			{"name": "Went live on Twitch", "complete": false},
-			{"name": "Verify runners are ready, give instructions if not.", "complete": false},
 			{"name": "Did 2-Minute Race Start Warning to Runners.", "complete": false},
-			{"name": "$StartRace SRTV-GUID in #restreamer", "complete": false}
+			{"name": "Commands: Did Start race", "complete": false}
 		]
 	}
 }
