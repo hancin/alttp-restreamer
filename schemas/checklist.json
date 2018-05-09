@@ -41,26 +41,26 @@
 	"default": {
 		"techStationDuties": [
 			{"name": "Commentator/Live profiles have correct stream keys", "complete": false},
-			{"name": "Selected race in schedule, and OBS is correct.", "complete": false},
-			{"name": "Generated trackers, enter round & standings. Saved.", "complete": false},
+			{"name": "Selected race in schedule, and OBS is correct", "complete": false},
+			{"name": "Generated trackers, enter round & standings. Saved", "complete": false},
 			{"name": "Commands: Did Start setup", "complete": false},
-			{"name": "TourneyBot: Copy SRTV info, Saved.", "complete": false},
+			{"name": "TourneyBot: Copy SRTV info, Saved", "complete": false},
 			{"name": "Sent info to runners/crew", "complete": false},
-			{"name": "Crop runners that are live early", "complete": false},
+			{"name": "Crop runners currently live", "complete": false},
 			{"name": "Commands: Did Twitch commands", "complete": false}
 		],
 		"extraContent": [
-			{"name": "Started commentary restream", "complete": false},
-			{"name": "Did Discord sound check w/ comms", "complete": false},
-			{"name": "Sent seed to runners.", "complete": false},
-			{"name": "Ensured all runners are cropped.", "complete": false},
-			{"name": "Did runner/YT audio check.", "complete": false},
-			{"name": "Verify runners are ready, give instructions if req.", "complete": false}
+			{"name": "Went live on Mixer", "complete": false},
+			{"name": "Did Sound check w/ comms", "complete": false},
+			{"name": "Check audio [OBS,VLC]", "complete": false},
+			{"name": "Sent seed to runners", "complete": false},
+			{"name": "All runners are cropped", "complete": false},
+			{"name": "Verify runners are ready, give instructions if required", "complete": false}
 		],
 		"stageTechDuties": [
-			{"name": "Did 1-Minute Live Warning to Commentators", "complete": false},
+			{"name": "Did 1-Minute Live Warning to comms", "complete": false},
 			{"name": "Went live on Twitch", "complete": false},
-			{"name": "Did 2-Minute Race Start Warning to Runners.", "complete": false},
+			{"name": "Did 2-Minute Race Start Warning to Runners", "complete": false},
 			{"name": "Commands: Did Start race", "complete": false}
 		]
 	}
