@@ -17,28 +17,27 @@
 
 	<dom-module id="layout-twitch">
 		<template>
-			<template is="dom-repeat" items="[[runners]]" as="runner">
-				<twitch-player runner-stream="[[runner.stream]]"></twitch-player>
+			<template is="dom-repeat" items="[[streams]]" as="stream">
+				<twitch-player stream="[[stream]]"></twitch-player>
 			</template>
 		</template>
 
 		<script>
-			const currentRun = nodecg.Replicant("currentRun");
+			const twitchPlayerStreams = nodecg.Replicant('twitchPlayerStreams');
 			Polymer({
 				is: 'layout-twitch',
 
 				properties: {
-                    itemTrackers: Array,
-					baseUrl: String,
-					runners: Array
+					streams: Array
 				},
 
-				ready() {
-					currentRun.on('change', newVal =>{
-						if(!newVal || !newVal.runners)
+				ready() {			
+					twitchPlayerStreams.on('change', newVal => {
+						if(!newVal)
 							return;
-						
-						this.runners = newVal.runners.slice(0);
+						console.log(newVal);
+
+						this.set("streams", newVal.slice(0));
 					});
 				}
 			});

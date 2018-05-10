@@ -1,7 +1,6 @@
 (function () {
 	'use strict';
 
-	const twitchPlayerStreams = nodecg.Replicant('twitchPlayerStreams');
 
 	class TwitchPlayer extends Polymer.Element 
     {
@@ -12,54 +11,59 @@
 		static get properties()
 		{
 			return {
-				'runnerStream': String,
-				'streamObject': Object
+				stream: {
+					type: Object,
+					observer: '_streamChanged'
+				},
+				currentStreamUrl: String,
 			}
 		}
 
+		_streamChanged(newVal, oldVal){
+			if(!this.hls){
+				this.hls = new Hls();
+				this.hls.on(Hls.Events.MANIFEST_PARSED,function() {
+					video.play();
+				});
+			}
+			const video = this.$.video;
+			console.log(newVal);
+			if(!newVal || newVal.hlsUrl == ""){
+				this.currentStreamUrl = "";
+				video.pause();
+				this.hls.detachMedia(video);
+				video.src = '';
+				return;
+			}
+			video.muted = newVal.muted;
+			video.volume = newVal.volume;
+
+			if(newVal.hlsUrl != this.currentStreamUrl){
+
+				if(!video.paused)
+					video.pause();
+				this.currentStreamUrl = newVal.hlsUrl;
+					
+				const [width, height] = this._autoDownscaleTo448p(newVal.resolution);
+				video.style.width = width+"px";
+				video.style.height = height+"px";
+
+				this.hls.attachMedia(video);
+				this.hls.loadSource(this.currentStreamUrl);
+			}
+
+		}
 
 		ready()
 		{
             super.ready();
-			var video = this.$.video;
 
-			var hls = new Hls();
-
-			twitchPlayerStreams.on('change', newVal =>{
-				console.log(newVal);
-				if(!newVal)
-					return;
-				if(newVal[this.runnerStream] === undefined)
-					return;
-
-				if(!newVal[this.runnerStream].isLoaded){
-					video.stop();
-					hls.detachMedia();
-					return;
-				}
-
-				this.streamObject = newVal[this.runnerStream];
-				const resolution = this._autoDownscaleTo720p(this.streamObject.streamInfo.resolution.split("x"));
-				console.log(video.style);
-				video.style.width = resolution[0]+"px";
-				video.style.height = resolution[1]+"px";
-				hls.loadSource(this.streamObject.streamInfo.url);
-				hls.attachMedia(video);
-			});
-
-			hls.on(Hls.Events.MANIFEST_PARSED,function() {
-				video.play();
-			});
-            
 		}
 
 		
-		_autoDownscaleTo720p(resolution) {
-			const srcRes = {width: parseInt(resolution[0]), height: parseInt(resolution[1])};
-
-			const scale = Math.min(srcRes.width / 1280, srcRes.height / 720);
-
-			return [srcRes.width / scale, srcRes.height / scale];
+		_autoDownscaleTo448p([width, height]) {
+			const scale = Math.min(width / 793, height / 446);
+			return [width / scale, height / scale];
 		}
 
 	}
