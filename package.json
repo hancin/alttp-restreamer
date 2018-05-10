@@ -28,7 +28,7 @@
     "request-promise": "^4.2.1",
     "socket.io-client": "^2.0.1",
     "twemoji": "^2.0.5",
-    "twitch-get-stream": "^0.4.1"
+    "twitch-get-stream": "github:hancin/node-twitch-get-stream"
   },
   "devDependencies": {},
   "homepage": "https://hancinworld.com/",
