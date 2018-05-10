@@ -27,7 +27,6 @@
 				});
 			}
 			const video = this.$.video;
-			console.log(newVal);
 			if(!newVal || newVal.hlsUrl == ""){
 				this.currentStreamUrl = "";
 				video.pause();
@@ -37,8 +36,14 @@
 			}
 			video.muted = newVal.muted;
 			video.volume = newVal.volume;
+			if(video.paused != newVal.paused){
+				if(newVal.paused)
+					video.pause();
+				else
+					video.play();
+			}
 
-			if(newVal.hlsUrl != this.currentStreamUrl){
+			if(newVal.hlsUrl != this.currentStreamUrl || newVal.forceReloadClient){
 
 				if(!video.paused)
 					video.pause();

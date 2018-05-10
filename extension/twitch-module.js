@@ -39,8 +39,10 @@ function _findHlsStreams()
 	unknownStreams.forEach(async (item, index) => {
 		const changes = await getStreamInfo(item.stream, item.forceReload);
 
-		if(!changes)
+		if(!changes || changes === {}){
+			console.log("No changes.")
 			return;
+		}
 
 		twitchPlayerStreams.value[index] = {...item, ...changes};
 	});
@@ -70,7 +72,8 @@ async function getStreamInfo(channel, forceReload)
 	return {
 		hlsUrl: stream.url,
 		resolution: [parseInt(width), parseInt(height)],
-		forceReload: false
+		forceReload: false,
+		forceReloadClient: forceReload
 	}
 }
 
@@ -95,6 +98,7 @@ currentRun.on('change', async newVal => {
 			volume: 0,
 			muted: true,
 			forceReload: false,
+			forceReloadClient: false,
 			resolution: [1280, 720],
 			delay: 0
 		};
