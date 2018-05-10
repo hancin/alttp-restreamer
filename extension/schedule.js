@@ -296,6 +296,7 @@ function update() {
 					trackers : match.trackers.filter(x=>x.approved).map(parseEntry),
 					commentators: match.commentators.filter(x=>x.approved).map(parseEntry),
 					broadcasters: match.broadcasters.filter(x=>x.approved).map(parseEntry),
+					id: match.id,
 					pk: match.id,
 					type: 'run'
 				}

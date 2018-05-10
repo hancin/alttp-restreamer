@@ -51,9 +51,17 @@
 				-webkit-box-orient: vertical;
 			}
 
-			#runners, #commentators, #trackers {
+			#runners, #commentators, #trackers, #broadcasters {
 				@apply --layout-horizontal;
 				@apply --layout-wrap;
+			}
+
+
+			#trackers .picnic{
+				color: #63D0EC;
+			}
+			#commentators .picnic{
+				color: #BDA4F7;
 			}
 
 			.runner {
@@ -139,19 +147,18 @@
 
 		<div class="divider"></div>
 
-		<section class$="padded [[calcModified(originalValues.category)]]">
-			<label>Category</label>
-			<span class="value" title="[[category]]">[[category]]&#8203;</span>
-		</section>
-
-		<div class="divider"></div>
-
 		<section id="commentators" >
 			<template is="dom-repeat" items="[[commentators]]" as="commentator">
 				<div class="padded runner" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
 					<label>Commentator</label>
 					<span class="value" title="[[commentator.name]]">[[commentator.name]]&#8203;</span>
 				</div>
+			</template>
+			<template is="dom-if" if="[[!commentators.length]]">
+				<section class="padded" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+					<label>Commentator</label>
+					<span class="value picnic"><u>No commentators on schedule.</u></span>
+				</section>
 			</template>
 		</section>
 		<div class="divider"></div>
@@ -162,13 +169,36 @@
 					<span class="value" title="[[tracker.name]]">[[tracker.name]]&#8203;</span>
 				</div>
 			</template>
+			<template is="dom-if" if="[[!trackers.length]]">
+				<section class="padded" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+					<label>Tracker</label>
+					<span class="value picnic"><u>No tracker on schedule.</u></span>
+				</section>
+			</template>
 		</section>
 
+		<div class="divider"></div>
+		<section id="broadcasters" >
+			<template is="dom-repeat" items="[[broadcasters]]" as="broadcaster">
+				<div class="padded runner" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+					<label>Broadcaster</label>
+					<span class="value" title="[[broadcaster.name]]">[[broadcaster.name]]&#8203;</span>
+				</div>
+			</template>
+			<template is="dom-if" if="[[!broadcasters.length]]">
+				<section class="padded" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+					<label>Broadcaster</label>
+					<span class="value">No broadcaster on schedule.</span>
+				</section>
+			</template>
+		</section>
 		<div class="divider"></div>
 
 		<section id="notes" class="padded">
 			<label>Tech Notes</label>
 			<div class="value"></div>
+		</section>
+		<section id="timeago" class="padded">
 		</section>
 	</template>
 

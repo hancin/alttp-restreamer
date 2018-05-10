@@ -9,16 +9,30 @@ class GdqScheduleRuninfo extends Polymer.Element {
 				type: String,
 				observer: '_notesChanged'
 			},
+			time: {
+				type: String,
+				observer: '_timeChanged'
+			},
 			label: {
 				type: String,
 				reflectToAttribute: true
 			},
-			commentators: Array,
-			trackers: Array,
+			commentators: {
+				type: Array,
+				value: []
+			},
+			trackers: {
+				type: Array,
+				value: []
+			},
 			runners: Array,
 			category: String,
 			name: String,
 			originalValues: Object,
+			broadcasters: {
+				type: Array,
+				value: []
+			},
 			order: Number
 		};
 	}
@@ -31,6 +45,15 @@ class GdqScheduleRuninfo extends Polymer.Element {
 		}
 	}
 
+	_timeChanged(newVal){
+		if (newVal) {
+			this.$.timeago.innerHTML = moment(newVal).fromNow();
+		} else {
+			this.$.timeago.innerHTML = '';
+		}
+	}
+
+
 	setRun(run) {
 		this.name = run.name;
 		this.commentators = run.commentators;
@@ -39,6 +62,8 @@ class GdqScheduleRuninfo extends Polymer.Element {
 		this.category = run.category;
 		this.order = run.order;
 		this.notes = run.notes;
+		this.broadcasters = run.broadcasters;
+		this.time = run.time;
 		this.originalValues = run.originalValues;
 	}
 
