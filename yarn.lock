@@ -1036,6 +1036,12 @@ lru-cache@^4.1.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
+m3u8@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/m3u8/-/m3u8-0.0.7.tgz#28675ce198960665afa363435ee079b7d61826cd"
+  dependencies:
+    chunked-stream "~0.0.1"
+
 "m3u8@github:tjenkinson/node-m3u8#hls-live-thumbnails":
   version "0.0.7"
   resolved "https://codeload.github.com/tjenkinson/node-m3u8/tar.gz/b11feac4381fd13171ff1bde09467d6e17d874ea"
@@ -1874,9 +1880,9 @@ twemoji@^2.0.5:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/twemoji/-/twemoji-2.5.1.tgz#296647c6163c7f047458871c2aebe25ea8ffe834"
 
-twitch-get-stream@^0.4.1:
+"twitch-get-stream@github:hancin/node-twitch-get-stream":
   version "0.4.1"
-  resolved "https://registry.yarnpkg.com/twitch-get-stream/-/twitch-get-stream-0.4.1.tgz#536c614e79a5e5e8622d9fe8c353866c19296036"
+  resolved "https://codeload.github.com/hancin/node-twitch-get-stream/tar.gz/fbff3dffa6f21614ad09f17d82804821bd309853"
   dependencies:
     lodash.compact "^3.0.0"
     playlist-parser "0.0.12"
