@@ -68,6 +68,19 @@ twitchPlayer.value =
 	streamATop: 0,
 };
 
+
+/*const test_api = {
+	hlsUrl: null,
+	name: null,
+	discord: null,
+	stream: null,
+	crop: {top: 0, left: 0, right: 0, bottom: 0},
+	cropSize: {width: 0, height: 0},
+	audio: 0,
+	delayDelta: 0
+};*/
+
+
 function _askReloadLayoutConfig() {
 	_setPlayerDefaults(nextGame.value);
 }
@@ -118,9 +131,17 @@ currentRun.on('change', newVal => {
 
 	Object.values(intervals).forEach((item) => clearInterval(item));
 	intervals = {};
+	const copy = Object.assign({}, twitchPlayerStreams.value);
+	twitchPlayerStreams.value = newVal.runners.map(runner =>{
+		if(!copy[runner.stream])
+			return {streamInfo: {}, isLoaded: false};
+		else
+			return copy[runner.stream];
+	});
 
 	newVal.runners.forEach(runner => {
-		intervals[runner.stream] = setInterval(() => fetchStreamData(runner), 30000);
+		intervals[runner.stream] = setInterval(() => fetchStreamData(runner), 10000);
+		fetchStreamData(runner);
 	});
 });
 
@@ -128,11 +149,10 @@ function fetchStreamData(runner){
 	console.log(runner);
 
 	twitchStreams.get(runner.stream).then(function(streams){
-		console.log(streams);
 		if(!streams || streams.length == 0)
 			return;
 
-		twitchPlayerStreams.value[runner.stream] = streams[0];
+		twitchPlayerStreams.value[runner.stream] = {streamInfo: streams[0], isLoaded: true};
 
 		clearInterval(intervals[runner.stream]);
 		intervals[runner.stream] = undefined;
