@@ -154,6 +154,8 @@ function mergeChangesFromTracker(run, unmodifiedRun) {
 	run = clone(run);
 	unmodifiedRun = clone(unmodifiedRun);
 
+	run.order = unmodifiedRun.order;
+
 	if (!run.originalValues) {
 		return unmodifiedRun;
 	}

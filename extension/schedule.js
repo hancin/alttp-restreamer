@@ -290,7 +290,7 @@ function update() {
 				let run = {
 					order: order,
 					name: match.match1.players.map(x=>x.displayName).join(" vs "),
-					time: moment(match.when).format('llll'),
+					time: match.when,
 					channel: match.channel.name,
 					runners: [...match.match1.players.map(parseEntry)],
 					trackers : match.trackers.filter(x=>x.approved).map(parseEntry),
@@ -300,7 +300,7 @@ function update() {
 					type: 'run'
 				}
 				
-				run.notes = `${run.channel}\r\n${moment(match.when).calendar()}\r\n${moment(match.when).fromNow()}`;
+				run.notes = `${run.channel}\r\n${moment(match.when).calendar()}`;
 
 				order += 1;
 				valid.push(run);
@@ -313,14 +313,12 @@ function update() {
 		runsPromisePreprocessed
 	]).then(([runsJSON]) => {
 
-		const formattedSchedule = runsJSON;
-
 		// If nothing has changed, return.
-		if (deepEqual(formattedSchedule, scheduleRep.value)) {
+		if (deepEqual(runsJSON, scheduleRep.value)) {
 			return false;
 		}
 
-		scheduleRep.value = formattedSchedule;
+		scheduleRep.value = runsJSON;
 
 		const newRunOrderMap = {};
 		runsJSON.forEach(run => {
@@ -332,7 +330,12 @@ function update() {
 		 * Else, update the currentRun by pk, merging with and local changes.
 		 */
 		if (!currentRunRep.value || typeof currentRunRep.value.order === 'undefined') {
-			_seekToArbitraryRun(1);
+			const timeBased = findRunByTime(moment().startOf('hour'));
+			if(timeBased){
+				_seekToArbitraryRun(timeBased);
+			}else{
+				_seekToArbitraryRun(1);
+			}
 		} else {
 			const currentRunAsInSchedule = findRunByPk(currentRunRep.value.pk);
 
@@ -348,7 +351,7 @@ function update() {
 
 			/* If currentRun was found in the schedule, merge any changes from the schedule into currentRun.
 			 * Else if currentRun has been removed from the schedule (determined by its `pk`),
-			 * set currentRun to whatever run now has currentRun's `order` value.
+			 * set currentRun to something that's running close to now.
 			 * If that fails, set currentRun to the final run in the schedule.
 			 */
 			if (currentRunAsInSchedule) {
@@ -359,15 +362,12 @@ function update() {
 					}
 				});
 			} else {
-				try {
-					_seekToArbitraryRun(Math.max(currentRunRep.value.order - 1, 1));
-				} catch (e) {
-					if (e.message === 'Could not find run at specified order.') {
-						const lastRunInSchedule = formattedSchedule.slice(0).reverse().find(item => item.type === 'run');
-						_seekToArbitraryRun(lastRunInSchedule);
-					} else {
-						throw e;
-					}
+				const timeBased = findRunByTime(moment().startOf('hour'));
+				if(timeBased){
+					_seekToArbitraryRun(timeBased);
+				}else{
+					const lastRunInSchedule = runsJSON.slice(0).reverse().find(item => item.type === 'run');
+					_seekToArbitraryRun(lastRunInSchedule);
 				}
 			}
 		}
@@ -581,5 +581,11 @@ function findRunByOrder(order) {
 function findRunByPk(pk) {
 	return scheduleRep.value.find(item => {
 		return item.type === 'run' && item.id === pk;
+	});
+}
+
+function findRunByTime(time) {
+	return scheduleRep.value.find(item => {
+		return item.type === 'run' && moment(item.time).diff(time) >= 0;
 	});
 }
