@@ -6,6 +6,10 @@ const deepEqual = require('deep-equal');
 const EventEmitter = require('events');
 const cheerio = require('cheerio');
 const request = require('request-promise').defaults({jar: true}); // <= Automatically saves and re-uses cookies.
+const NodeCache = require('node-cache');
+const moment = require('moment');
+
+const scheduleCache = new NodeCache({stdTTL: 120, checkperiod: 60});
 
 // Ours
 const nodecg = require('./util/nodecg-api-context').get();
@@ -233,130 +237,83 @@ nodecg.listenFor('resetRun', (pk, cb) => {
 	}
 });
 
+
+function parseEntry(entry){
+	let runner = {
+		pk: entry.id,
+		name: entry.displayName,
+		stream: entry.publicStream,
+		discord: entry.discordTag
+	}
+
+	if(runner.stream === '')
+		runner.stream = entry.displayName;
+
+	return runner;
+}
+
 /**
  * Gets the latest schedule info from the GDQ tracker.
  * @returns {Promise} - A a promise resolved with "true" if the schedule was updated, "false" if unchanged.
  */
 function update() {
-	const runnersPromise = request({
-		uri: nodecg.bundleConfig.useMockData ?
-			'https://www.dropbox.com/s/mbr6p9zn4piek1j/players.json' :
-			nodecg.bundleConfig.speedgaming.players,
-		qs: {
-			dl: 1 // For Dropbox only
-		},
-		json: nodecg.bundleConfig.useMockData
-	});
+	const rightNow = moment().startOf('hour');
 
 	const runsPromise = request({
 		uri: nodecg.bundleConfig.useMockData ?
 			'https://www.dropbox.com/s/fghcrrst55c5qsi/schedule.json' :
-			nodecg.bundleConfig.speedgaming.schedule,
+			nodecg.bundleConfig.speedgaming.scheduleNew,
 		qs: {
-			showid: 1,
-			past: 1,
+			event: 'alttpr',
+			from: rightNow.subtract(5, 'hours').format(),
+			to: rightNow.add(3, 'hours').endOf('day').format(),
 			dl: 1 // For Dropbox only
 		},
-		json: nodecg.bundleConfig.useMockData
+		json: true
 	});
 
+	//Channels to ignore at all times.
+	const bannedChannels = [31];
+
 	const runsPromisePreprocessed = nodecg.bundleConfig.useMockData? runsPromise : 
-		runsPromise.then(response=>{
-			const $ = cheerio.load(response);
-			var entries = $("tr");
-			var valid = [];
-			var order = 1;
-		
-			entries.each((index, line) => {
+		runsPromise.then(entries=> {
+			console.log(`There were ${entries.length} results from search, before any filters.`);
 
-				const cells = $(line).children("td");
-				const cellTime = cells.eq(1).first().text().trim().replace(/\s\s+/g, " ");
-				//Let's clean the schedule a bit.
-				if(cellTime.indexOf("Apr") !== -1){
-					return;
-				}
+			let valid = [];
+			let order = 1;
+			const filteredResults = entries.filter(m => m.approved && m.channel !== null && !bannedChannels.includes(m.channel.id));
+			
+			console.log(`After filtering them, ${filteredResults.length} results will be read.`);
 
-				const cellPk = cells.eq(0).first().text().trim();
-				const cellRunners = cells.eq(2).first().text().trim();
-				const cellChannel = cells.eq(3).first().text().trim();
-				const cellCommentators = cells.eq(4).first().text().trim();
-				const cellTrackers = cells.eq(5).first().text().trim();
+			for(let match of filteredResults){
 
-				//This is not restreamed by us.
-				/*if(cellChannel.indexOf("ALTTPRandomizer") === -1){
-					return;
-				}*/
-		
-				var run = {
+				let run = {
 					order: order,
-					name: cellRunners,
-					time: cellTime,
-					runners: cellRunners.split(" vs "),
-					channel: cellChannel,
-					commentators: cellCommentators.split(', '),
-					trackers: cellTrackers.split(', '),
-					pk: parseInt(cellPk)
-				};
+					name: match.match1.players.map(x=>x.displayName).join(" vs "),
+					time: moment(match.when).format('llll'),
+					channel: match.channel.name,
+					runners: [...match.match1.players.map(parseEntry)],
+					trackers : match.trackers.filter(x=>x.approved).map(parseEntry),
+					commentators: match.commentators.filter(x=>x.approved).map(parseEntry),
+					broadcasters: match.broadcasters.filter(x=>x.approved).map(parseEntry),
+					pk: match.id,
+					type: 'run'
+				}
 				
+				run.notes = `${run.channel}\r\n${moment(match.when).calendar()}\r\n${moment(match.when).fromNow()}`;
+
 				order += 1;
-		
 				valid.push(run);
-
-			});
+			}
+			
 			return Promise.resolve(valid);
 		});
-
-	const runnersPromisePreprocessed = nodecg.bundleConfig.useMockData? runnersPromise : 
-		runnersPromise.then(response=>{
-			const $ = cheerio.load(response);
-			var entries = $("select[name=personid] option");
-			var valid = [];
-		
-			entries.each((index, line) => {
-				var sanitizedText = $(line).text();
-				sanitizedText = sanitizedText.replace(/\s+/g," ").trim();
-				var splits = sanitizedText.split(' | ');
-				if(splits.length != 3)
-				return;
-
-				let runner = {
-					pk: parseInt($(line).val()),
-					name: splits[0],
-					twitch: splits[1].substr(splits[1].indexOf("= ")+2),
-					discord: splits[2].substr(splits[2].indexOf("= ")+2)
-				};
-
-				valid.push(runner);
-
-			});
-			return Promise.resolve(valid);
-		});
-
 
 	return Promise.all([
-		runnersPromisePreprocessed, runsPromisePreprocessed
-	]).then(([runnersJSON, runsJSON]) => {
+		runsPromisePreprocessed
+	]).then(([runsJSON]) => {
 
-
-
-		const formattedRunners = {};
-		runnersJSON.forEach(obj => {
-			formattedRunners[obj.name] = {
-				pk: obj.pk,
-				stream: obj.twitch,
-				discord: obj.discord,
-				name: obj.name
-			};
-		});
-
-		if (!deepEqual(formattedRunners, runnersRep.value)) {
-			runnersRep.value = clone(formattedRunners);
-		}
-
-		const formattedSchedule = calcFormattedSchedule({
-			rawRuns: runsJSON,
-			formattedRunners
-		});
+		const formattedSchedule = runsJSON;
 
 		// If nothing has changed, return.
 		if (deepEqual(formattedSchedule, scheduleRep.value)) {
@@ -533,50 +490,6 @@ function calcFormattedSchedule({rawRuns, formattedRunners}) {
  * @returns {Object} - The formatted run object.
  */
 function formatRun(run, formattedRunners) {
-	const runners = run.runners.slice(0, 4).map(runnerId => {
-		if(formattedRunners[runnerId] === undefined){
-			return {
-				name: runnerId,
-				stream: "???",
-				discord: "???"
-			}
-		}
-		return {
-			name: formattedRunners[runnerId].name,
-			stream: formattedRunners[runnerId].stream,
-			discord: formattedRunners[runnerId].discord
-		};
-	});
-
-	const commentators = run.commentators.map(runnerId => {
-		if(formattedRunners[runnerId] === undefined){
-			return {
-				name: runnerId,
-				stream: "???",
-				discord: "???"
-			}
-		}
-		return {
-			name: formattedRunners[runnerId].name,
-			stream: formattedRunners[runnerId].stream,
-			discord: formattedRunners[runnerId].discord
-		};
-	});
-
-	const trackers = run.trackers.map(runnerId => {
-		if(formattedRunners[runnerId] === undefined){
-			return {
-				name: runnerId,
-				stream: "???",
-				discord: "???"
-			}
-		}
-		return {
-			name: formattedRunners[runnerId].name,
-			stream: formattedRunners[runnerId].stream,
-			discord: formattedRunners[runnerId].discord
-		};
-	});
 
 	return {
 		name: run.name || 'Unknown',

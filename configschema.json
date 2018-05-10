@@ -31,6 +31,10 @@
 		"speedgaming": {
 			"type": ["object", "null"],
 			"properties": {
+				"scheduleNew":{
+					"type":"string",
+					"description": "The URL to fetch the schedule from (v2.0)."
+				},
 				"schedule":{
 					"type":"string",
 					"description": "The URL to fetch the schedule from."
