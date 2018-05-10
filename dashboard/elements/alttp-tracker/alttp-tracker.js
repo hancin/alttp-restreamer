@@ -2,7 +2,6 @@
 	'use strict';
 
 	const currentRun = nodecg.Replicant('currentRun');
-	const currentOperator = nodecg.Replicant('currentOperator');
 	const schedule = nodecg.Replicant('schedule');
 	const currentRunExtraRep = nodecg.Replicant('currentRunExtra');
 
@@ -30,10 +29,6 @@
 				'selectedInfoTab': {
 					"type": String,
 					"value": "0"
-				},
-				'textOperatorStream': {
-					"type": String,
-					"value": ""
 				}
 			}
 		}
@@ -48,12 +43,6 @@
 					return;
 				}
 				this.updateRunInfo(newVal);
-			});
-			currentOperator.on('change', newVal => {
-				if (!newVal) {
-					return;
-				}
-				this.textOperatorStream = newVal.stream;
 			});
 			currentRunExtraRep.on('change', newVal => {
 				if (!newVal || !newVal.itemTrackers)
@@ -78,6 +67,7 @@
 		updateRunInfo(run) {
 			this.runName = run.name;
 			this.textRunnerNames = (!run.runners) ? "" : run.runners.map(x=>x.name.replace(" ","")).join(" ");
+			this.textBroadcasterStreams = (!run.broadcasters) ? "" : run.broadcasters.map(x=>x.stream).join(" ");
 			this.textCommentatorStreams = (!run.commentators) ? "" : run.commentators.map(x=>x.stream).join(" ");
 			this.textCommentatorDiscords = (!run.commentators) ? "" : run.commentators.map(x=>x.discord).join(", ");
 			this.textRunnerStreams = (!run.runners) ? "" : run.runners.map(x=>x.stream).join(" ");

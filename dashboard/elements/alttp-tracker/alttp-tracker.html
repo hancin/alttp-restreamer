@@ -7,7 +7,9 @@
 <link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="../../../node_modules/moment/moment.js">
 <link rel="import" href="../gdq-run-editor/gdq-run-editor.html">
+<script src="../../../node_modules/moment/moment.js"></script>
 
 <dom-module id="alttp-tracker">
 	<template>
@@ -183,9 +185,6 @@
 			<paper-button id="saveChanges" raised on-tap="saveChanges">Save Changes</paper-button>
 			<!--<paper-button id="editCurrent2" raised on-tap="editCurrent">Update OBS</paper-button>-->
 		</div>
-		<template is="dom-if" if="{{!textOperatorStream}}">
-			<em style="color: red;display:block;">You haven't entered your name! Please go to the SETUP tab and select your name.</em>
-		</template>
 		<paper-tabs selected="{{selectedInfoTab}}" no-slide>
 			<paper-tab>Commands</paper-tab>	
 			<paper-tab>Trackers</paper-tab>
@@ -199,14 +198,14 @@
 
 <b>Twitch commands for restreamers</b>
 <pre>!redit [[textRunnerStreams]]</pre>
-<pre>!cedit [[textCommentatorStreams]] [[textTrackerStreams]] [[textOperatorStream]]</pre>
+<pre>!cedit [[textCommentatorStreams]] [[textTrackerStreams]] [[textBroadcasterStreams]]</pre>
 <pre>!retitle [[textRunnerNames]]</pre>
 
 <b>Twitch commands for moderators</b>
 <pre>@restream_moderator Setting up for stream now.  
 Could I please get these commands run on twitch.tv/[[twitchChannel]]?
 !editr [[textRunnerStreams]]
-!editc [[textCommentatorStreams]] [[textTrackerStreams]] [[textOperatorStream]]
+!editc [[textCommentatorStreams]] [[textTrackerStreams]] [[textBroadcasterStreams]]
 !springtitle [[textRunnerNames]]</pre>
 
 <b>Start the race: (#restreamer)</b>

@@ -82,14 +82,6 @@
         "file": "mixer-feed.html",
         "headerColor": "#2d4e8a",
         "workspace": "Video Feeds"
-      },
-      {
-        "name": "operator-setup",
-        "title": "Operator Setup",
-        "width": 3,
-        "file": "operator-setup.html",
-        "headerColor": "#2d4e8a",
-        "workspace": "Setup"
       }
     ],
     "graphics": [
