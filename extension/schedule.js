@@ -265,8 +265,8 @@ function update() {
 			nodecg.bundleConfig.speedgaming.scheduleNew,
 		qs: {
 			event: 'alttpr',
-			from: rightNow.subtract(5, 'hours').format(),
-			to: rightNow.add(3, 'hours').endOf('day').format(),
+			from: moment().startOf('hour').subtract(5, 'hours').format(),
+			to: moment().startOf('hour').add(3, 'hours').endOf('day').format(),
 			dl: 1 // For Dropbox only
 		},
 		json: true
@@ -345,7 +345,7 @@ function update() {
 			// This can only happen for two reasons:
 			//     1) The nextRun was deleted from the schedule.
 			//     2) A new run was added between currentRun and nextRun.
-			const newNextRun = _findRunAfter(currentRunRep.value);
+			const newNextRun = currentRunAsInSchedule? _findRunAfter(currentRunAsInSchedule) : _findRunAfter(currentRunRep.value);
 			if (!newNextRun || !nextRunRep.value || newNextRun.pk !== nextRunRep.value.pk) {
 				nextRunRep.value = clone(newNextRun);
 			}
