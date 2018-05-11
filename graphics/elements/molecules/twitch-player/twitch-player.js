@@ -65,20 +65,9 @@
 			let isReloading = false;
 
 			if(newVal.hlsUrl != this.currentStreamUrl || newVal.forceReloadClient){
-
-				console.log(newVal.hlsUrl);
 				isReloading = true;
 				this.currentStreamUrl = newVal.hlsUrl;
 					
-				const [width, height] = this._autoDownscaleTo448p(newVal.resolution);
-				const [x, y] = [14, 8];
-				const [w, h] = [860 / 1.6, 703 / 1.6];
-
-				video.width = 860;
-				video.height = 446;
-				video.style.marginLeft = `-${x}px`;
-				video.style.marginTop = `-${y}px`;
-
 				this.hls.attachMedia(video);
 				this.hls.loadSource(this.currentStreamUrl);
 			}
@@ -97,12 +86,6 @@
 		{
             super.ready();
 
-		}
-
-		
-		_autoDownscaleTo448p([width, height]) {
-			const scale = Math.min(width / 793, height / 446);
-			return [width / scale, height / scale];
 		}
 
 	}

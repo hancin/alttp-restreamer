@@ -1,7 +1,7 @@
 {
   "name": "alttp-restreamer",
   "description": "On-screen setup for ALTTP Restreaming.",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "contributors": [
     "David Pratte <hancin@hancinworld.com>"
   ],

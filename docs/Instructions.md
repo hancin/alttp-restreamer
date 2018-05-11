@@ -3,14 +3,12 @@
 The first time setup requires that you do a couple steps to get the full functionality.
 
 1. Extract the zip file you downloaded to a new folder.
-2. Run the "nodecg.exe" program inside the folder. After a few minutes, the main dashboard will show up in your browser. Leave the little 
+2. Run the "nodecg.exe" program inside the folder. After a few seconds, the main dashboard will show up in your browser. Leave the little 
 console window open until you're done streaming.
-3. Head over to the "Setup" tab, and pick yourself in the "Current operator" list, and press Save.
-4. You've now unlocked all features available in the program! It's now time to add it to OBS.
-5. Right-click on your current Scene in OBS, and hit Duplicate. We do this so you can go back to the old ways later if you need to.
-6. In the new scene, remove all sources except for the frame overlay (to hide errors in crops), and the left and right runners 
+3. Right-click on your current Scene in OBS, and hit Duplicate. We do this so you can go back to the old ways later if you need to.
+4. In the new scene, remove all sources except for the frame overlay (to hide errors in crops), and the left and right runners 
 timers and game. All the rest will be rendered unnecessary in the next step.
-7. Create a new browser source with the following information:
+5. Create a new browser source with the following information:
    * URL: http://localhost:9090/bundles/alttp-restreamer/graphics/restream.html
    * Width: 1280
    * Height: 720
@@ -18,8 +16,7 @@ timers and game. All the rest will be rendered unnecessary in the next step.
    * Custom CSS: remove all the existing content in this box.
    * Shutdown source when not visible: Yes
    * Refresh browser when scene becomes active: No (I like to manually refresh if I feel the need to)
- 8. If you haven't touched anything in the dashboard, you should see Mr. "Players" show up on the left, with Mr. "Commentary" explaining 
- things to the viewers! As you'll see, this will automatically update when you pick a race in the schedule.
+ 8. Assuming the schedule isn't empty, the overlay will update with the first race it found so you can see it in action!
  9. Proceed to Race Setup.
 
  # Race Setup
