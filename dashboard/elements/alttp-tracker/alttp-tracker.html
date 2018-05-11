@@ -219,9 +219,11 @@ Could I please get these commands run on twitch.tv/[[twitchChannel]]?
 ALTTP Randomizer Spring 2018 Tournament - [[runName]]
 
 Here's the item trackers for the different runners:
-<template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">[[itemTracker.runnerName]]: [[baseUrl]]/[[itemTracker.url]]
+<template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">[[itemTracker.runnerName]]: [[baseUrl]]/[[itemTracker.url]]?password=[[password]]
 </template>
 Password: [[password]]
+
+_Note: Thanks to an update to the tracker, you should not need to enter that password anymore. :smiley: _
 
 Commentary restream: https://mixer.com/[[mixerChannel]]</pre>
 </div>
