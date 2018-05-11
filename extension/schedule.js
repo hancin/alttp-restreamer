@@ -22,7 +22,6 @@ let updateInterval;
 const checklist = require('./checklist');
 const canSeekScheduleRep = nodecg.Replicant('canSeekSchedule');
 const currentRunRep = nodecg.Replicant('currentRun');
-const currentOperatorRep = nodecg.Replicant('currentOperator');
 const currentRunExtraRep = nodecg.Replicant('currentRunExtra');
 const nextRunRep = nodecg.Replicant('nextRun');
 const runnersRep = nodecg.Replicant('runners', {defaultValue: {}, persistent: false});
@@ -179,22 +178,6 @@ nodecg.listenFor('modifyRun', (data, cb) => {
 });
 
 
-nodecg.listenFor('updateOperator', (data, cb) => {
-	if(data === undefined){
-		nodecg.log.error('Cannot update operator because data is null.');
-		cb();
-	}
-
-	if(!runnersRep.value){
-		nodecg.log.error('Runners have not been loaded yet, cannot update operator.');
-		cb();
-	}
-
-	var updatedData = Object.assign({}, {name: data}, runnersRep.value[data]);
-	
-	currentOperatorRep.value = updatedData;
-
-});
 
 nodecg.listenFor('modifyRunExtra', (data, cb) => {
 	Object.assign(currentRunExtraRep.value, {
