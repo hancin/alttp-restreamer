@@ -4,21 +4,16 @@
 <dom-module id="twitch-player">
 	<template>
 		<style>
+
 			video{
-				object-fit: fill;
-			}
-			#container{
-				overflow: hidden;
-				width: 558px;
-				height: 446px;
+				display:none;
 			}
 		</style>
 		<center>
-			<div id="container">
-				<video height="446" width="558" id="video" controls></video>
-			</div>
+			<video id="video" controls></video>
 
-			<canvas id="timer"></canvas>
+			<canvas width="558" height="448" id="game"></canvas>
+			<canvas width="178" height="47" id="timer"></canvas>
 		</center>
 	
 	</template>

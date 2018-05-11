@@ -2,6 +2,7 @@
 	'use strict';
 
 
+	
 	class TwitchPlayer extends Polymer.Element 
     {
 		static get is() 
@@ -19,53 +20,43 @@
 			}
 		}
 
-		drawTimer() {
-			const {video, context, width, height} = this.savedParams;
-
-			if(video.paused || video.ended)
-				return false;
-
-			//context.drawImage(video,1020, 58, 249, 43, 0, 0, width, height);
-			context.drawImage(video,0,0,width,height);
+		clear() {
+			this.timerContext.clearRect(0, 0, 178, 47);
+			this.gameContext.clearRect(0, 0, 558, 446);
 		}
+
+		draw(self){
+			if(self.videoSource.paused || self.videoSource.ended)
+				return ;
 	
-		_checkElapsedTime(timestamp){
-			this.drawTimer();
-			window.requestAnimationFrame(this._checkElapsedTime.bind(this));
+			self.timerContext.drawImage(self.videoSource,0,0,178,47);
+			self.gameContext.drawImage(self.videoSource,0,0,558,446);
+			window.requestAnimationFrame(self.cb);
 		}
-	
 
 		_streamChanged(newVal, oldVal){
 			const video = this.$.video;
+			const $this = this;
 			if(!this.hls){
 				this.hls = new Hls();
 				this.hls.on(Hls.Events.MANIFEST_PARSED,function() {
 					video.play();
 				});
 
-				const canvas = this.$.timer;
-				const context = canvas.getContext('2d');
-				canvas.width = 178;
-				canvas.height = 47;
-				const $this = this;
-				this.animationTime = 0;
+				this.timerContext = this.$.timer.getContext('2d');
+				this.gameContext = this.$.game.getContext('2d');
+				
+				const cb = () => $this.draw({timerContext: this.timerContext,gameContext: this.gameContext,videoSource: video, cb: cb});
 
-
-				video.addEventListener('play', (function() {
-					$this.savedParams = {
-						video: this,
-						context: context,
-						width: canvas.width,
-						height: canvas.height
-					}
-					window.requestAnimationFrame($this._checkElapsedTime.bind($this));
-
-				}));
+				video.addEventListener('play', function() {
+					window.requestAnimationFrame(cb);
+				});
 			}
 			if(!newVal || newVal.hlsUrl == ""){
 				this.currentStreamUrl = "";
 				this.hls.detachMedia(video);
 				video.src = '';
+				window.requestAnimationFrame($this.clear.bind($this));
 				return;
 			}
 			video.muted = newVal.muted;
@@ -75,6 +66,7 @@
 
 			if(newVal.hlsUrl != this.currentStreamUrl || newVal.forceReloadClient){
 
+				console.log(newVal.hlsUrl);
 				isReloading = true;
 				this.currentStreamUrl = newVal.hlsUrl;
 					
