@@ -7,9 +7,18 @@
 			video{
 				object-fit: fill;
 			}
+			#container{
+				overflow: hidden;
+				width: 558px;
+				height: 446px;
+			}
 		</style>
 		<center>
-			<video height="446" width="558" id="video" controls></video>
+			<div id="container">
+				<video height="446" width="558" id="video" controls></video>
+			</div>
+
+			<canvas id="timer"></canvas>
 		</center>
 	
 	</template>

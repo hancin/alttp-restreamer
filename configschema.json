@@ -28,6 +28,11 @@
 				}
 			}
 		},
+		"cropApi": {
+			"type": "string",
+			"description": "This is where we'll pull the crop info from.",
+			"default": ""
+		},
 		"speedgaming": {
 			"type": ["object", "null"],
 			"properties": {

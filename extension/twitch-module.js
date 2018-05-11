@@ -40,6 +40,7 @@ function _findHlsStreams()
 		if(item.stream.hlsUrl !== "" && !item.stream.forceReload){
 			return;
 		}
+
 		const changes = await getStreamInfo(item.stream, item.forceReload);
 
 		if(!changes || changes === {}){
@@ -51,6 +52,7 @@ function _findHlsStreams()
 	});
 	
 }
+
 
 async function getStreamInfo(channel, forceReload)
 {
