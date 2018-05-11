@@ -34,9 +34,12 @@ function _findHlsStreams()
 	if(twitchPlayerStreams.value === undefined)
 		return;
 
-	const unknownStreams = twitchPlayerStreams.value.filter(stream => stream.hlsUrl === "" || stream.forceReload);
+	const unknownStreams = twitchPlayerStreams.value;
 
 	unknownStreams.forEach(async (item, index) => {
+		if(item.stream.hlsUrl !== "" && !item.stream.forceReload){
+			return;
+		}
 		const changes = await getStreamInfo(item.stream, item.forceReload);
 
 		if(!changes || changes === {}){
