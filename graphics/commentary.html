@@ -13,10 +13,10 @@
 <body>
 	<div id="container">
 		<img id="background" src="assets/backgrounds/bg2-blank.png">
-		<layout-app></layout-app>
+		<layout-commentary></layout-commentary>
 	</div>
 
-	<dom-module id="layout-app">
+	<dom-module id="layout-commentary">
 		<template>
 			<style>
 				*{
@@ -84,12 +84,22 @@
 
 					letter-spacing: 1px;
 				}
+				#countdown{
+					position: absolute;
+					left: 388px;
+					top: 564px;
+					font-size:24px;
+				}
 			</style>
 
 			<template is="dom-repeat" items="[[runners]]" as="runner">
 				<alttp-runner index="[[index]]" runner="[[runner]]"></alttp-runner>
 			</template>
 
+			<div id="countdown" class="textShadow"><template is="dom-if" if="[[countdownVisible]]">
+					<span style="font-family: monospace">[[countdown]]</span>
+				</template>
+			</div>
 			<div id="commentators" class="textShadow">
 				<img src="assets/images/commentator.png" /> [[commentators]]
 			</div>
@@ -104,9 +114,11 @@
 		<script>
 			const currentRun = nodecg.Replicant('currentRun');
 			const currentRunExtra = nodecg.Replicant('currentRunExtra');
+			const time = nodecg.Replicant('countdown');
+			const running = nodecg.Replicant('countdownRunning');
 
 			Polymer({
-				is: 'layout-app',
+				is: 'layout-commentary',
 
 				properties: {
 					numRunners: {
@@ -115,13 +127,31 @@
 						value: 1
 					},
 					runners: Array,
-					time: String,
 					commentators: String,
 					round: String,
-					standings: String
+					standings: String,
+					countdown: String,
+					countdownVisible: {
+						type: Boolean,
+						value: false
+					}
 				},
 
 				ready() {
+					time.on('change', newVal => {
+						if(!newVal)
+							return;
+						this.countdown = `${newVal.minutes}:${newVal.seconds.toString().padStart(2, '0')}`;
+					});
+					running.on('change', newVal => {
+						if(!newVal){
+							this.countdownVisible = false;
+							return;
+						}
+						this.countdownVisible = newVal;
+						console.log(this.countdownVisible);
+					});
+
 					currentRun.on('change', newVal => {
 						if (!newVal) {
 							return;
