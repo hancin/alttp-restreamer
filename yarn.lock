@@ -1036,13 +1036,7 @@ lru-cache@^4.1.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
-m3u8@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/m3u8/-/m3u8-0.0.7.tgz#28675ce198960665afa363435ee079b7d61826cd"
-  dependencies:
-    chunked-stream "~0.0.1"
-
-"m3u8@github:tjenkinson/node-m3u8#hls-live-thumbnails":
+m3u8@^0.0.7, "m3u8@github:tjenkinson/node-m3u8#hls-live-thumbnails":
   version "0.0.7"
   resolved "https://codeload.github.com/tjenkinson/node-m3u8/tar.gz/b11feac4381fd13171ff1bde09467d6e17d874ea"
   dependencies:

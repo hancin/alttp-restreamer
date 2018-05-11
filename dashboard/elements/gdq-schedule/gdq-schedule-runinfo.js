@@ -66,8 +66,12 @@ class GdqScheduleRuninfo extends Polymer.Element {
 		this.time = run.time;
 		this.originalValues = run.originalValues;
 
+	}
 
-		setInterval((() => this._timeChanged(run.time)).bind(this), 15000);
+	ready(){
+		super.ready();
+		
+		setInterval((() => this._timeChanged(this.time)).bind(this), 15000);
 	}
 
 	calcName(name) {
