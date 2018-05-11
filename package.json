@@ -43,49 +43,14 @@
         "file": "operator-dashboard.html",
         "headerColor": "#2d4e8a",
         "fullbleed": true
-      },
-      {
-        "name": "runners-multitwitch",
-        "title": "Runners - Multi Twitch",
-        "width": 9,
-        "file": "runners-multitwitch.html",
-        "headerColor": "#2d4e8a",
-        "workspace": "Video Feeds"
-      },
-      {
-        "name": "twitch-chat",
-        "title": "Twitch chat",
-        "width": 3,
-        "file": "twitch-chat.html",
-        "headerColor": "#2d4e8a",
-        "workspace": "Video Feeds"
-      },
-      {
-        "name": "mixer-chat",
-        "title": "Mixer chat",
-        "width": 3,
-        "file": "mixer-chat.html",
-        "headerColor": "#2d4e8a",
-        "workspace": "Video Feeds"
-      },
-      {
-        "name": "twitch-feed",
-        "title": "Twitch Live Feed",
-        "width": 4,
-        "file": "twitch-feed.html",
-        "headerColor": "#2d4e8a",
-        "workspace": "Video Feeds"
-      },
-      {
-        "name": "mixer-feed",
-        "title": "Mixer Live Feed",
-        "width": 5,
-        "file": "mixer-feed.html",
-        "headerColor": "#2d4e8a",
-        "workspace": "Video Feeds"
       }
     ],
     "graphics": [
+      {
+        "file": "view-videofeeds.html",
+        "width": 1920,
+        "height": 1080
+      },
       {
         "file": "restream.html",
         "width": 1280,

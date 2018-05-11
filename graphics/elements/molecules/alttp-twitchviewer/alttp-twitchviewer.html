@@ -1,4 +1,4 @@
-<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
 <dom-module id="alttp-twitchviewer">
 	<template>
@@ -6,13 +6,12 @@
 			:host {
 				padding: 0;
 				margin: 0;
-				@apply --layout-vertical;
+				@apply --layout-horizontal;
 				overflow: hidden;
 			}
+
 			iframe{
-				width:100vw;
-				min-height: 720px;
-				height: 100vh;
+				@apply --layout-flex;
 			}
 		</style>
 

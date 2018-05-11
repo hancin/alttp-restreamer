@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ALTTP Graphics</title>
+	<link href="https://fonts.googleapis.com/css?family=Teko:600&amp;subset=latin-ext" rel="stylesheet">
+	<link rel="stylesheet" href="style/layout.css">
+	<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+	<link rel="import" href="elements/molecules/alttp-twitchchat/alttp-twitchchat.html">
+	<link rel="import" href="elements/molecules/alttp-twitchfeed/alttp-twitchfeed.html">
+	<link rel="import" href="elements/molecules/alttp-twitchviewer/alttp-twitchviewer.html">
+	<link rel="import" href="elements/molecules/alttp-mixerfeed/alttp-mixerfeed.html">
+	<link rel="import" href="elements/molecules/alttp-mixerchat/alttp-mixerchat.html">
+</head>
+
+<body>
+	<div id="containerFull">
+		<view-videofeeds></view-videofeeds>
+	</div>
+
+	<dom-module id="view-videofeeds">
+		<template>
+			<style>
+				:host{
+					@apply --layout-vertical;
+				}
+				#container1, #container2 {
+					@apply --layout-flex-6;
+					@apply --layout-horizontal;
+				}
+
+				iframe{border:none;}
+
+
+				#container1{
+					height: 40vh;
+				}
+
+				#container2 {
+					height: 60vh;
+				}
+
+				alttp-twitchfeed, alttp-mixerfeed{
+					@apply --layout-flex-5;
+				}
+
+				alttp-twitchchat, alttp-mixerchat{
+					@apply --layout-flex-2;
+				}
+				alttp-twitchviewer{
+					@apply --layout-flex-10;
+				}
+			</style>
+			<div id="container1">
+				<alttp-twitchfeed></alttp-twitchfeed>
+				<alttp-mixerfeed></alttp-mixerfeed>
+				<alttp-mixerchat></alttp-mixerchat>
+			</div>
+			<div id="container2">
+				<alttp-twitchviewer></alttp-twitchviewer>
+				<alttp-twitchchat></alttp-twitchchat>
+			</div>
+		</template>
+
+
+
+		<script>
+
+			Polymer({
+				is: 'view-videofeeds',
+
+			});
+		</script>
+	</dom-module>
+</body>
+
+</html>
