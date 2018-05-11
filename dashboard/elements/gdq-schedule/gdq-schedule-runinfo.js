@@ -33,7 +33,8 @@ class GdqScheduleRuninfo extends Polymer.Element {
 				type: Array,
 				value: []
 			},
-			order: Number
+			order: Number,
+			animationTime: Number
 		};
 	}
 
@@ -53,7 +54,6 @@ class GdqScheduleRuninfo extends Polymer.Element {
 		}
 	}
 
-
 	setRun(run) {
 		this.name = run.name;
 		this.commentators = run.commentators;
@@ -65,6 +65,9 @@ class GdqScheduleRuninfo extends Polymer.Element {
 		this.broadcasters = run.broadcasters;
 		this.time = run.time;
 		this.originalValues = run.originalValues;
+
+
+		setInterval((() => this._timeChanged(run.time)).bind(this), 15000);
 	}
 
 	calcName(name) {
