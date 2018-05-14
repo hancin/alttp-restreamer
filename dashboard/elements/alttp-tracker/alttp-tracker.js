@@ -36,6 +36,12 @@
 		ready() {
 			super.ready();
 
+			this.clipboard = new ClipboardJS(this.shadowRoot.querySelectorAll("textarea"));
+
+			this.clipboard.on('success', newVal => {
+				console.log(newVal);
+			});
+
 			this.baseUrl = nodecg.bundleConfig.tracker.url;
 
 			currentRun.on('change', newVal => {

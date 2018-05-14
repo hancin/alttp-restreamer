@@ -1,0 +1,30 @@
+<link rel="import" href="../../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+
+<script src="../../../../node_modules/moment/min/moment.min.js"></script>
+<dom-module id="alttp-scheduleinfo">
+	<template>
+		<style>
+			ol{
+				list-style-type: none;
+				padding: 0;
+				margin:0;
+				text-indent: 0;
+			}
+			li{
+				font-size: 1.1em;
+			}
+		</style>
+		<ol>
+			<template is="dom-repeat" items="[[schedule]]" as="match">
+				<li style$="color: [[calcColor(match.time)]]">[[formatTime(match.time)]] | [[formatChannel(match.channel)]] | [[match.name]]</li>
+			</template>
+		</ol>
+
+		<template is="dom-if" if="[[!schedule]]">
+			No matches to display.
+		</template>
+	</template>
+
+	<script src="alttp-scheduleinfo.js"></script>
+</dom-module>

@@ -17,7 +17,10 @@ const timer = require('./timekeeping');
 const {calcOriginalValues, mergeChangesFromTracker} = require('./lib/diff-run');
 
 const POLL_INTERVAL = 60 * 60 * 1000;
+const SD_POLL_INTERVAL = 15 * 60 * 1000;
+
 let updateInterval;
+let displayInterval;
 
 const checklist = require('./checklist');
 const canSeekScheduleRep = nodecg.Replicant('canSeekSchedule');
@@ -27,6 +30,8 @@ const nextRunRep = nodecg.Replicant('nextRun');
 const runnersRep = nodecg.Replicant('runners', {defaultValue: {}, persistent: false});
 const runOrderMap = nodecg.Replicant('runOrderMap', {defaultValue: {}, persistent: false});
 const scheduleRep = nodecg.Replicant('schedule', {defaultValue: [], persistent: false});
+const scheduleInfoRep = nodecg.Replicant('scheduleInfo', {defaultValue: [], persistent: false});
+
 const emitter = new EventEmitter();
 module.exports = emitter;
 module.exports.update = update;
@@ -71,6 +76,7 @@ currentRunRep.on('change', newVal => {
 
 // Get latest schedule data every POLL_INTERVAL milliseconds
 updateInterval = setInterval(update, POLL_INTERVAL);
+displayInterval = setInterval(prepareInfo, SD_POLL_INTERVAL);
 
 // Dashboard can invoke manual updates
 nodecg.listenFor('updateSchedule', (data, cb) => {
@@ -235,6 +241,23 @@ function parseEntry(entry){
 	return runner;
 }
 
+function prepareInfo() {
+	if(!scheduleRep.value)
+		return;
+
+	const startDate = moment().subtract(90, 'minutes');
+	const endDate = moment().add(1, 'hour');
+	
+	const relevantEntries = scheduleRep.value.filter(match => moment(match.time).isBetween(startDate, endDate));
+
+	
+	if(deepEqual(relevantEntries, scheduleInfoRep.value)){
+		return;
+	}
+
+	scheduleInfoRep.value = clone(relevantEntries);
+}
+
 /**
  * Gets the latest schedule info from the GDQ tracker.
  * @returns {Promise} - A a promise resolved with "true" if the schedule was updated, "false" if unchanged.
@@ -242,7 +265,7 @@ function parseEntry(entry){
 function update() {
 	const rightNow = moment().startOf('hour');
 
-	const runsPromise = request({
+	return request({
 		uri: nodecg.bundleConfig.useMockData ?
 			'https://www.dropbox.com/s/fghcrrst55c5qsi/schedule.json' :
 			nodecg.bundleConfig.speedgaming.scheduleNew,
@@ -253,49 +276,42 @@ function update() {
 			dl: 1 // For Dropbox only
 		},
 		json: true
-	});
+	}).then(entries=> {
+		//Channels to ignore at all times.
+		const bannedChannels = [31];
 
-	//Channels to ignore at all times.
-	const bannedChannels = [31];
+		console.log(`There were ${entries.length} results from search, before any filters.`);
 
-	const runsPromisePreprocessed = nodecg.bundleConfig.useMockData? runsPromise : 
-		runsPromise.then(entries=> {
-			console.log(`There were ${entries.length} results from search, before any filters.`);
+		let valid = [];
+		let order = 1;
+		const filteredResults = entries.filter(m => m.approved && m.channel !== null && !bannedChannels.includes(m.channel.id));
+		
+		console.log(`After filtering them, ${filteredResults.length} results will be read.`);
 
-			let valid = [];
-			let order = 1;
-			const filteredResults = entries.filter(m => m.approved && m.channel !== null && !bannedChannels.includes(m.channel.id));
-			
-			console.log(`After filtering them, ${filteredResults.length} results will be read.`);
+		for(let match of filteredResults){
 
-			for(let match of filteredResults){
-
-				let run = {
-					order: order,
-					name: match.match1.players.map(x=>x.displayName).join(" vs "),
-					time: match.when,
-					channel: match.channel.name,
-					runners: [...match.match1.players.map(parseEntry)],
-					trackers : match.trackers.filter(x=>x.approved).map(parseEntry),
-					commentators: match.commentators.filter(x=>x.approved).map(parseEntry),
-					broadcasters: match.broadcasters.filter(x=>x.approved).map(parseEntry),
-					id: match.id,
-					pk: match.id,
-					type: 'run'
-				}
-				
-				run.notes = `${run.channel}\r\n${moment(match.when).calendar()}`;
-
-				order += 1;
-				valid.push(run);
+			let run = {
+				order: order,
+				name: match.match1.players.map(x=>x.displayName).join(" vs "),
+				time: match.when,
+				channel: match.channel.name,
+				runners: [...match.match1.players.map(parseEntry)],
+				trackers : match.trackers.filter(x=>x.approved).map(parseEntry),
+				commentators: match.commentators.filter(x=>x.approved).map(parseEntry),
+				broadcasters: match.broadcasters.filter(x=>x.approved).map(parseEntry),
+				id: match.id,
+				pk: match.id,
+				type: 'run'
 			}
 			
-			return Promise.resolve(valid);
-		});
+			run.notes = `${run.channel}\r\n${moment(match.when).calendar()}`;
 
-	return Promise.all([
-		runsPromisePreprocessed
-	]).then(([runsJSON]) => {
+			order += 1;
+			valid.push(run);
+		}
+		
+		return Promise.resolve(valid);
+	}).then(runsJSON => {
 
 		// If nothing has changed, return.
 		if (deepEqual(runsJSON, scheduleRep.value)) {
@@ -356,14 +372,12 @@ function update() {
 			}
 		}
 
+		prepareInfo();
 		return true;
 	}).catch(error => {
 		const response = error.response;
 		const actualError = error.error || error;
-		if (response && response.statusCode === 403) {
-			nodecg.log.warn('[schedule] Permission denied, refreshing session and trying again...');
-			emitter.emit('permissionDenied');
-		} else if (response) {
+		if (response) {
 			nodecg.log.error('[schedule] Failed to update, got status code', response.statusCode);
 		} else {
 			nodecg.log.error('[schedule] Failed to update:', actualError);
