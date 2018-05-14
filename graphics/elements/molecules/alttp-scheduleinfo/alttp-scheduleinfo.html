@@ -15,14 +15,16 @@
 				font-size: 1.1em;
 			}
 		</style>
-		<ol>
-			<template is="dom-repeat" items="[[schedule]]" as="match">
-				<li style$="color: [[calcColor(match.time)]]">[[formatTime(match.time)]] | [[formatChannel(match.channel)]] | [[match.name]]</li>
-			</template>
-		</ol>
+		<template is="dom-if" if="[[isInterviewing]]">
+			<ol>
+				<template is="dom-repeat" items="[[schedule]]" as="match">
+					<li style$="color: [[calcColor(match.time)]]">[[formatTime(match.time)]] | [[formatChannel(match.channel)]] | [[match.name]]</li>
+				</template>
+			</ol>
 
-		<template is="dom-if" if="[[!schedule]]">
-			No matches to display.
+			<template is="dom-if" if="[[!schedule]]">
+				No matches to display.
+			</template>
 		</template>
 	</template>
 
