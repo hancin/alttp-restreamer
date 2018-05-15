@@ -56,7 +56,11 @@
 		}
 
 		formatTime(time){
-			return moment(time).fromNow().replace(" minutes", "m").replace(" hour","h");
+			const that = moment(time);
+			const time_diff = that.diff(moment(), 'minutes');
+			if(time_diff <= -45 || time_diff >= 45)
+				return that.format('h:mm A');
+			return moment(time).fromNow().replace(" minutes", "m").replace("an hour","1h");
 		}
 
 		calcColor(time){
