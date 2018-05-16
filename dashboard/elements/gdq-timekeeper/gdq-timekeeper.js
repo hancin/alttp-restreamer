@@ -3,7 +3,6 @@
 
 	const stopwatch = nodecg.Replicant('stopwatch');
 	const currentRun = nodecg.Replicant('currentRun');
-	const checklistComplete = nodecg.Replicant('checklistComplete');
 
 	class GdqTimekeeper extends Polymer.Element {
 		static get is() {
@@ -44,9 +43,6 @@
 					runners[i] = runners[i] || false;
 				}
 				this.runners = runners;
-			});
-			checklistComplete.on('change', newVal => {
-				this.checklistIncomplete = !newVal;
 			});
 		}
 
