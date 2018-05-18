@@ -35,7 +35,6 @@
 					twitchPlayerStreams.on('change', newVal => {
 						if(!newVal)
 							return;
-						console.log(newVal);
 
 						this.set("streams", newVal.slice(0));
 					});

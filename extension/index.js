@@ -46,6 +46,8 @@ module.exports = function (nodecg) {
 	
 	const schedule = require('./schedule');
 
+	const experimentalTwitchRep = nodecg.Replicant('experimentalTwitch');
+
 	// Be careful when re-ordering these.
 	// Some of them depend on Replicants initialized in others.
 	require('./timekeeping');
