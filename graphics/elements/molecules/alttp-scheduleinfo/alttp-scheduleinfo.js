@@ -58,7 +58,7 @@
 		formatTime(time){
 			const that = moment(time);
 			const time_diff = that.diff(moment(), 'minutes');
-			if(time_diff <= -45 || time_diff >= 45)
+			if(time_diff <= -40 || time_diff >= 40)
 				return that.format('h:mm A');
 			return moment(time).fromNow().replace(" minutes", "m").replace("an hour","1h");
 		}
