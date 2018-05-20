@@ -17,7 +17,7 @@ const timer = require('./timekeeping');
 const {calcOriginalValues, mergeChangesFromTracker} = require('./lib/diff-run');
 
 const POLL_INTERVAL = 60 * 60 * 1000;
-const SD_POLL_INTERVAL = 15 * 60 * 1000;
+const SD_POLL_INTERVAL = 5 * 60 * 1000;
 
 let updateInterval;
 let displayInterval;
@@ -90,6 +90,8 @@ nodecg.listenFor('updateSchedule', (data, cb) => {
 		} else {
 			nodecg.log.info('Schedule unchanged, not updated');
 		}
+
+		prepareInfo();
 
 		cb(null, updated);
 	}, error => {
