@@ -113,7 +113,7 @@
 			</style>
 
 			<template is="dom-repeat" items="[[runners]]" as="runner">
-				<alttp-runner index="[[index]]" runner="[[runner]]"></alttp-runner>
+				<alttp-runner index="[[index]]" runner="[[runner]]" stream="[[getStream(streams, index)]]" show-twitch="[[showTwitch]]"></alttp-runner>
 			</template>
 
 			<div id="countdown" >
@@ -141,6 +141,8 @@
 			const currentRunExtra = nodecg.Replicant('currentRunExtra');
 			const time = nodecg.Replicant('countdown');
 			const running = nodecg.Replicant('countdownRunning');
+			const experimentalTwitch = nodecg.Replicant('experimentalTwitch');
+			const twitchPlayerStreams = nodecg.Replicant('twitchPlayerStreams');
 
 			Polymer({
 				is: 'layout-commentary',
@@ -161,7 +163,12 @@
 					countdownVisible: {
 						type: Boolean,
 						value: false
-					}
+					},
+					showTwitch: {
+						type: Boolean,
+						value: false
+					},
+					streams: {type: Array, value: []}
 				},
 
 				ready() {
@@ -199,7 +206,25 @@
 						this.standings = newVal.standings;
 					});
 
+					experimentalTwitch.on('change', newVal => {
+						this.showTwitch = newVal;
+					});
+					
+					twitchPlayerStreams.on('change', newVal => {
+						if(!newVal)
+							return;
+
+						this.set("streams", newVal.slice(0));
+					});
+
 				},
+
+				getStream(streams, index){
+					if(!streams)
+						return {};
+					
+					return streams[index];
+				}
 
 			});
 		</script>

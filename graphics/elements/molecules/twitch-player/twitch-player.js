@@ -16,6 +16,7 @@
 					type: Object,
 					observer: '_streamChanged'
 				},
+				index: Number,
 				currentStreamUrl: String,
 			}
 		}
@@ -45,11 +46,10 @@
 
 				this.timerContext = this.$.timer.getContext('2d');
 				this.gameContext = this.$.game.getContext('2d');
+				const data = {timerContext: this.timerContext,gameContext: this.gameContext, videoSource: video, cb: () => $this.draw(data)};
 				
-				const cb = () => $this.draw({timerContext: this.timerContext,gameContext: this.gameContext,videoSource: video, cb: cb});
-
 				video.addEventListener('play', function() {
-					window.requestAnimationFrame(cb);
+					window.requestAnimationFrame(data.cb);
 				});
 			}
 			if(!newVal || newVal.hlsUrl == ""){

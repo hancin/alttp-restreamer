@@ -1,6 +1,7 @@
 <link rel="import" href="../../../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../alttp-tracker/alttp-tracker.html">
+<link rel="import" href="../twitch-player/twitch-player.html">
 <dom-module id="alttp-runner">
 	<template>
 		<style>
@@ -70,7 +71,6 @@
 				height: 446px;
 				font-size: 35px;
 				line-height: 128px;
-				padding: 3px 15px;
 			}
 
 			#runner0 .runnerStream {
@@ -144,6 +144,9 @@
 			<alttp-tracker item-trackers="[[itemTrackers]]" index="[[index]]" password="[[password]]"></alttp-tracker>
 			<div class="runnerStream">
 			</div>
+			<template is="dom-if" if="[[showTwitch]]">
+				<twitch-player stream="[[stream]]" index="[[index]]"></twitch-player>
+			</template>
 			<div class="runnerExtra">
 				<img src="[[calcStatusGraph(results, index)]]" />
 			</div>

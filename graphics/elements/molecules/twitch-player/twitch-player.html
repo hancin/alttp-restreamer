@@ -5,16 +5,41 @@
 	<template>
 		<style>
 
-			video{
+			video, #frame{
 				display:none;
 			}
+
+			#timer, #game{
+				position: absolute;
+			}
+
+			#runner0 #timer{
+				left: 56px;
+				top: 24px;
+			}
+
+			#runner1 #timer {
+				left: 1046px;
+				top: 24px;
+			}
+
+			#runner0 #game {
+				left: 48px;
+				top: 83px;
+			}
+
+			#runner1 #game {
+				left: 674px;
+				top: 83px;
+			}
+
 		</style>
-		<center>
-			<video id="video" controls></video>
+		<div id$="runner[[index]]">
+			<video id="video"></video>
 
 			<canvas width="558" height="448" id="game"></canvas>
 			<canvas width="178" height="47" id="timer"></canvas>
-		</center>
+		</div>
 	
 	</template>
 	<script src="twitch-player.js"></script>

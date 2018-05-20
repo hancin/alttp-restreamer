@@ -14,7 +14,9 @@
 			return {
 				itemTrackers: {type:Array, value: []},
 				runner: Object,
-				index: Number
+				index: Number,
+				stream: Object,
+				showTwitch: {type:Boolean, value: false}
 			};
 		}
 
