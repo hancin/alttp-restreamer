@@ -24,6 +24,7 @@
 				'mixerChannel': String,
 				'srtvPage': String,
 				'standings': String,
+				'seed': String,
 				'round': String,
 				'runName': String,
 				'selectedInfoTab': {
@@ -58,6 +59,7 @@
 				this.twitchChannel = newVal.twitchChannel;
 				this.mixerChannel = newVal.mixerChannel;
 				this.password = newVal.password;
+				this.seed = newVal.seed;
 				this.standings = newVal.standings;
 				this.round = newVal.round;
 				this.srtvPage = newVal.srtvPage;
@@ -118,6 +120,7 @@
 				mixerChannel: this.mixerChannel,
 				password: this.password,
 				standings: this.standings,
+				seed: this.seed,
 				round: this.round,
 				srtvPage: this.srtvPage,
 				pk: this.pk

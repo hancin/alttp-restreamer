@@ -140,6 +140,15 @@
 					<a href="[[srtvPage]]" target="_blank">View</a>
 					
 				</div>
+				<div class="row">
+					<paper-input
+						label="Seed page"
+						value="{{seed}}"
+						always-float-label>
+					</paper-input>
+										
+					<a href="[[seed]]" target="_blank">View</a>
+				</div>
 
 				<template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">
 					<div class="row">
@@ -254,6 +263,15 @@ Some things to note to help expedite the setup process:
 
 You will receive the seed in the SR.TV chat at the latest 10 minutes prior to race start.
  </pre>
+ <b>Send in SRTV chat when runners are ready.</b>
+ <pre>I see you're both here, so here's the seed for tonight: [[seed]]
+ </pre>
+ <b>Further SRTV instructions:</b>
+ <pre>When you're both ready and we're live, we'll give you a two minute warning before the race start.
+ </pre> 
+ <b>Two-minute warning:</b>
+ <pre>Looks like everyone is ready. Unless you tell me to stop, we're going in two minutes.
+ </pre> 
 </div>
 	</iron-pages>
 	</template>

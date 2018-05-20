@@ -60,6 +60,7 @@ currentRunRep.on('change', newVal => {
 			mixerChannel: '',
 			standings: '',
 			round: '',
+			seed: '',
 			srtvPage: '',
 			pk: newVal.pk
 		}
@@ -192,6 +193,7 @@ nodecg.listenFor('modifyRunExtra', (data, cb) => {
 		mixerChannel: data.mixerChannel,
 		password: data.password,
 		standings: data.standings,
+		seed: data.seed,
 		round: data.round,
 		srtvPage: data.srtvPage,
 		pk: data.pk
