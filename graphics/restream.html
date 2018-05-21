@@ -133,7 +133,7 @@
 						if (!newVal) {
 							return;
 						}
-						this.commentators = newVal.commentators.map(comm => comm.name).join(', ');
+						this.commentators = newVal.commentators.filter(comm=>comm.name !== '').map(comm => comm.name).join(', ');
 						this.runners = newVal.runners;
 						if (newVal.runners.length !== 3 && newVal.runners.length <= 4) {
 							this.numRunners = newVal.runners.length;
@@ -151,7 +151,7 @@
 					experimentalTwitch.on('change', newVal => {
 						this.showTwitch = newVal;
 					});
-					
+
 					twitchPlayerStreams.on('change', newVal => {
 						if(!newVal)
 							return;

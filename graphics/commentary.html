@@ -190,7 +190,7 @@
 						if (!newVal) {
 							return;
 						}
-						this.commentators = newVal.commentators.map(comm => comm.name).join(', ');
+						this.commentators = newVal.commentators.filter(comm=>comm.name !== '').map(comm => comm.name).join(', ');
 						this.runners = newVal.runners;
 						this.trackers = newVal.trackers.map(track => track.name).join(', ');
 						this.broadcasters = newVal.broadcasters.map(track => track.name).join(', ');
