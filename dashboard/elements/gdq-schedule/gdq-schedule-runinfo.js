@@ -85,6 +85,13 @@ class GdqScheduleRuninfo extends Polymer.Element {
 	calcModified(original) {
 		return typeof original === 'undefined' || original === null ? '' : 'modified';
 	}
+	
+	calcModified2(original, index) {
+		if(typeof original === 'undefined' || original === null)
+			return '';
+
+		return this.calcModified(original[index]);
+	}
 }
 
 customElements.define(GdqScheduleRuninfo.is, GdqScheduleRuninfo);

@@ -5,6 +5,12 @@
 	const schedule = nodecg.Replicant('schedule');
 	const currentRunExtraRep = nodecg.Replicant('currentRunExtra');
 
+	function helper(text){
+		if(!text)
+		return "_";
+
+		return text.stream;
+	}
 
 	/**
 	 * @customElement
@@ -75,12 +81,12 @@
 		updateRunInfo(run) {
 			this.runName = run.name;
 			this.textRunnerNames = (!run.runners) ? "" : run.runners.map(x=>x.name.replace(" ","")).join(" ");
-			this.textBroadcasterStreams = (!run.broadcasters) ? "" : run.broadcasters.map(x=>x.stream).join(" ");
-			this.textCommentatorStreams = (!run.commentators) ? "" : run.commentators.map(x=>x.stream).join(" ");
+			this.textBroadcasterStreams = (!run.broadcasters) ? "_" : `${helper(run.broadcasters[0])}`;
+			this.textCommentatorStreams = (!run.commentators) ? "_ _" : `${helper(run.commentators[0])} ${helper(run.commentators[1])}`;
 			this.textCommentatorDiscords = (!run.commentators) ? "" : run.commentators.map(x=>x.discord).join(", ");
 			this.textRunnerStreams = (!run.runners) ? "" : run.runners.map(x=>x.stream).join(" ");
 			this.textRunnerDiscords = (!run.runners) ? "" : run.runners.map(x=>x.discord).join(", ");
-			this.textTrackerStreams = (!run.trackers) ? "" : run.trackers.map(x=>x.stream).join(" ");
+			this.textTrackerStreams = (!run.trackers) ? "_" : `${helper(run.trackers[0])}`;
 			this.textTrackerDiscords = (!run.trackers) ? "" : run.trackers.map(x=>x.discord).join(", ");
 			this.runPk = run.pk;
 

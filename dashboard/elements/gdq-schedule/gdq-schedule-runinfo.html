@@ -127,29 +127,25 @@
 		<div class="divider"></div>
 
 		<section id="runners">
-			<div class$="padded runner [[calcModified(originalValues.runners.0)]]" style="margin-bottom: 12px;">
-				<label>Runner</label>
-				<span class="value" title="[[runners.0.name]]">[[runners.0.name]]&#8203;</span>
-			</div>
-			<div class$="padded runner [[calcModified(originalValues.runners.1)]]" style="margin-bottom: 12px;">
-				<label>Runner 2</label>
-				<span class="value" title="[[runners.1.name]]">[[runners.1.name]]&#8203;</span>
-			</div>
-			<div class$="padded runner [[calcModified(originalValues.runners.2)]]">
-				<label>Runner 3</label>
-				<span class="value" title="[[runners.2.name]]">[[runners.2.name]]&#8203;</span>
-			</div>
-			<div class$="padded runner [[calcModified(originalValues.runners.3)]]">
-				<label>Runner 4</label>
-				<span class="value" title="[[runners.3.name]]">[[runners.3.name]]&#8203;</span>
-			</div>
+			<template is="dom-repeat" items="[[runners]]" as="runner">
+				<div class$="padded runner [[calcModified2(originalValues.runners, index)]]" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+					<label>Runner</label>
+					<span class="value" title="[[runner.name]]">[[runner.name]]&#8203;</span>
+				</div>
+			</template>
+			<template is="dom-if" if="[[!runners.length]]">
+				<section class="padded" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+					<label>Runners</label>
+					<span class="value picnic"><u>No runners on schedule?</u></span>
+				</section>
+			</template>
 		</section>
 
 		<div class="divider"></div>
 
 		<section id="commentators" >
 			<template is="dom-repeat" items="[[commentators]]" as="commentator">
-				<div class="padded runner" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+				<div class$="padded runner [[calcModified2(originalValues.commentators, index)]]" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
 					<label>Commentator</label>
 					<span class="value" title="[[commentator.name]]">[[commentator.name]]&#8203;</span>
 				</div>
@@ -161,10 +157,12 @@
 				</section>
 			</template>
 		</section>
+
 		<div class="divider"></div>
+
 		<section id="trackers" >
 			<template is="dom-repeat" items="[[trackers]]" as="tracker">
-				<div class="padded runner" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+				<div class$="padded runner [[calcModified2(originalValues.trackers, index)]]" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
 					<label>Tracker</label>
 					<span class="value" title="[[tracker.name]]">[[tracker.name]]&#8203;</span>
 				</div>
@@ -178,9 +176,10 @@
 		</section>
 
 		<div class="divider"></div>
+
 		<section id="broadcasters" >
 			<template is="dom-repeat" items="[[broadcasters]]" as="broadcaster">
-				<div class="padded runner" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
+				<div class$="padded runner [[calcModified2(originalValues.broadcasters, index)]]" style="margin-bottom: 12px;" style="margin-bottom: 12px;">
 					<label>Broadcaster</label>
 					<span class="value" title="[[broadcaster.name]]">[[broadcaster.name]]&#8203;</span>
 				</div>
@@ -192,6 +191,7 @@
 				</section>
 			</template>
 		</section>
+		
 		<div class="divider"></div>
 
 		<section id="notes" class="padded">

@@ -1,0 +1,146 @@
+<link rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../../bower_components/paper-input/paper-input.html">
+
+<dom-module id="alttp-run-section">
+    <template>
+        <style>
+			.edit-box {
+				@apply --layout-vertical;
+				padding: 16px;
+			}
+
+			.edit-box {
+				@apply --layout-flex-2;
+				border: 1px solid #C1C1C1;
+				margin-left: 4px;
+			}
+
+			.edit-box > :nth-child(1) paper-input {
+				--paper-input-container-focus-color: #32a7d3;
+				--paper-input-container-label: {
+					color: #32a7d3;
+				};
+			}
+
+			.edit-box > :nth-child(2) paper-input {
+				--paper-input-container-focus-color: #fa5959;
+				--paper-input-container-label: {
+					color: #fa5959;
+				};
+			}
+
+			.edit-box > :nth-child(3) paper-input {
+				--paper-input-container-focus-color: #24c55d;
+				--paper-input-container-label: {
+					color: #24c55d;
+				};
+			}
+
+			.edit-box > :nth-child(4) paper-input {
+				--paper-input-container-focus-color: #dd4dee;
+				--paper-input-container-label: {
+					color: #dd4dee;
+				};
+			}
+
+			.row {
+				@apply --layout-horizontal;
+				@apply --layout-center;
+			}
+
+			.row > :not(:last-child) {
+				margin-right: 12px;
+			}
+
+			.row > :not(:first-child) {
+				margin-left: 12px;
+			}
+			.runner-buttons, .text-buttons {
+				@apply --layout-horizontal;
+			}
+
+			.runner-buttons paper-button{
+				padding: 0;
+				min-width: 0;
+				width: 42px;
+				height: 42px;
+				--paper-button: {
+					color: white;
+					background-color: #645BA6;
+				}
+			}
+
+            h3 paper-button {
+				padding: 0;
+				min-width: 0;
+				width: 30px;
+				height: 30px;
+                vertical-align: middle;
+				--paper-button: {
+                    color: white;
+                    background-color: #24c55d;
+                }
+            }
+
+			paper-input {
+				@apply --layout-flex;
+				--paper-input-container-disabled: {
+					opacity: 1;
+					background-color: #ffb0b3;
+				}
+			}
+        </style>
+        <h3>[[name]]s
+            <template is="dom-if" if="[[_canAddMore(data.length, max)]]">
+                <paper-button class="add-button" on-tap="_add" raised>
+                    <iron-icon icon="add"></iron-icon>
+                </paper-button>
+            </template>
+        </h3>
+        <div class="edit-box">
+            <template id="content" is="dom-repeat" items="[[data]]" as="item">
+                <div class="row" data-index$="[[index]]">
+                    <div>
+                        <paper-input label="Name" value="{{item.name}}" 
+                            hidden$="[[_shouldDisplayOriginal(index,'name', showingOriginal)]]" always-float-label>
+                        </paper-input>
+                        <paper-input label="Name" value="[[calcVal(originalValues, index, 'name')]]" 
+                            hidden$="[[!_shouldDisplayOriginal(index,'name', showingOriginal)]]" always-float-label disabled>
+                        </paper-input>
+                    </div>
+
+                    <div>
+                        <paper-input label="Twitch Channel" value="{{item.stream}}" 
+                            hidden$="[[_shouldDisplayOriginal(index, 'stream', showingOriginal)]]" always-float-label>
+                        </paper-input>
+                        <paper-input label="Twitch Channel" value="[[calcVal(originalValues, index, 'stream')]]" 
+                            hidden$="[[!_shouldDisplayOriginal(index, 'stream', showingOriginal)]]" always-float-label disabled>
+                        </paper-input>
+                    </div>
+                    <div>
+                        <paper-input label="Discord" value="{{item.discord}}" 
+                            hidden$="[[_shouldDisplayOriginal(index, 'discord', showingOriginal)]]" always-float-label>
+                        </paper-input>
+                        <paper-input label="Discord" value="[[calcVal(originalValues, index, 'discord')]]"
+                            hidden$="[[!_shouldDisplayOriginal(index, 'discord', showingOriginal)]]" always-float-label disabled>
+                        </paper-input>
+                    </div>
+
+                    <div class="runner-buttons">
+                        <paper-button class="runner-up-button" on-tap="_moveUp" raised disabled$="[[calcDisabledIndex(index, data.length, 0)]]">
+                            <iron-icon icon="arrow-upward"></iron-icon>
+                        </paper-button>
+                        <paper-button class="runner-down-button" on-tap="_moveDown" raised disabled$="[[calcDisabledIndex(index, data.length, 1)]]">
+                            <iron-icon icon="arrow-downward"></iron-icon>
+                        </paper-button>
+                    </div>
+                </div>
+            </template>
+            <div class="text-buttons">
+            </div>
+        </div>
+    </template>
+    <script src="alttp-run-section.js"></script>
+</dom-module>

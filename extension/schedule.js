@@ -157,6 +157,7 @@ nodecg.listenFor('modifyRun', (data, cb) => {
 	data.runners = data.runners.map(scrubItem);
 	data.commentators = data.commentators.map(scrubItem);
 	data.trackers = data.trackers.map(scrubItem);
+	data.broadcasters = data.broadcasters.map(scrubItem);
 
 	let run;
 	if (currentRunRep.value.pk === data.pk) {
@@ -233,7 +234,6 @@ nodecg.listenFor('resetRun', (pk, cb) => {
 
 function parseEntry(entry){
 	let runner = {
-		pk: entry.id,
 		name: entry.displayName,
 		stream: entry.publicStream,
 		discord: entry.discordTag

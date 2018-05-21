@@ -125,6 +125,22 @@ function calcOriginalValues(run, original) {
 						default:
 							throw new Error(`Unexpected difference:\n${JSON.stringify(difference)}`);
 					}
+				} else if(difference.path[0] === 'broadcasters'){
+					if (!originalValues.broadcasters) {
+						originalValues.broadcasters = [];
+					}
+
+					switch (difference.item.kind) {
+						case 'N':
+							originalValues.broadcasters[difference.index] = {name: '', stream: '', discord: ''};
+							break;
+						case 'D':
+							originalValues.broadcasters[difference.index] = clone(original.broadcasters[difference.index]);
+							break;
+						/* istanbul ignore next: shouldn't be possible to enter default path */
+						default:
+							throw new Error(`Unexpected difference:\n${JSON.stringify(difference)}`);
+					}
 				} else {
 					throw new Error(`Unexpected difference:\n${JSON.stringify(difference)}`);
 				}
