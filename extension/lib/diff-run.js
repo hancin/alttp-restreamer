@@ -197,7 +197,7 @@ function mergeChangesFromTracker(run, unmodifiedRun) {
 
 		switch (difference.kind) {
 			case 'E':
-				if (difference.path[0] === 'runners' && difference.rhs === '') {
+				if ((difference.path[0] === 'runners' || difference.path[0] === 'trackers' || difference.path[0] === 'commentators' || difference.path[0] === 'broadcasters') && difference.rhs === '') {
 					delete objectPath.get(run, pathBase)[pathTip];
 				} else {
 					objectPath.set(run, difference.path, difference.rhs);
