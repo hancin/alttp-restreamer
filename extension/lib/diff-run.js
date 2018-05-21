@@ -277,6 +277,19 @@ function mergeChangesFromTracker(run, unmodifiedRun) {
 			}
 		}
 
+		if (run.originalValues.broadcasters) {
+			for (let i = 0; i < run.originalValues.broadcasters.length; i++) {
+				if (typeof run.originalValues.broadcasters[i] === 'object' &&
+					Object.keys(run.originalValues.broadcasters[i]).length === 0) {
+					delete run.originalValues.broadcasters[i];
+				}
+			}
+
+			if (Object.keys(run.originalValues.broadcasters).length === 0) {
+				delete run.originalValues.broadcasters;
+			}
+		}
+
 		if (Object.keys(run.originalValues).length === 0) {
 			delete run.originalValues;
 		}
