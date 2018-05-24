@@ -282,7 +282,7 @@ function update() {
 		json: true
 	}).then(entries=> {
 		//Channels to ignore at all times.
-		const bannedChannels = [31];
+		const bannedChannels = [31,36];
 
 		console.log(`There were ${entries.length} results from search, before any filters.`);
 
