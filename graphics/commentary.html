@@ -124,9 +124,8 @@
 					&nbsp;&nbsp;<img height="16" src="assets/images/tv.svg" />&nbsp;[[broadcasters]]
 				</div>
 				
-
+				<template is="dom-if" if="[[countdownVisible]]"><div class="textShadow" style="font-family: monospace;font-size: 22px;text-align: center">[[countdown]]</div></template>
 				<alttp-scheduleinfo></alttp-scheduleinfo>
-				<template is="dom-if" if="[[countdownVisible]]"><div class="textShadow" style="font-family: monospace;font-size: 24px;text-align: center">[[countdown]]</div></template>
 			</div>
 			<div id="matchInfo" class="textShadow">
 				[[round]]
