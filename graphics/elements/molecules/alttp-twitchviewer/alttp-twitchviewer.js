@@ -32,7 +32,7 @@
 		}
 
 		_mapToUrl(runners) {
-			return `https://kadgar.net/live/${runners.join("/")}`;
+			return `http://kadgar.net/live/${runners.join("/")}`;
 		}
 
 

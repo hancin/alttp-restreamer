@@ -66,8 +66,8 @@
 		calcColor(time){
 			const realTime = moment(time);
 
-			const colorDifference = Math.abs(realTime.diff(moment(), 'minutes'))*2;
-			const opacityDifference = Math.min(Math.max(colorDifference - 60, 0), 1);
+			const colorDifference = Math.round(Math.abs(realTime.diff(moment(), 'minutes'))*1.5);
+			const opacityDifference = Math.min(Math.max(colorDifference - 60, 0), 1)*2;
 			const realColor = 255 - Math.min(colorDifference, 120);
 
 			return `rgba(${realColor},${realColor},${realColor},${1-(opacityDifference/100)})`;
