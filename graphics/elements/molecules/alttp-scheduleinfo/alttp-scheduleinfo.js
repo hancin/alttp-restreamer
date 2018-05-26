@@ -59,7 +59,7 @@
 			const that = moment(time);
 			const time_diff = that.diff(moment(), 'minutes');
 			if(time_diff <= -40 || time_diff >= 40)
-				return that.format('h:mm A');
+				return that.tz('America/Toronto').format('h:mm A z');
 			return moment(time).fromNow().replace(" minutes", "m").replace("an hour","1h");
 		}
 
