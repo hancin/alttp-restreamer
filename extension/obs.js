@@ -11,14 +11,56 @@ const OBSUtility = require('nodecg-utility-obs');
 // Ours
 const nodecg = require('./util/nodecg-api-context').get();
 
+const model = {
+	commentary: {
+		obs: new OBSUtility(nodecg, {namespace: 'commentatorOBS'}),
+		scene: nodecg.Replicant('commentatorScene'),
+	},
+	restream: {
+		obs: new OBSUtility(nodecg, {namespace: 'restreamOBS'}),
+		scene: nodecg.Replicant('restreamScene'),
+	},
+	leftRunner: {
+		timerSource: nodecg.Replicant('leftTimerSource'),
+		gameSource: nodecg.Replicant('leftGameSource')
+	},
+	rightRunner: {
+		timerSource: nodecg.Replicant('rightTimerSource'),
+		gameSource: nodecg.Replicant('rightGameSource')
+	}
+};
 
-const commentatorOBS = new OBSUtility(nodecg, {namespace: 'commentatorOBS'});
-const restreamOBS = new OBSUtility(nodecg, {namespace: 'restreamOBS'});
+function _dispatch(cb){
+	cb(model.commentary);
+	cb(model.restream);
+}
 
-commentatorOBS.replicants.sceneList.on('change', newVal => {
-	console.log(newVal);
-});
-commentatorOBS.replicants.programScene.on('change', newVal => {
+
+
+_dispatch(obsVm => obsVm.obs.replicants.sceneList.on('change', newVal => {
+	if(!newVal)
+		return;
+
+	const scene = obsVm.scene.value;
+	if(!scene)
+		return;
+	
+	if(newVal.includes(scene)){
+		console.log(`Scene ${scene} present in OBS, looking good!`);
+	}else{
+		console.warn(`Scene ${scene} not present in OBS! Please check your config.`);
+	}
+	
+}));
+
+_dispatch(obsVm => obsVm.obs.replicants.previewScene.on('change', newVal => {
+	if(!newVal)
+		return;
+	
+	
+}));
+
+_dispatch(obsVm => obsVm.obs.replicants.programScene.on('change', newVal => {
 	if (!newVal) {
 		return;
 	}
@@ -60,7 +102,7 @@ commentatorOBS.replicants.programScene.on('change', newVal => {
 
 		return false;
 	});
-});
+}));
 
 module.exports = {
 	updateRestream() {
@@ -70,22 +112,17 @@ module.exports = {
 	},
 
 	resetCropping() {
-		return commentatorOBS.send('ResetCropping').catch(error => {
-			nodecg.log.error('resetCropping error:', error);
-		});
 	},
 
 	setCurrentScene(sceneName) {
-		return commentatorOBS.setCurrentScene({
-			'scene-name': sceneName
-		});
+		_dispatch(obsVm => obsVm.obs.setCurrentScene({'scene-name': sceneName}));
 	},
 
 	get commentatorOBSConnected() {
-		return commentatorOBS._connected;
+		return model.commentary.obs._connected;
 	},
 	
 	get restreamOBSConnected() {
-		return restreamOBS._connected;
+		return model.restream.obs._connected;
 	}
 };

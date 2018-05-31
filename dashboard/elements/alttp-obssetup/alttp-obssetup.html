@@ -117,6 +117,13 @@
 					</template>
 				</paper-listbox>
 			</paper-dropdown-menu>
+			<paper-dropdown-menu label="Commentary scene">
+				<paper-listbox slot="dropdown-content" selected="0" >
+					<template is="dom-repeat" items="[[scenes]]" as="scene">
+							<paper-item>[[scene]]</paper-item>
+					</template>
+				</paper-listbox>
+			</paper-dropdown-menu>
 		</div>
 
 		<div id="edit-ctrls">
