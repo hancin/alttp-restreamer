@@ -16,6 +16,7 @@ timers and game. All the rest will be rendered unnecessary in the next step.
    * Custom CSS: remove all the existing content in this box.
    * Shutdown source when not visible: Yes
    * Refresh browser when scene becomes active: No (I like to manually refresh if I feel the need to)
+ 6. (Optional) You can copy this scene and create a commentator scene based on it. Change the browser source URL to http://localhost:9090/bundles/alttp-restreamer/graphics/commentary.html in that scene, and it'll show the commentator info box.
  8. Assuming the schedule isn't empty, the overlay will update with the first race it found so you can see it in action!
  9. Proceed to Race Setup.
 
@@ -28,7 +29,7 @@ timers and game. All the rest will be rendered unnecessary in the next step.
  3. Pick your race by typing a name in the "Search" box, and hitting "Take".
  4. Hit "Generate Trackers", then enter the Round (eg. Swiss Round 5) and Standings (eg. 2-2). Finish this config by hitting Save.
  5. Copy the "Start Race Setup" from the Commands tab, and run it in #restreamer on Discord.
- 6. Copy the SRTV page that ALTTP Tourney Bot gives you in a DM. enter it in the "SR.TV Page" box, and hit Save.
+ 6. Copy the SRTV page and Seed that ALTTP Tourney Bot gives you in a DM. enter it in the "SR.TV Page" and "Seed Page" boxex, and hit Save.
  7. You can send the information in the "Trackers", "Commentators" and "Runners" to the appropriate people. Their discord tags are 
  mentioned when you click the tab.
  8. Run the "Twitch commands for restreamers" in the twitch channel. If those don't work, check with Felix to make sure he added you,
