@@ -1,4 +1,4 @@
-# First-time setup
+## First-time setup
 
 The first time setup requires that you do a couple steps to get the full functionality.
 
@@ -20,7 +20,7 @@ timers and game. All the rest will be rendered unnecessary in the next step.
  8. Assuming the schedule isn't empty, the overlay will update with the first race it found so you can see it in action!
  9. Proceed to Race Setup.
 
- # Race Setup
+ ## Race Setup
  
  You will do this everytime you want to do a race with the program.
  
