@@ -9,14 +9,14 @@ console window open until you're done streaming.
 4. In the new scene, remove all sources except for the frame overlay (to hide errors in crops), and the left and right runners 
 timers and game. All the rest will be rendered unnecessary in the next step.
 5. Create a new browser source with the following information:
-   * URL: http://localhost:9090/bundles/alttp-restreamer/graphics/restream.html
-   * Width: 1280
-   * Height: 720
-   * FPS: 60 (or 30, if you're broadcasting 30fps)
+   * URL: `http://localhost:9090/bundles/alttp-restreamer/graphics/restream.html`
+   * Width: `1280`
+   * Height: `720`
+   * FPS: `60` (or 30, if you're broadcasting 30fps)
    * Custom CSS: remove all the existing content in this box.
-   * Shutdown source when not visible: Yes
-   * Refresh browser when scene becomes active: No (I like to manually refresh if I feel the need to)
- 6. (Optional) You can copy this scene and create a commentator scene based on it. Change the browser source URL to http://localhost:9090/bundles/alttp-restreamer/graphics/commentary.html in that scene, and it'll show the commentator info box.
+   * Shutdown source when not visible: `Yes`
+   * Refresh browser when scene becomes active: `No` (I like to manually refresh if I feel the need to)
+ 6. (Advanced and optional) You can copy this scene and create a commentator scene based on it. Change the browser source URL to `http://localhost:9090/bundles/alttp-restreamer/graphics/commentary.html` in that scene, and it'll show the commentator info box.
  7. Assuming the schedule isn't empty, the overlay will update with the first race it found so you can see it in action!
  8. Proceed to Race Setup.
 
