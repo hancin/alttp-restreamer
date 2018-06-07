@@ -1,4 +1,4 @@
-## First-time setup
+<h3>First-time setup</h3>
 
 The first time setup requires that you do a couple steps to get the full functionality.
 
@@ -17,10 +17,10 @@ timers and game. All the rest will be rendered unnecessary in the next step.
    * Shutdown source when not visible: Yes
    * Refresh browser when scene becomes active: No (I like to manually refresh if I feel the need to)
  6. (Optional) You can copy this scene and create a commentator scene based on it. Change the browser source URL to http://localhost:9090/bundles/alttp-restreamer/graphics/commentary.html in that scene, and it'll show the commentator info box.
- 8. Assuming the schedule isn't empty, the overlay will update with the first race it found so you can see it in action!
- 9. Proceed to Race Setup.
+ 7. Assuming the schedule isn't empty, the overlay will update with the first race it found so you can see it in action!
+ 8. Proceed to Race Setup.
 
- ## Race Setup
+ <h3>Race Setup</h3>
  
  You will do this everytime you want to do a race with the program.
  
