@@ -23,7 +23,7 @@ timers and game. All the rest will be rendered unnecessary in the next step.
  
  You will do this everytime you want to do a race with the program.
  
- 1. Run nodecg.exe, wait for the browser to open.
+ 1. Run the app and wait for the browser to open.
  2. Open OBS (If you open OBS before nodecg is started, just go to the properties of the browser source and hit "Refresh cache")
  3. Pick your race by typing a name in the "Search" box, and hitting "Take".
  4. Hit "Generate Trackers", then enter the Round (eg. Swiss Round 5) and Standings (eg. 2-2). Finish this config by hitting Save.
