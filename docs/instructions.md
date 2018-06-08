@@ -2,8 +2,7 @@
 
 The first time setup requires that you do a couple steps to get the full functionality.
 
-1. Extract the zip file you downloaded to a new folder.
-2. Run the "nodecg.exe" program inside the folder. After a few seconds, the main dashboard will show up in your browser. Leave the little 
+2. Run the "Node.js" program from the shortcut. After a few seconds, the main dashboard will show up in your browser. Leave the little 
 console window open until you're done streaming.
 3. Right-click on your current Scene in OBS, and hit Duplicate. We do this so you can go back to the old ways later if you need to.
 4. In the new scene, remove all sources except for the frame overlay (to hide errors in crops), and the left and right runners 
