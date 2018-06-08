@@ -4,7 +4,7 @@
 const nodecg = require('./util/nodecg-api-context').get();
 const TimeUtils = require('./lib/time');
 
-const time = nodecg.Replicant('countdown', {defaultValue: TimeUtils.createTimeStruct(1800 * 1000), persistent: false});
+const time = nodecg.Replicant('countdown', {defaultValue: TimeUtils.createTimeStruct(900 * 1000), persistent: false});
 const running = nodecg.Replicant('countdownRunning', {defaultValue: false, persistent: false});
 let countdownTimer;
 

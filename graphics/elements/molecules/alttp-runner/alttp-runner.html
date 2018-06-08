@@ -144,9 +144,6 @@
 			<alttp-tracker item-trackers="[[itemTrackers]]" index="[[index]]" password="[[password]]"></alttp-tracker>
 			<div class="runnerStream">
 			</div>
-			<template is="dom-if" if="[[showTwitch]]">
-				<twitch-player stream="[[stream]]" index="[[index]]"></twitch-player>
-			</template>
 			<div class="runnerExtra">
 				<img src="[[calcStatusGraph(results, index)]]" />
 			</div>

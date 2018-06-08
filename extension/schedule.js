@@ -262,6 +262,15 @@ function prepareInfo() {
 	scheduleInfoRep.value = clone(relevantEntries);
 }
 
+function makeDummy(name, handle){
+	return {
+		approved: true,
+		displayName: name,
+		publicStream: handle,
+		discordTag: `${handle}#0001`
+	};
+}
+
 /**
  * Gets the latest schedule info from the GDQ tracker.
  * @returns {Promise} - A a promise resolved with "true" if the schedule was updated, "false" if unchanged.
@@ -281,6 +290,20 @@ function update() {
 		},
 		json: true
 	}).then(entries=> {
+
+		if(!entries){
+			entries = [{
+				approved: true,
+				match1: {players: [makeDummy('Player 1', 'player1'), makeDummy('Player 2', 'player2')]},
+				channel: {name: 'ALTTPRandomizer', id: 993},
+				when: moment().startOf('hour').format(),
+				trackers: [makeDummy('Tracker','tracker')],
+				commentators: [makeDummy('Crossproduct', 'crossproduct'), makeDummy('Tairr', 'tairr')],
+				broadcasters: [makeDummy('You', 'me')],
+				id: 69420
+			}];
+		}
+
 		//Channels to ignore at all times.
 		const bannedChannels = [31,36];
 
@@ -288,11 +311,19 @@ function update() {
 
 		let valid = [];
 		let order = 1;
-		const filteredResults = entries.filter(m => m.approved && m.channel !== null && !bannedChannels.includes(m.channel.id));
+		const filteredResults = entries.filter(m => m.approved && (
+			  (m.channel !== undefined && m.channel !== null && !bannedChannels.includes(m.channel.id))
+		      ||(m.channels !== undefined && m.channels !== null && m.channels.some(c=> c !== null && !bannedChannels.includes(c.id)))
+			)
+		);
 		
 		console.log(`After filtering them, ${filteredResults.length} results will be read.`);
 
 		for(let match of filteredResults){
+
+			if(!match.channel){
+				match.channel = match.channels.find(c=> c !== null && !bannedChannels.includes(c.id));
+			}
 
 			let run = {
 				order: order,
@@ -306,7 +337,7 @@ function update() {
 				id: match.id,
 				pk: match.id,
 				type: 'run'
-			}
+			};
 			
 			run.notes = `${run.channel}\r\n${moment(match.when).calendar()}`;
 

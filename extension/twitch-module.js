@@ -31,12 +31,14 @@ const hlsUrlCache = new NodeCache({stdTTL: 900, checkperiod: 150});
  */
 function _findHlsStreams()
 {
-	if(twitchPlayerStreams.value === undefined)
+	const unknownStreams = twitchPlayerStreams.value;
+	if(unknownStreams === undefined || !unknownStreams || !unknownStreams.forEach)
 		return;
 
-	const unknownStreams = twitchPlayerStreams.value;
-
 	unknownStreams.forEach(async (item, index) => {
+		if(!item || !item.stream)
+			return;
+
 		if(item.stream.hlsUrl !== "" && !item.stream.forceReload){
 			return;
 		}
