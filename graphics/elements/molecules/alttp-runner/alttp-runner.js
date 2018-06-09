@@ -13,6 +13,7 @@
 		static get properties() {
 			return {
 				itemTrackers: {type:Array, value: []},
+				standings: {type:Array, value: [0,0]},
 				runner: Object,
 				index: Number,
 				stream: Object,
@@ -30,6 +31,7 @@
 					return;
 				this.password = newVal.password;
 				this.set('itemTrackers', newVal.itemTrackers.slice(0));
+				this.set('standings', newVal.standings.split('-'));
 			});
 			
 		}
@@ -58,18 +60,21 @@
 			
 		}
 		
-		calcStatusGraph(results, index) {
-			if (!results) {
-				return "assets/images/standby.png";
+		calcStatusGraph(results, index, standings, minimum) {
+			let winCount = 0;
+			if(standings[index] !== undefined){
+				winCount = parseInt(standings[index]);
 			}
 
-			if(results[index] && results[index].forfeit)
-				return "assets/images/forfeit.png"; 
-			
-			if(results[index] && results[index].place === 1)
-				return "assets/images/winner.png"; 
+			if (Array.isArray(results) && results[index] && results[index].place === 1) {
+				winCount += 1;
+			}
 
-			return "assets/images/standby.png";
+			if (winCount >= minimum){
+				return "assets/images/triforce-light.png";
+			}
+
+			return "assets/images/triforce-dark.png";
 
 
 		}

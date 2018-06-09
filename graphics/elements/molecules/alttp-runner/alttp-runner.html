@@ -88,17 +88,38 @@
 				width: 128px;
 				height: 41px;
 				font-size: 20px;
-				line-height: 41px;
+				width: 130px;
+				height: 52px;
+				text-align: center;
 			}
 
 			#runner0 .runnerExtra {
 				left: 385px;
-				top: 564px;
+				top: 550px;
 			}
 
 			#runner1 .runnerExtra {
-				left: 767px;
-				top: 564px;
+				left: 764px;
+				top: 550px;
+			}
+
+			.runnerExtra .win {
+				width: 60px;
+				margin-top:7px;
+			}
+			.runnerExtra .runner0.win1, .runnerExtra .runner1.win2{
+				float:left;
+			}
+			.runnerExtra .runner0.win2, .runnerExtra .runner1.win1{
+				float:right;
+			}
+			.runnerExtra .wins{
+				position: absolute;
+				left: 0;
+				top: 0;
+				width:130px;
+				text-align: center;
+				display: block;
 			}
 
 			.textShadow {
@@ -145,7 +166,9 @@
 			<div class="runnerStream">
 			</div>
 			<div class="runnerExtra">
-				<img src="[[calcStatusGraph(results, index)]]" />
+				<span class="textShadow wins">Wins</span>
+				<img class$="runner[[index]] win1 win" src="[[calcStatusGraph(results, index, standings, 1)]]" />
+				<img class$="runner[[index]] win2 win" src="[[calcStatusGraph(results, index, standings, 2)]]" />
 			</div>
 		</div>
 	</template>
