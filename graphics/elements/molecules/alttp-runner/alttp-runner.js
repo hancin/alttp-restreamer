@@ -71,10 +71,10 @@
 			}
 
 			if (winCount >= minimum){
-				return "assets/images/triforce-light.png";
+				return "assets/images/triforce-on.png";
 			}
 
-			return "assets/images/triforce-dark.png";
+			return "assets/images/triforce-off.png";
 
 
 		}
