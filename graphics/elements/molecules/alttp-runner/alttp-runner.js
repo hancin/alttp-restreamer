@@ -64,6 +64,9 @@
 			let winCount = 0;
 			if(standings[index] !== undefined){
 				winCount = parseInt(standings[index]);
+				if(isNaN(winCount))
+					winCount = 0;
+					
 			}
 
 			if (Array.isArray(results) && results[index] && results[index].place === 1) {
@@ -75,6 +78,22 @@
 			}
 
 			return "assets/images/triforce-off.png";
+
+
+		}
+
+		calcStatusGraph2(results, index) {
+			if (!results) {
+				return "assets/images/standby.png";
+			}
+
+			if(results[index] && results[index].forfeit)
+				return "assets/images/forfeit.png"; 
+			
+			if(results[index] && results[index].place === 1)
+				return "assets/images/winner.png"; 
+
+			return "assets/images/standby.png";
 
 
 		}
