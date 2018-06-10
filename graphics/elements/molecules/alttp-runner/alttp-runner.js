@@ -15,6 +15,7 @@
 				itemTrackers: {type:Array, value: []},
 				standings: {type:Array, value: [0,0]},
 				runner: Object,
+				cssClass: {type:String, value:""},
 				index: Number,
 				stream: Object,
 				showTwitch: {type:Boolean, value: false}
@@ -66,7 +67,7 @@
 				winCount = parseInt(standings[index]);
 				if(isNaN(winCount))
 					winCount = 0;
-					
+
 			}
 
 			if (Array.isArray(results) && results[index] && results[index].place === 1) {

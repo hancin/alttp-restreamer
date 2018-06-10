@@ -103,6 +103,33 @@
 				top: 550px;
 			}
 
+			#runner0.commentary .runnerExtra, #runner1.commentary .runnerExtra{
+				top:690px;
+			}
+			.commentary .runnerExtra{
+				background-color: rgba(255,255,255,0.5);
+			}
+			.commentary .runnerExtra img {
+				max-height: 25px;
+			}
+			.commentary .runnerExtra .wins {
+				display:none;
+			}
+			.commentary .runnerExtra .win {
+				width:25px;
+			}
+			.commentary .runnerExtra .status{
+				clear:none;
+				position: absolute;
+				top: 5px;
+				left: 55px;
+			}
+			
+			.commentary .runnerExtra .runner0.win, .commentary .runnerExtra .runner1.win{
+				float:left;
+			}
+
+
 			.runnerExtra .win {
 				width: 60px;
 				margin-top:7px;
@@ -112,6 +139,9 @@
 			}
 			.runnerExtra .runner0.win2, .runnerExtra .runner1.win1{
 				float:right;
+			}
+			.runnerExtra .status{
+				clear:both;
 			}
 			.runnerExtra .wins{
 				position: absolute;
@@ -155,7 +185,7 @@
 				letter-spacing: 1px;
 			}
 		</style>
-		<div id="runner[[index]]">
+		<div id="runner[[index]]" class$="[[cssClass]]">
 			<div class="runnerName textShadow">
 				[[runner.name]]
 			</div>
@@ -169,7 +199,7 @@
 				<span class="textShadow wins">Wins</span>
 				<img class$="runner[[index]] win1 win" src="[[calcStatusGraph(results, index, standings, 1)]]" />
 				<img class$="runner[[index]] win2 win" src="[[calcStatusGraph(results, index, standings, 2)]]" />
-				<div style="clear:both">
+				<div class="status">
 					<img src="[[calcStatusGraph2(results, index, standings, 2)]]" />
 				</div>
 			</div>

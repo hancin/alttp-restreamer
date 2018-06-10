@@ -113,7 +113,7 @@
 			</style>
 
 			<template is="dom-repeat" items="[[runners]]" as="runner">
-				<alttp-runner index="[[index]]" runner="[[runner]]" stream="[[getStream(streams, index)]]" show-twitch="[[showTwitch]]"></alttp-runner>
+				<alttp-runner css-class="commentary" index="[[index]]" runner="[[runner]]" stream="[[getStream(streams, index)]]" show-twitch="[[showTwitch]]"></alttp-runner>
 			</template>
 
 			<div id="countdown" >
