@@ -28,7 +28,7 @@ timers and game. All the rest will be rendered unnecessary in the next step.
  3. Pick your race by typing a name in the "Search" box, and hitting "Take".
  4. Hit "Generate Trackers", then enter the Round (eg. Swiss Round 5) and Standings (eg. 2-2). Finish this config by hitting Save.
  5. Copy the "Start Race Setup" from the Commands tab, and run it in #restreamer on Discord.
- 6. Copy the SRTV page and Seed that ALTTP Tourney Bot gives you in a DM. enter it in the "SR.TV Page" and "Seed Page" boxex, and hit Save.
+ 6. Copy the SRTV page and Seed that ALTTP Tourney Bot gives you in a DM. enter it in the "SR.TV Page" and "Seed Page" boxes, and hit Save.
  7. You can send the information in the "Trackers", "Commentators" and "Runners" to the appropriate people. Their discord tags are 
  mentioned when you click the tab.
  8. Run the "Twitch commands for restreamers" in the twitch channel. If those don't work, check with Felix to make sure he added you,
