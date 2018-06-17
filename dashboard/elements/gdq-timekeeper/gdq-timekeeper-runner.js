@@ -73,6 +73,7 @@ class GdqTimekeeperRunner extends Polymer.Element {
 	}
 
 	finish() {
+		nodecg.sendMessage('startTimer');
 		nodecg.sendMessage('completeRunner', {index: this.index, forfeit: false});
 	}
 
