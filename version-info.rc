@@ -1,0 +1,26 @@
+1 VERSIONINFO
+FILEVERSION 1,2,6,0
+PRODUCTVERSION 1,2,6,0
+FILEOS 0x40004
+FILETYPE 0x1
+{
+BLOCK "StringFileInfo"
+{
+    BLOCK "040904b0"
+    {
+        VALUE "FileDescription", "ALTTP Restreamer Dashboard"
+        VALUE "FileVersion", "1.2.6"
+        VALUE "InternalName", "dashboard.exe"
+        VALUE "LegalCopyright", "Copyright (C) 2017"
+        VALUE "OriginalFilename", "dashboard.exe"
+        VALUE "ProductName", "ALTTP Restreamer Dashboard"
+        VALUE "ProductVersion", "1.2.6-installer"
+        VALUE "SquirrelAwareVersion", "0"
+    }
+}
+
+BLOCK "VarFileInfo"
+{
+	VALUE "Translation", 0x0409 0x04B0  
+}
+}
