@@ -18,7 +18,6 @@ BLOCK "StringFileInfo"
         VALUE "OriginalFilename", "dashboard.exe"
         VALUE "ProductName", "ALTTP Restreamer Dashboard"
         VALUE "ProductVersion", "$env:APPVEYOR_BUILD_VERSION-$(-join $env:APPVEYOR_REPO_COMMIT[0..7])"
-        VALUE "SquirrelAwareVersion", "0"
     }
 }
 
