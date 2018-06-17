@@ -29,7 +29,7 @@
 
 				this.$.typeahead.items = newVal
 					.filter(item => item.type === 'run')
-					.map(speedrun => speedrun.name);
+					.map(speedrun => `${speedrun.order} - ${speedrun.name}`);
 				this._checkButtons();
 			});
 
@@ -67,6 +67,7 @@
 			}
 
 			const nameToFind = this.$.typeahead.value;
+			const theOrder = parseInt(this.$.typeahead.value.substr(0, this.$.typeahead.value.indexOf(" ")));
 
 			// Find the run based on the name.
 			const matched = schedule.value.some(run => {
@@ -74,7 +75,9 @@
 					return false;
 				}
 
-				if (run.name.toLowerCase() === nameToFind.toLowerCase()) {
+
+
+				if (run.order === theOrder) {
 					this._pendingSetCurrentRunByOrderMessageResponse = true;
 					this._checkButtons();
 					nodecg.sendMessage('setCurrentRunByOrder', run.order, () => {
