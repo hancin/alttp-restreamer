@@ -14,7 +14,7 @@ cache:
 
 install:
   - ps: Install-Product node 9 x64
-  - choco install reshack
+  - choco install reshack --no-progress
   - git reset --hard HEAD
   - npm install -g bower pkg
   - npm install
@@ -30,13 +30,13 @@ build_script:
   - cd nodecg
   - mkdir instrumented
   - npm i && bower install
-  - 'move %APPVEYOR_BUILD_FOLDER%\version-info.rc .'
+  - 'move %APPVEYOR_BUILD_FOLDER%\make-versioninfo.ps1 .'
   - 'move %APPVEYOR_BUILD_FOLDER% bundles\%APPVEYOR_PROJECT_SLUG%'
   - pkg . --targets node9-win-x64 --public -o dashboard.exe
   - if not exist cfg mkdir cfg
   - set "RH_PATH=C:\Program Files (x86)\Resource Hacker"
   - set "PATH=%RH_PATH%;%PATH%"
-  - ResourceHacker -open dashboard.exe -save dashboard.exe -action delete -mask ICONGROUP,1, & exit 0
+  - ps: .\make-versioninfo.ps1
   - ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
   - ResourceHacker -open dashboard.exe -save dashboard.exe -action addoverwrite -resource .\version-info.res
   - 'echo {"logging": {"console": {"level": "info"},"file": {"enabled": true,"level": "debug"},"replicants": false}} >> cfg/nodecg.json'
