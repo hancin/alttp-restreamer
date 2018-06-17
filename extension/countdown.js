@@ -37,6 +37,12 @@ function start(startTime) {
 	countdownTimer = new TimeUtils.CountdownTimer(Date.now() + durationMs);
 	countdownTimer.on('tick', remainingTimeStruct => {
 		time.value = remainingTimeStruct;
+
+		if(remainingTimeStruct.raw < 1000 && countdownTimer){
+			countdownTimer.stop();
+			running.value = false;
+			time.value = TimeUtils.createTimeStruct(900 * 1000);
+		}
 	});
 }
 
