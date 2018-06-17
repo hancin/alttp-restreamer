@@ -17,7 +17,7 @@ BLOCK "StringFileInfo"
         VALUE "LegalCopyright", "Copyright (c) 2017-$(Get-Date -Format yyyy) Hancin"
         VALUE "OriginalFilename", "dashboard.exe"
         VALUE "ProductName", "ALTTP Restreamer Dashboard"
-        VALUE "ProductVersion", "$env:APPVEYOR_BUILD_VERSION-$($env:APPVEYOR_REPO_COMMIT[0..7])"
+        VALUE "ProductVersion", "$env:APPVEYOR_BUILD_VERSION-$(-join $env:APPVEYOR_REPO_COMMIT[0..7])"
         VALUE "SquirrelAwareVersion", "0"
     }
 }
