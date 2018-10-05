@@ -13,7 +13,6 @@
 
 <body>
 	<div id="container">
-		<img id="background" src="assets/backgrounds/bg2-blank.png">
 		<layout-commentary></layout-commentary>
 	</div>
 
@@ -93,7 +92,7 @@
 					top: 564px;
 				}
 				#rightdata {
-					position: absolute;
+					position: relative;
 					left: 380px;
 					top: 544px;
 					font-size:16px;
@@ -105,32 +104,64 @@
 					overflow: hidden;
 					
 				}
+
+				.runner4l #rightdata{
+					top: 682px;
+					left: 192px;
+					width: 896px;
+					height: 35px;
+
+				}
+				.runner4l #rightdata .countdown{
+					position: absolute;
+					right: 20px;
+					top: 5px;
+					font-size: 1.2em;
+				}
 				.crew{
 					border-bottom: 1px solid #c1c1c1;
 					padding-bottom:6px;
 					margin-bottom: 6px;
 				}
+				.runner2l #background2, .runner4l #background{
+					display:none;
+				}
+
+				#background, #background2 {
+					position: absolute;
+					top: 0;
+					left: 0;
+					z-index: -10;
+				}
 			</style>
+			<div class$="[[layoutFlag]]">
+				<img id="background" src="assets/backgrounds/bg2-blank.png">
+				<img id="background2" src="assets/backgrounds/fall2018qual.png">
+				<template is="dom-repeat" items="[[runners]]" as="runner">
+					<alttp-runner layout-flag="[[layoutFlag]]" css-class="commentary" index="[[index]]" runner="[[runner]]" stream="[[getStream(streams, index)]]" show-twitch="[[showTwitch]]"></alttp-runner>
+				</template>
 
-			<template is="dom-repeat" items="[[runners]]" as="runner">
-				<alttp-runner css-class="commentary" index="[[index]]" runner="[[runner]]" stream="[[getStream(streams, index)]]" show-twitch="[[showTwitch]]"></alttp-runner>
-			</template>
-
-			<div id="countdown" >
-			</div>
-			<div id="rightdata">
-				<div class="crew"><img height="16" src="assets/images/commentator.png" />&nbsp;[[commentators]] 
-					&nbsp;&nbsp;<img height="16" src="assets/images/clipboard.svg" />&nbsp;[[trackers]] 
-					&nbsp;&nbsp;<img height="16" src="assets/images/tv.svg" />&nbsp;[[broadcasters]]
+				<div id="countdown">
 				</div>
-				
-				<template is="dom-if" if="[[countdownVisible]]"><div class="textShadow" style="font-family: monospace;font-size: 22px;text-align: center">[[countdown]]</div></template>
-				<alttp-scheduleinfo></alttp-scheduleinfo>
+				<div id="rightdata">
+					<div class="crew">
+						<img height="16" src="assets/images/commentator.png" />&nbsp;[[commentators]] &nbsp;&nbsp;
+						<img height="16" src="assets/images/clipboard.svg" />&nbsp;[[trackers]] &nbsp;&nbsp;
+						<img height="16" src="assets/images/tv.svg" />&nbsp;[[broadcasters]]
+					</div>
+
+					<template is="dom-if" if="[[countdownVisible]]">
+						<div class="textShadow countdown" style="font-family: monospace;font-size: 22px;text-align: center">[[countdown]]</div>
+					</template>
+					<alttp-scheduleinfo></alttp-scheduleinfo>
+				</div>
+				<div id="matchInfo" class="textShadow">
+					[[round]]
+					<br />[[standings]]
+				</div>
 			</div>
-			<div id="matchInfo" class="textShadow">
-				[[round]]
-				<br />[[standings]]
-			</div>
+
+
 		</template>
 
 
@@ -193,6 +224,12 @@
 						this.runners = newVal.runners;
 						this.trackers = newVal.trackers.map(track => track.name).join(', ');
 						this.broadcasters = newVal.broadcasters.map(track => track.name).join(', ');
+						if(newVal.runners.length <= 2){
+							this.layoutFlag ="runner2l";
+						}
+						else{
+							this.layoutFlag ="runner4l";
+						}
 						if (newVal.runners.length !== 3 && newVal.runners.length <= 4) {
 							this.numRunners = newVal.runners.length;
 						}
