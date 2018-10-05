@@ -18,7 +18,8 @@
 				cssClass: {type:String, value:""},
 				index: Number,
 				stream: Object,
-				showTwitch: {type:Boolean, value: false}
+				showTwitch: {type:Boolean, value: false},
+				layoutFlag: {type:String, value: "runner2"},
 			};
 		}
 

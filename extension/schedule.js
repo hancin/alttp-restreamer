@@ -336,8 +336,14 @@ function update() {
 				broadcasters: match.broadcasters.filter(x=>x.approved).map(parseEntry),
 				id: match.id,
 				pk: match.id,
+				event: match.event.shortName,
+				slug: match.event.slug,
 				type: 'run'
 			};
+
+			if(!run.name){
+				run.name = match.match1.title;
+			}
 			
 			run.notes = `${run.channel}\r\n${moment(match.when).calendar()}`;
 

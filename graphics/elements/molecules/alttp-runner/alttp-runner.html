@@ -10,9 +10,7 @@
 				font-family: Teko;
 				color: #fff;
 			}
-
 			.runnerName {
-				width: 305px;
 				height: 38px;
 				line-height: 35px;
 				font-size: 32px;
@@ -20,18 +18,30 @@
 				text-align: center;
 				position: absolute;
 			}
+			
+			.runnerStream {
+				position: absolute;
+				background: #000;
+				font-size: 35px;
+				line-height: 128px;
+			}
 
-			#runner0 .runnerName {
+			/* 2 player setup */
+			.runner2l .runnerName {
+				width: 305px;
+			}
+
+			.runner2l#runner0 .runnerName {
 				left: 242px;
 				top: 33px;
 			}
 
-			#runner1 .runnerName {
+			.runner2l#runner1 .runnerName {
 				left: 733px;
 				top: 33px;
 			}
 
-			.runnerTimer {
+			.runner2l .runnerTimer {
 				position: absolute;
 				width: 178px;
 				height: 47px;
@@ -43,47 +53,43 @@
 				padding: 3px 10px;
 			}
 
-			#runner0 .runnerTimer {
+			.runner2l#runner0 .runnerTimer {
 				left: 56px;
 				top: 24px;
 			}
 
-			#runner1 .runnerTimer {
+			.runner2l#runner1 .runnerTimer {
 				left: 1046px;
 				top: 24px;
 			}
 
-			#runner0 alttp-tracker {
+			.runner2l#runner0 alttp-tracker {
 				left: 48px;
 				top: 564px;
 			}
 
-			#runner1 alttp-tracker {
+			.runner2l#runner1 alttp-tracker {
 				left: 912px;
 				top: 564px;
 			}
 
 
-			.runnerStream {
-				position: absolute;
-				background: #000;
+			.runner2l .runnerStream {
 				width: 558px;
 				height: 446px;
-				font-size: 35px;
-				line-height: 128px;
 			}
 
-			#runner0 .runnerStream {
+			.runner2l#runner0 .runnerStream {
 				left: 48px;
 				top: 83px;
 			}
 
-			#runner1 .runnerStream {
+			.runner2l#runner1 .runnerStream {
 				left: 674px;
 				top: 83px;
 			}
 
-			.runnerExtra {
+			.runner2l .runnerExtra {
 				position: absolute;
 				width: 128px;
 				height: 41px;
@@ -93,44 +99,45 @@
 				text-align: center;
 			}
 
-			#runner0 .runnerExtra {
+			.runner2l#runner0 .runnerExtra {
 				left: 385px;
 				top: 550px;
 			}
 
-			#runner1 .runnerExtra {
+			.runner2l#runner1 .runnerExtra {
 				left: 764px;
 				top: 550px;
 			}
 
-			#runner0.commentary .runnerExtra, #runner1.commentary .runnerExtra{
+			.runner2l#runner0.commentary .runnerExtra, .runner2l#runner1.commentary .runnerExtra{
 				top:690px;
 			}
-			.commentary .runnerExtra{
+			
+			.runner2l.commentary .runnerExtra{
 				background-color: rgba(255,255,255,0.5);
 			}
-			.commentary .runnerExtra img {
+			.runner2l.commentary .runnerExtra img {
 				max-height: 25px;
 			}
-			.commentary .runnerExtra .wins {
+			.runner2l.commentary .runnerExtra .wins {
 				display:none;
 			}
-			.commentary .runnerExtra .win {
+			.runner2l.commentary .runnerExtra .win {
 				width:25px;
 			}
-			.commentary .runnerExtra .status{
+			.runner2l.commentary .runnerExtra .status{
 				clear:none;
 				position: absolute;
 				top: 5px;
 				left: 55px;
 			}
 			
-			.commentary .runnerExtra .runner0.win, .commentary .runnerExtra .runner1.win{
+			.runner2l.commentary .runnerExtra .runner0.win, .commentary .runnerExtra .runner1.win{
 				float:left;
 			}
 
 
-			.runnerExtra .win {
+			.runner2l .runnerExtra .win {
 				width: 60px;
 				margin-top:7px;
 			}
@@ -150,6 +157,149 @@
 				width:130px;
 				text-align: center;
 				display: block;
+			}
+
+			/* 4p */
+			.runner4l .runnerName {
+				width: 175px;
+			}
+
+			.runner4l#runner0 .runnerName {
+				left: 16px;
+				top: 5px;
+			}
+
+			.runner4l#runner1 .runnerName {
+				left: 1088px;
+				top: 5px;
+			}
+			.runner4l#runner2 .runnerName {
+				left: 16px;
+				top: 362px;
+			}
+			.runner4l#runner3 .runnerName {
+				left: 1088px;
+				top: 362px;
+			}
+
+			.runner4l .runnerTimer {
+				position: absolute;
+				width: 120px;
+				height: 25px;
+				font-family: "Century Gothic", sans-serif;
+				font-weight: bold;
+				letter-spacing: 2px;
+				font-size: 24px;
+				text-align: right;
+				line-height: 26px;
+				padding: 0px 5px;
+			}
+
+			.runner4l#runner0 .runnerTimer {
+				left: 44px;
+				top: 51px;
+			}
+
+			.runner4l#runner1 .runnerTimer {
+				left: 1116px;
+				top: 50px;
+			}
+			.runner4l#runner2 .runnerTimer {
+				left: 44px;
+				top: 409px;
+			}
+			.runner4l#runner3 .runnerTimer {
+				left: 1116px;
+				top: 409px;
+			}
+
+			.runner4l#runner0 alttp-tracker {
+				left: 24px;
+				top: 94px;
+			}
+
+			.runner4l#runner1 alttp-tracker {
+				left: 1096px;
+				top: 93px;
+			}
+			.runner4l#runner2 alttp-tracker {
+				left: 24px;
+				top: 452px;
+			}
+			.runner4l#runner3 alttp-tracker {
+				left: 1096px;
+				top: 452px;
+			}
+
+
+			.runner4l .runnerStream {
+				width: 383px;
+				height: 300px;
+			}
+
+			.runner4l#runner0 .runnerStream {
+				left: 220px;
+				top: 50px;
+			}
+
+			.runner4l#runner1 .runnerStream {
+				left: 676px;
+				top: 50px;
+			}
+			.runner4l#runner2 .runnerStream {
+				left: 220px;
+				top: 369px;
+			}
+			.runner4l#runner3 .runnerStream {
+				left: 676px;
+				top: 369px;
+			}
+
+			.runner2l .runnerExtra {
+				position: absolute;
+				width: 128px;
+				height: 41px;
+				font-size: 20px;
+				width: 130px;
+				height: 52px;
+				text-align: center;
+			}
+
+			.runner2l#runner0 .runnerExtra {
+				left: 385px;
+				top: 550px;
+			}
+
+			.runner2l#runner1 .runnerExtra {
+				left: 764px;
+				top: 550px;
+			}
+
+			.runner2l#runner0.commentary .runnerExtra, .runner2l#runner1.commentary .runnerExtra{
+				top:690px;
+			}
+			
+			.runner2l.commentary .runnerExtra{
+				background-color: rgba(255,255,255,0.5);
+			}
+			.runner2l.commentary .runnerExtra img {
+				max-height: 25px;
+			}
+			.runner2l.commentary .runnerExtra .wins {
+				display:none;
+			}
+			.runner2l.commentary .runnerExtra .win {
+				width:25px;
+			}
+			.runner2l.commentary .runnerExtra .status{
+				clear:none;
+				position: absolute;
+				top: 5px;
+				left: 55px;
+			}
+			
+			.runner2l.commentary .runnerExtra .runner0.win, .commentary .runnerExtra .runner1.win{
+				float:left;
 			}
 
 			.textShadow {
@@ -185,24 +335,24 @@
 				letter-spacing: 1px;
 			}
 		</style>
-		<div id="runner[[index]]" class$="[[cssClass]]">
+		<div id="runner[[index]]" class$="[[cssClass]] [[layoutFlag]]">
 			<div class="runnerName textShadow">
 				[[runner.name]]
 			</div>
 			<div class="runnerTimer textShadow">
 				[[calcRunnerStatus(results, index)]]
 			</div>
-			<alttp-tracker item-trackers="[[itemTrackers]]" index="[[index]]" password="[[password]]"></alttp-tracker>
+			<alttp-tracker item-trackers="[[itemTrackers]]" index="[[index]]" password="[[password]]" layout-flag="[[layoutFlag]]"></alttp-tracker>
 			<div class="runnerStream">
 			</div>
-			<div class="runnerExtra">
+			<!--div class="runnerExtra">
 				<span class="textShadow wins">Wins</span>
 				<img class$="runner[[index]] win1 win" src="[[calcStatusGraph(results, index, standings, 1)]]" />
 				<img class$="runner[[index]] win2 win" src="[[calcStatusGraph(results, index, standings, 2)]]" />
 				<div class="status">
 					<img src="[[calcStatusGraph2(results, index, standings, 2)]]" />
 				</div>
-			</div>
+			</div-->
 		</div>
 	</template>
 

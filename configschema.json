@@ -1,26 +1,11 @@
 {
 	"$schema": "http://json-schema.org/draft-04/schema#",
 	"type": "object",
-	"additionalProperties": false,
+	"additionalProperties": true,
 
-	"properties": {
-		"useMockData": {
-			"type": "boolean",
-			"description": "Whether or not to use mock data instead of the real API. If true, pulls from Dropbox.",
-			"default": false
-		},
-		"operatorTwitch": {
-			"type": "string",
-			"description": "Who's the restreamer using this?",
-			"default": false
-		},
-		"twitchClientId": {
-			"type": "string",
-			"description": "Give a valid client ID for twitch app.",
-			"default": ""
-		},
-		"tracker": {
-			"type": ["object", "null"],
+	"definitions": {
+		"trackerInfo": {
+			"type": "object",
 			"properties": {
 				"url": {
 					"type": "string",
@@ -28,13 +13,8 @@
 				}
 			}
 		},
-		"cropApi": {
-			"type": "string",
-			"description": "This is where we'll pull the crop info from.",
-			"default": ""
-		},
-		"speedgaming": {
-			"type": ["object", "null"],
+		"sgApi": {
+			"type": "object",
 			"properties": {
 				"scheduleNew":{
 					"type":"string",
@@ -49,7 +29,54 @@
 					"description": "The URL to fetch players from."
 				}
 			}
+		},
+		"channel": {
+			"type": "object",
+			"properties": {
+				"slug":{
+					"type": "string",
+					"description": "An identifier for this channel"
+				},
+				"mini":{
+					"type": "string",
+					"description": "The identifier shown in the schedule"
+				},
+				"name":{
+					"type": "string",
+					"description": "The full name of this channel"
+				}
+			},
+			"required": ["slug", "mini", "name"]
 		}
 	},
-	"required": ["tracker"]
+	"properties": {
+		"useMockData": {
+			"type": "boolean",
+			"description": "Whether or not to use mock data instead of the real API. If true, pulls from Dropbox.",
+			"default": false
+		},
+		"twitchClientId": {
+			"type": "string",
+			"description": "Give a valid client ID for twitch app.",
+			"default": ""
+		},
+		"tracker": {
+			"$ref": "#/definitions/trackerInfo"
+		},
+		"cropApi": {
+			"type": "string",
+			"description": "This is where we'll pull the crop info from.",
+			"default": ""
+		},
+		"speedgaming": {
+			"$ref": "#/definitions/sgApi"
+		},
+		"channels": {
+			"type":"array",
+			"items": {
+				"$ref": "#/definitions/channel"
+			}
+		}
+	},
+	"required": ["channels"]
 }

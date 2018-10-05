@@ -132,12 +132,12 @@
 
 				<div class="row">
 					<paper-input
-						label="SR.TV page"
+						label="SRL Room"
 						value="{{srtvPage}}"
 						always-float-label>
 					</paper-input>
 					
-					<a href="[[srtvPage]]" target="_blank">View</a>
+					<!--a href="[[srtvPage]]" target="_blank">View</a-->
 					
 				</div>
 				<div class="row">
@@ -199,7 +199,7 @@
 			<paper-tab>Commands</paper-tab>	
 			<paper-tab>Trackers</paper-tab>
 			<paper-tab>Commentators</paper-tab>	
-			<paper-tab>Runners</paper-tab>	
+			<!--paper-tab>Runners</paper-tab-->	
 		</paper-tabs>
 		<iron-pages selected="{{selectedInfoTab}}">
 		<div id="Commands">
@@ -207,27 +207,27 @@
 <pre>$RestreamRace [[runPk]]</pre>
 
 <b>Twitch commands for restreamers</b>
-<pre>!redit [[textRunnerStreams]]</pre>
-<pre>!cedit [[textCommentatorStreams]] [[textTrackerStreams]] [[textBroadcasterStreams]]</pre>
-<pre>!retitle [[textRunnerNames]]</pre>
+<pre>[[commandNamesRestream.r]] [[textRunnerStreams]]</pre>
+<pre>[[commandNamesRestream.c]] [[textCommentatorStreams]] [[textTrackerStreams]] [[textBroadcasterStreams]]</pre>
+<pre>[[commandNamesRestream.title]] [[textRunnerNames]]</pre>
 
 <b>Twitch commands for moderators</b>
-<pre>@restream_moderator Setting up for stream now.  
+<pre>@Restream-Mods Setting up for stream now.  
 Could I please get these commands run on twitch.tv/[[twitchChannel]]?
-!editr [[textRunnerStreams]]
-!editc [[textCommentatorStreams]] [[textTrackerStreams]] [[textBroadcasterStreams]]
-!springtitle [[textRunnerNames]]
+[[commandNames.r]] [[textRunnerStreams]]
+[[commandNames.c]] [[textCommentatorStreams]] [[textTrackerStreams]] [[textBroadcasterStreams]]
+[[commandNames.title]] [[textRunnerNames]]
  </pre>
 
-<b>Start the race: (#restreamer)</b>
-<pre>$StartRace [[_srtvGuid(srtvPage)]]</pre>
+<!--b>Start the race: (#restreamer)</b>
+<pre>$StartRace [[_srtvGuid(srtvPage)]]</pre-->
 </div>
 <div id="Trackers">
 <b>Send to the trackers: [[textTrackerDiscords]]</b>
 <pre>Hi there, here is the information for the upcoming race!
 
-[[srtvPage]]
-ALTTP Randomizer Spring 2018 Tournament - [[runName]]
+SRL Room: [[srtvPage]]
+[[eventShort]] - [[runName]]
 
 Here's the item trackers for the different runners:
 <template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">[[itemTracker.runnerName]]: [[baseUrl]]/[[itemTracker.url]]?password=[[password]]
@@ -243,13 +243,13 @@ Commentary restream: https://mixer.com/[[mixerChannel]]
 <b>Send to the commentators: [[textCommentatorDiscords]]</b>
 <pre>Hi there, here is the information for the upcoming race!
 
-[[srtvPage]]
-ALTTP Randomizer Spring 2018 Tournament - [[runName]]
+SRL Room: [[srtvPage]]
+[[eventShort]] - [[runName]]
 
 Commentary restream: https://mixer.com/[[mixerChannel]]
  </pre>
 </div>
-<div id="Runners">
+<!--div id="Runners">
 <b>Send to the runners: [[textRunnerDiscords]]</b>
 <pre>Hi there, here is the information for the upcoming race!
 
@@ -272,7 +272,7 @@ You will receive the seed in the SR.TV chat at the latest 10 minutes prior to ra
  <b>Two-minute warning:</b>
  <pre>Looks like everyone is ready. Unless you tell me to stop, the race will start in 2 minutes.
  </pre> 
-</div>
+</div-->
 	</iron-pages>
 	</template>
 

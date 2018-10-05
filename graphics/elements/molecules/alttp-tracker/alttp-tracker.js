@@ -14,7 +14,11 @@
 				},
 				itemTrackers: {type:Array, value: []},
 				password: Number,
-				index: Number
+				index: Number,
+				layoutFlag: {
+					type: String,
+					value: "runner2"
+				}
 			};
 		}
 
@@ -22,9 +26,9 @@
 		getTrackerInfo(itemTrackers, index){
 			if(itemTrackers[index] === undefined)
 				return null;
-
-
-			return itemTrackers[index].url;
+				var layout = this.layoutFlag === "runner4l"? "4": "2";
+				var url = `${this.baseUrl}/${itemTrackers[index].url}?password=${this.password}&layout=${layout}`;
+			return url;
 		}
 	}
 
