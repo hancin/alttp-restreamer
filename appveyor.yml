@@ -13,7 +13,7 @@ cache:
   - '%USERPROFILE%\pkg-cache'
 
 install:
-  - ps: Install-Product node 9 x64
+  - ps: Install-Product node 10 x64
   - choco install reshack --no-progress
   - git reset --hard HEAD
   - npm install -g bower pkg
@@ -32,7 +32,7 @@ build_script:
   - npm i && bower install
   - 'move %APPVEYOR_BUILD_FOLDER%\make-versioninfo.ps1 .'
   - 'move %APPVEYOR_BUILD_FOLDER% bundles\%APPVEYOR_PROJECT_SLUG%'
-  - pkg . --targets node9-win-x64 --public -o dashboard.exe
+  - pkg . --targets node10-win-x64 --public -o dashboard.exe
   - if not exist cfg mkdir cfg
   - set "RH_PATH=C:\Program Files (x86)\Resource Hacker"
   - set "PATH=%RH_PATH%;%PATH%"
