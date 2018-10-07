@@ -18,13 +18,18 @@
 				cssClass: {type:String, value:""},
 				index: Number,
 				stream: Object,
-				showTwitch: {type:Boolean, value: false},
-				layoutFlag: {type:String, value: "runner2"},
+				showTwitch: {type: Boolean, value: false},
+				layoutFlag: {type: String, value: "runner2"},
+				maxTextWidth: {type: Number, value: 290},
 			};
 		}
 
 		ready() {
 			super.ready();
+
+			if(this.layoutFlag === "runner4l") {
+				this.maxTextWidth = 170;
+			}
 
 			stopwatch.on('change', this.stopwatchChanged.bind(this));
 

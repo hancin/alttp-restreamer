@@ -1,5 +1,6 @@
 <link rel="import" href="../../../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../../../bower_components/sc-fitted-text/sc-fitted-text.html">
 <link rel="import" href="../alttp-tracker/alttp-tracker.html">
 <link rel="import" href="../twitch-player/twitch-player.html">
 <dom-module id="alttp-runner">
@@ -162,13 +163,12 @@
 			/* 4p */
 			.runner4l .runnerName {
 				width: 200px;
-				font-size:20px;
-				line-height: 38px;
+				line-height: 40px;
 			}
 
 			.runner4l#runner0 .runnerName {
 				left: 5px;
-				bottom: 677px;
+				top: 5px;
 			}
 
 			.runner4l#runner1 .runnerName {
@@ -339,7 +339,7 @@
 		</style>
 		<div id="runner[[index]]" class$="[[cssClass]] [[layoutFlag]]">
 			<div class="runnerName textShadow">
-				[[runner.name]]
+				<sc-fitted-text text="[[runner.name]]" max-width="[[maxTextWidth]]" align="center"></sc-fitted-text>
 			</div>
 			<div class="runnerTimer textShadow">
 				[[calcRunnerStatus(results, index)]]
