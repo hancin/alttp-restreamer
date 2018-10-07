@@ -16,7 +16,7 @@ const nodecg = require('./util/nodecg-api-context').get();
 const timer = require('./timekeeping');
 const {calcOriginalValues, mergeChangesFromTracker} = require('./lib/diff-run');
 
-const POLL_INTERVAL = 60 * 60 * 1000;
+const POLL_INTERVAL = 60 * 60 * 1000 * 24; //HACK: slow this down a lot for now.
 const SD_POLL_INTERVAL = 5 * 60 * 1000;
 
 let updateInterval;
