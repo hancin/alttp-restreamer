@@ -18,9 +18,9 @@ stack: node 10
 
 install:
   - ps: | 
-    if ($isWindows) {
-      Install-Product node 10 x64
-    }
+      if ($isWindows) {
+        Install-Product node 10 x64
+      }
   - cmd: choco install reshack --no-progress
   - git reset --hard HEAD
   - npm install -g bower pkg
