@@ -41,7 +41,7 @@ build_script:
   - cmd: 'move %APPVEYOR_BUILD_FOLDER% bundles\%APPVEYOR_PROJECT_SLUG%'
   - sh: 'mv $APPVEYOR_BUILD_FOLDER bundles/$APPVEYOR_PROJECT_SLUG'
   - cmd: pkg . --targets node10-win-x64 --public -o dashboard.exe
-  - sh: pkg . --targets ndoe10-linux-x64 --public -o dashboard
+  - sh: pkg . --targets node10-linux-x64 --public -o dashboard
   - cmd: if not exist cfg mkdir cfg
   - sh: mkdir -p cfg
   - cmd: set "RH_PATH=C:\Program Files (x86)\Resource Hacker"
