@@ -1,4 +1,6 @@
-image: Visual Studio 2017
+image: 
+  - Visual Studio 2017
+  - Ubuntu
 
 platform:
   - x64
@@ -12,9 +14,14 @@ cache:
   - '%LOCALAPPDATA%\bower'
   - '%USERPROFILE%\pkg-cache'
 
+stack: node 10
+
 install:
-  - ps: Install-Product node 10 x64
-  - choco install reshack --no-progress
+  - ps: | 
+    if ($isWindows) {
+      Install-Product node 10 x64
+    }
+  - cmd: choco install reshack --no-progress
   - git reset --hard HEAD
   - npm install -g bower pkg
   - npm install
@@ -30,24 +37,33 @@ build_script:
   - cd nodecg
   - mkdir instrumented
   - npm i && bower install
-  - 'move %APPVEYOR_BUILD_FOLDER%\make-versioninfo.ps1 .'
-  - 'move %APPVEYOR_BUILD_FOLDER% bundles\%APPVEYOR_PROJECT_SLUG%'
-  - pkg . --targets node10-win-x64 --public -o dashboard.exe
-  - if not exist cfg mkdir cfg
-  - set "RH_PATH=C:\Program Files (x86)\Resource Hacker"
-  - set "PATH=%RH_PATH%;%PATH%"
-  - ps: .\make-versioninfo.ps1
-  - ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
-  - ResourceHacker -open dashboard.exe -save dashboard.exe -action addoverwrite -resource .\version-info.res
+  - cmd: 'move %APPVEYOR_BUILD_FOLDER%\make-versioninfo.ps1 .'
+  - cmd: 'move %APPVEYOR_BUILD_FOLDER% bundles\%APPVEYOR_PROJECT_SLUG%'
+  - sh: 'mv $APPVEYOR_BUILD_FOLDER bundles/$APPVEYOR_PROJECT_SLUG'
+  - cmd: pkg . --targets node10-win-x64 --public -o dashboard.exe
+  - sh: pkg . --targets ndoe10-linux-x64 --public -o dashboard
+  - cmd: if not exist cfg mkdir cfg
+  - sh: mkdir -p cfg
+  - cmd: set "RH_PATH=C:\Program Files (x86)\Resource Hacker"
+  - cmd: set "PATH=%RH_PATH%;%PATH%"
+  - ps: | 
+    if ($isWindows) {
+      .\make-versioninfo.ps1
+      ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
+      ResourceHacker -open dashboard.exe -save dashboard.exe -action addoverwrite -resource .\version-info.res
+    }
   - 'echo {"logging": {"console": {"level": "info"},"file": {"enabled": true,"level": "debug"},"replicants": false}} >> cfg/nodecg.json'
   - ps: Start-FileDownload 'https://www.dropbox.com/s/nv229lvugehx8jt/alttp-restreamer-demo.json?dl=1' -FileName 'cfg/alttp-restreamer.json'
 
 after_build:
   - ps: '$env:PKG_ZIP_NAME = "alttp-restreamer-$env:APPVEYOR_BUILD_VERSION-$(-join $env:APPVEYOR_REPO_COMMIT[0..7]).zip"'
-  - 7z a %PKG_ZIP_NAME% dashboard.exe cfg
+  - cmd: 7z a %PKG_ZIP_NAME% dashboard.exe cfg
+  - sh: zip -r $PKG_ZIP_NAME dashboard cfg
   - ps: 'Get-ChildItem -Recurse -ErrorAction SilentlyContinue bundles\$env:APPVEYOR_PROJECT_SLUG\node_modules\*.node | % { 7z a $env:PKG_ZIP_NAME $_.FullName }'
-  - 'if not exist %APPVEYOR_BUILD_FOLDER% mkdir %APPVEYOR_BUILD_FOLDER%'
-  - 'move %PKG_ZIP_NAME% %APPVEYOR_BUILD_FOLDER%'
+  - cmd: 'if not exist %APPVEYOR_BUILD_FOLDER% mkdir %APPVEYOR_BUILD_FOLDER%'
+  - sh: mkdir -p $APPVEYOR_BUILD_FOLDER
+  - cmd: 'move %PKG_ZIP_NAME% %APPVEYOR_BUILD_FOLDER%'
+  - sh: 'mv $PKG_ZIP_NAME $APPVEYOR_BUILD_FOLDER'
 
 test: off
 
