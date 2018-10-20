@@ -47,11 +47,11 @@ build_script:
   - cmd: set "RH_PATH=C:\Program Files (x86)\Resource Hacker"
   - cmd: set "PATH=%RH_PATH%;%PATH%"
   - ps: | 
-    if ($isWindows) {
-      .\make-versioninfo.ps1
-      ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
-      ResourceHacker -open dashboard.exe -save dashboard.exe -action addoverwrite -resource .\version-info.res
-    }
+      if ($isWindows) {
+        .\make-versioninfo.ps1
+        ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
+        ResourceHacker -open dashboard.exe -save dashboard.exe -action addoverwrite -resource .\version-info.res
+      }
   - 'echo {"logging": {"console": {"level": "info"},"file": {"enabled": true,"level": "debug"},"replicants": false}} >> cfg/nodecg.json'
   - ps: Start-FileDownload 'https://www.dropbox.com/s/nv229lvugehx8jt/alttp-restreamer-demo.json?dl=1' -FileName 'cfg/alttp-restreamer.json'
 
