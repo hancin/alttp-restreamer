@@ -32,20 +32,25 @@ before_build:
   - npm --version
 
 build_script:
+  - ps: |
+      if ($isWindows) {
+          $env:RH_PATH = "C:\Program Files (x86)\Resource Hacker"
+          $env:PATH = "$env:RH_PATH;$env:PATH"
+          $env:TARGET_EXE = "dashboard.exe"
+          $env:TARGET_PLATFORM = "node10-win-x64"
+      } else {
+          $env:TARGET_EXE = "dashboard"
+          $env:TARGET_PLATFORM = "node10-linux-x64"
+      }
   - cd ..
   - git clone https://github.com/nodecg/nodecg.git
   - cd nodecg
   - mkdir instrumented
   - npm i && bower install
-  - cmd: 'move %APPVEYOR_BUILD_FOLDER%\make-versioninfo.ps1 .'
-  - cmd: 'move %APPVEYOR_BUILD_FOLDER% bundles\%APPVEYOR_PROJECT_SLUG%'
-  - sh: 'mv $APPVEYOR_BUILD_FOLDER bundles/$APPVEYOR_PROJECT_SLUG'
-  - cmd: pkg . --targets node10-win-x64 --public -o dashboard.exe
-  - sh: pkg . --targets node10-linux-x64 --public -o dashboard
-  - cmd: if not exist cfg mkdir cfg
-  - sh: mkdir -p cfg
-  - cmd: set "RH_PATH=C:\Program Files (x86)\Resource Hacker"
-  - cmd: set "PATH=%RH_PATH%;%PATH%"
+  - ps: Move-Item $env:APPVEYOR_BUILD_FOLDER\make-versioninfo.ps1 .
+  - ps: Move-Item $env:APPVEYOR_BUILD_FOLDER bundles/$env:APPVEYOR_PROJECT_SLUG
+  - ps: pkg . --targets $env:TARGET_PLATFORM --public -o $env:TARGET_EXE
+  - ps: New-Item -ItemType Directory -Force -Path ./cfg
   - ps: | 
       if ($isWindows) {
         .\make-versioninfo.ps1
@@ -56,14 +61,19 @@ build_script:
   - ps: Start-FileDownload 'https://www.dropbox.com/s/nv229lvugehx8jt/alttp-restreamer-demo.json?dl=1' -FileName 'cfg/alttp-restreamer.json'
 
 after_build:
-  - ps: '$env:PKG_ZIP_NAME = "alttp-restreamer-$env:APPVEYOR_BUILD_VERSION-$(-join $env:APPVEYOR_REPO_COMMIT[0..7]).zip"'
-  - cmd: 7z a %PKG_ZIP_NAME% dashboard.exe cfg
-  - sh: zip -r $PKG_ZIP_NAME dashboard cfg
-  - ps: 'Get-ChildItem -Recurse -ErrorAction SilentlyContinue bundles\$env:APPVEYOR_PROJECT_SLUG\node_modules\*.node | % { 7z a $env:PKG_ZIP_NAME $_.FullName }'
-  - cmd: 'if not exist %APPVEYOR_BUILD_FOLDER% mkdir %APPVEYOR_BUILD_FOLDER%'
-  - sh: mkdir -p $APPVEYOR_BUILD_FOLDER
-  - cmd: 'move %PKG_ZIP_NAME% %APPVEYOR_BUILD_FOLDER%'
-  - sh: 'mv $PKG_ZIP_NAME $APPVEYOR_BUILD_FOLDER'
+  - ps: |
+      if ($isWindows) {
+        $env:PKG_ZIP_NAME = "alttp-restreamer-$env:APPVEYOR_BUILD_VERSION-$(-join $env:APPVEYOR_REPO_COMMIT[0..7]).zip"
+        $env:TARGET_EXE = "dashboard.exe"
+      } else {
+        $env:PKG_ZIP_NAME = "alttp-restreamer-$env:APPVEYOR_BUILD_VERSION-$(-join $env:APPVEYOR_REPO_COMMIT[0..7]).tar.gz"
+        $env:TARGET_EXE = "dashboard"
+      }
+  - cmd: 7z a %PKG_ZIP_NAME% %TARGET_EXE% cfg
+  - sh: chmod +x $TARGET_EXE
+  - sh: tar czf $PKG_ZIP_NAME $TARGET_EXE cfg
+  - ps: New-Item -ItemType Directory -Force -Path $env:APPVEYOR_BUILD_FOLDER
+  - ps: Move-Item $env:PKG_ZIP_NAME $env:APPVEYOR_BUILD_FOLDER
 
 test: off
 
