@@ -14,7 +14,7 @@ cache:
   - '%LOCALAPPDATA%\bower'
   - '%USERPROFILE%\pkg-cache'
   - '../nodecg/node_modules'
-  - '../nodecg/bundles/%APPVEYOR_PROJECT_SLUG/node_modules'
+  - '../nodecg/bundles/%APPVEYOR_PROJECT_SLUG%/node_modules'
 
 stack: node 10
 
@@ -27,7 +27,7 @@ install:
   - sh: export PATH="$(yarn global bin):$PATH"
   - git reset --hard HEAD
   - yarn global add bower pkg
-  - yarn
+  - yarn install --production
   - bower install
 
 before_build:
@@ -47,8 +47,13 @@ build_script:
   - cd ..
   - git clone https://github.com/nodecg/nodecg.git
   - cd nodecg
-  - mkdir instrumented
-  - yarn && bower install
+  - git checkout v1.1.3
+  - yarn install --production
+  - bower install
+  # Delete git directory files so they are not included in the final package.
+  - ps: Remove-Item ./.git -Force -Recurse
+  - ps: Remove-Item $env:APPVEYOR_BUILD_FOLDER/.git -Force -Recurse
+  # Move project files to bundles for use by nodecg
   - ps: Move-Item $env:APPVEYOR_BUILD_FOLDER\make-versioninfo.ps1 .
   - ps: Move-Item $env:APPVEYOR_BUILD_FOLDER bundles/$env:APPVEYOR_PROJECT_SLUG
   - ps: pkg . --targets $env:TARGET_PLATFORM --public -o $env:TARGET_EXE
