@@ -10,11 +10,12 @@ environment:
   RH_PATH: 'C:\Program Files (x86)\Resource Hacker'
 
 cache:
-  - '%LOCALAPPDATA%\yarn\cache'
+  - '%APPDATA%\npm-cache'
   - '%LOCALAPPDATA%\bower'
   - '%USERPROFILE%\pkg-cache'
-  - '../nodecg/node_modules'
-  - '../nodecg/bundles/%APPVEYOR_PROJECT_SLUG%/node_modules'
+  - '~/.npm'
+  # - '../nodecg/node_modules'
+  # - '../nodecg/bundles/%APPVEYOR_PROJECT_SLUG%/node_modules'
 
 stack: node 10
 
@@ -27,7 +28,7 @@ install:
   - sh: export PATH="$(yarn global bin):$PATH"
   - git reset --hard HEAD
   - yarn global add bower pkg
-  - yarn install --production
+  - npm ci
   - bower install
 
 before_build:
@@ -48,7 +49,7 @@ build_script:
   - git clone https://github.com/nodecg/nodecg.git
   - cd nodecg
   - git checkout v1.1.3
-  - yarn install --production
+  - npm ci
   - bower install
   # Delete git directory files so they are not included in the final package.
   - ps: Remove-Item ./.git -Force -Recurse
