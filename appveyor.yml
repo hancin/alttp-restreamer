@@ -7,13 +7,14 @@ platform:
 
 environment:
   PKG_CACHE_PATH: '%USERPROFILE%\pkg-cache'
+  RH_PATH: 'C:\Program Files (x86)\Resource Hacker'
 
 cache:
-  - '%APPDATA%\npm'
-  - '%APPDATA%\npm-cache'
-  - node_modules
+  - '%LOCALAPPDATA%\yarn\cache'
   - '%LOCALAPPDATA%\bower'
   - '%USERPROFILE%\pkg-cache'
+  - '../nodecg/node_modules'
+  - '../nodecg/bundles/%APPVEYOR_PROJECT_SLUG/node_modules'
 
 stack: node 10
 
@@ -36,7 +37,6 @@ before_build:
 build_script:
   - ps: |
       if ($isWindows) {
-          $env:RH_PATH = "C:\Program Files (x86)\Resource Hacker"
           $env:PATH = "$env:RH_PATH;$env:PATH"
           $env:TARGET_EXE = "dashboard.exe"
           $env:TARGET_PLATFORM = "node10-win-x64"
