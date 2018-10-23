@@ -57,7 +57,7 @@ build_script:
         ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
         ResourceHacker -open dashboard.exe -save dashboard.exe -action addoverwrite -resource .\version-info.res
       }
-  - ps: '"{\"logging\": {\"console\": {\"level\": \"info\"},\"file\": {\"enabled\": true,\"level\": \"debug\"},\"replicants\": false}}" >> cfg/nodecg.json'
+  - ps: '"{""logging"": {""console"": {""level"": ""info""},""file"": {""enabled"": true,""level"": ""debug""},""replicants"": false}}" >> cfg/nodecg.json'
   - ps: Start-FileDownload 'https://www.dropbox.com/s/nv229lvugehx8jt/alttp-restreamer-demo.json?dl=1' -FileName 'cfg/alttp-restreamer.json'
 
 after_build:
