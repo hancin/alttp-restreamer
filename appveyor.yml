@@ -11,8 +11,8 @@ environment:
 cache:
   - '%APPDATA%\npm'
   - '%APPDATA%\npm-cache'
+  - node_modules
   - '%LOCALAPPDATA%\bower'
-  - '%USERPROFILE%\pkg-cache'
 
 stack: node 10
 
