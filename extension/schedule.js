@@ -292,16 +292,7 @@ function update() {
 	}).then(entries=> {
 
 		if(!entries){
-			entries = [{
-				approved: true,
-				match1: {players: [makeDummy('Player 1', 'player1'), makeDummy('Player 2', 'player2')]},
-				channel: {name: 'ALTTPRandomizer', id: 993},
-				when: moment().startOf('hour').format(),
-				trackers: [makeDummy('Tracker','tracker')],
-				commentators: [makeDummy('Crossproduct', 'crossproduct'), makeDummy('Tairr', 'tairr')],
-				broadcasters: [makeDummy('You', 'me')],
-				id: 69420
-			}];
+			entries = [];
 		}
 
 		//Channels to ignore at all times.
@@ -318,6 +309,40 @@ function update() {
 		);
 		
 		console.log(`After filtering them, ${filteredResults.length} results will be read.`);
+		
+		if(filteredResults.length < 2){
+			console.log(`Since we have too few matches on schedule, we will create ${2 - filteredResults.length} matches for you.`);
+
+			var twoPlayerMatch = {
+				id: filteredResults.length+1,
+				approved: true,
+				match1: {players: [makeDummy('Player 1', 'player1'), makeDummy('Player 2', 'player2')]},
+				channel: {name: 'ALTTPRandomizer4', id: 993},
+				when: moment().startOf('hour').format(),
+				trackers: [makeDummy('Tracker','tracker')],
+				commentators: [makeDummy('Commentator 1', 'commentator1'), makeDummy('Commentator 2', 'commentator2')],
+				broadcasters: [makeDummy('You', 'me')],
+				event: { shortName: 'ALTTP Randomizer Fake Tournament', slug: 'alttpr' }
+			};
+			filteredResults.push(twoPlayerMatch);
+
+
+			if(filteredResults.length < 2){
+				var fourPlayerMatch = {
+					id: filteredResults.length+1,
+					approved: true,
+					match1: {players: [makeDummy('Player 1', 'player1'), makeDummy('Player 2', 'player2')]},
+					match2: {players: [makeDummy('Player 3', 'player3'), makeDummy('Player 4', 'player4')]},
+					channel: {name: 'ALTTPRandomizer5', id: 993},
+					when: moment().endOf('hour').format(),
+					trackers: [makeDummy('Tracker 1','tracker1'),makeDummy('Tracker 2','tracker2')],
+					commentators: [makeDummy('Commentator 1', 'commentator1'), makeDummy('Commentator 2', 'commentator2')],
+					broadcasters: [makeDummy('You', 'me')],
+					event: { shortName: 'ALTTP Randomizer Fake Tournament', slug: 'alttpr' }
+				};
+				filteredResults.push(fourPlayerMatch);
+			}
+		}
 
 		for(let match of filteredResults){
 
@@ -340,6 +365,13 @@ function update() {
 				slug: match.event.slug,
 				type: 'run'
 			};
+
+			if(match.match2){
+				run.name += ", " + match.match2.players.map(x=>x.displayName).join(" vs ");
+				run.runners.push(...match.match2.players.map(parseEntry));
+			}
+
+
 
 			if(!run.name){
 				run.name = match.match1.title;
