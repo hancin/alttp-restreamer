@@ -13,6 +13,7 @@ cache:
   - '%APPDATA%\npm-cache'
   - node_modules
   - '%LOCALAPPDATA%\bower'
+  - '%USERPROFILE%\pkg-cache'
 
 stack: node 10
 
@@ -23,12 +24,12 @@ install:
       }
   - cmd: choco install reshack --no-progress
   - git reset --hard HEAD
-  - npm install -g bower pkg
-  - npm install
+  - yarn global add bower pkg
+  - yarn
   - bower install
 
 before_build:
-  - node --version
+  - yarn --version
   - npm --version
 
 build_script:
@@ -46,7 +47,7 @@ build_script:
   - git clone https://github.com/nodecg/nodecg.git
   - cd nodecg
   - mkdir instrumented
-  - npm i && bower install
+  - yarn && bower install
   - ps: Move-Item $env:APPVEYOR_BUILD_FOLDER\make-versioninfo.ps1 .
   - ps: Move-Item $env:APPVEYOR_BUILD_FOLDER bundles/$env:APPVEYOR_PROJECT_SLUG
   - ps: pkg . --targets $env:TARGET_PLATFORM --public -o $env:TARGET_EXE
