@@ -23,6 +23,7 @@ install:
         Install-Product node 10 x64
       }
   - cmd: choco install reshack --no-progress
+  - sh: export PATH="$(yarn global bin):$PATH"
   - git reset --hard HEAD
   - yarn global add bower pkg
   - yarn
