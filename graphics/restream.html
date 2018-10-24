@@ -108,8 +108,8 @@
 					<img src="assets/images/commentator.png" /> [[commentators]]
 				</div>
 				<div id="matchInfo" class="textShadow">
-					[[round]]
-					<br /> [[standings]]
+					[[title1]]
+					<br /> [[title2]]
 				</div>
 			</div>
 		</template>
@@ -134,8 +134,8 @@
 					runners: Array,
 					time: String,
 					commentators: String,
-					round: String,
-					standings: String,
+					title1: String,
+					title2: String,
 					showTwitch: {
 						type: Boolean,
 						value: false
@@ -165,8 +165,8 @@
 					currentRunExtra.on('change', newVal => {
 						if (!newVal)
 							return;
-						this.round = newVal.round;
-						this.standings = newVal.standings;
+						this.title1 = newVal.title1;
+						this.title2 = newVal.title2;
 					});			
 
 					experimentalTwitch.on('change', newVal => {

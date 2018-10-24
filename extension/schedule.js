@@ -55,11 +55,19 @@ currentRunRep.on('change', newVal => {
 					'url': ''
 				}
 			}),
+			standings: newVal.runners.map(runner => {
+				return {
+					'runnerName': runner.name,
+					'record': ''
+				}
+			}),
+			seriesMatches: 3,
+			stage: 1,
 			password: '',
 			twitchChannel: newVal.notes.split("\r\n")[0],
 			mixerChannel: '',
-			standings: '',
-			round: '',
+			title1: '',
+			title2: '',
 			seed: '',
 			srtvPage: '',
 			pk: newVal.pk
@@ -192,12 +200,15 @@ nodecg.listenFor('modifyRun', (data, cb) => {
 nodecg.listenFor('modifyRunExtra', (data, cb) => {
 	Object.assign(currentRunExtraRep.value, {
 		itemTrackers: data.itemTrackers,
+		standings: data.standings,
+		seriesMatches: data.seriesMatches,
 		twitchChannel: data.twitchChannel,
 		mixerChannel: data.mixerChannel,
 		password: data.password,
-		standings: data.standings,
+		title2: data.title2,
 		seed: data.seed,
-		round: data.round,
+		title1: data.title1,
+		stage: data.stage,
 		srtvPage: data.srtvPage,
 		pk: data.pk
 	});
@@ -311,7 +322,7 @@ function update() {
 		console.log(`After filtering them, ${filteredResults.length} results will be read.`);
 		
 		if(filteredResults.length < 2){
-			console.log(`Since we have too few matches on schedule, we will create ${2 - filteredResults.length} matches for you.`);
+			console.log(`Since we have too few matches on schedule, we will create 2 matches for you.`);
 
 			var twoPlayerMatch = {
 				id: filteredResults.length+1,
@@ -327,7 +338,7 @@ function update() {
 			filteredResults.push(twoPlayerMatch);
 
 
-			if(filteredResults.length < 2){
+			//if(filteredResults.length < 2){
 				var fourPlayerMatch = {
 					id: filteredResults.length+1,
 					approved: true,
@@ -341,7 +352,7 @@ function update() {
 					event: { shortName: 'ALTTP Randomizer Fake Tournament', slug: 'alttpr' }
 				};
 				filteredResults.push(fourPlayerMatch);
-			}
+			//}
 		}
 
 		for(let match of filteredResults){

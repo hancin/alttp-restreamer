@@ -38,7 +38,7 @@
 					return;
 				this.password = newVal.password;
 				this.set('itemTrackers', newVal.itemTrackers.slice(0));
-				this.set('standings', newVal.standings.split('-'));
+				this.set('standings', [0,0]);
 			});
 			
 		}

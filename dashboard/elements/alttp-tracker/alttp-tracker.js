@@ -24,18 +24,23 @@
 		static get properties() {
 			return {
 				itemTrackers: {type: Array, value: []},
+				standings: {type: Array, value: []},
 				baseUrl: String,
 				password: String,
 				twitchChannel: String,
 				mixerChannel: String,
 				srtvPage: String,
-				standings: String,
+				title2: String,
 				seed: String,
-				round: String,
+				title1: String,
 				runName: String,
 				stage: {
 					type: Number,
 					value: 1
+				},
+				seriesMatches: {
+					type: Number,
+					value: 3
 				},
 				selectedInfoTab: {
 					type: String,
@@ -66,13 +71,24 @@
 					return;
 				}
 				/* I think? this is causing on-input to not work?? */
-				this.itemTrackers = newVal.itemTrackers.map(x => Object.assign({}, x));
+				if(!newVal.itemTrackers){
+					this.itemTrackers = [];
+				}else{
+					this.itemTrackers = newVal.itemTrackers.map(x => Object.assign({}, x));
+				}
+				if(!newVal.standings){
+					this.standings = [];
+				}else{
+					this.standings = newVal.standings.map(x => Object.assign({}, x));
+				}
 				this.twitchChannel = newVal.twitchChannel;
+				this.seriesMatches = newVal.seriesMatches;
 				this.mixerChannel = newVal.mixerChannel;
+				this.stage = newVal.stage;
 				this.password = newVal.password;
 				this.seed = newVal.seed;
-				this.standings = newVal.standings;
-				this.round = newVal.round;
+				this.title2 = newVal.title2;
+				this.title1 = newVal.title1;
 				this.srtvPage = newVal.srtvPage;
 				this.pk = newVal.pk;
 
@@ -100,7 +116,7 @@
 			} : {
 				c: '!editc',
 				r: '!editr',
-				title: '!springtitle'
+				title: '!falltitle'
 			};
 			this.commandNamesRestream = (run.runners && run.runners.length > 2) ? {
 				c: '!cedit4',
@@ -140,6 +156,9 @@
 		showLine2(runners) {
 			return runners.length <= 2;
 		}
+		showStandings(stage){
+			return stage === 2;
+		}
 
 
 		randomIntFromInterval(min, max) {
@@ -150,12 +169,15 @@
 
 			nodecg.sendMessage('modifyRunExtra', {
 				itemTrackers: this.itemTrackers.map(x => Object.assign({}, x)),
+				standings: this.standings.map(x => Object.assign({}, x)),
+				seriesMatches: this.seriesMatches,
 				twitchChannel: this.twitchChannel,
 				mixerChannel: this.mixerChannel,
 				password: this.password,
-				standings: this.standings,
+				stage: this.stage,
+				title2: this.title2,
 				seed: this.seed,
-				round: this.round,
+				title1: this.title1,
 				srtvPage: this.srtvPage,
 				pk: this.pk
 			}, () => {
@@ -192,11 +214,21 @@
 						'url': ''
 					});
 				}
+				if(this.standings.length <= i){
+					this.push('standings', {
+						'runnerName': this.runners[i].name,
+						'record': ''
+					});
+				}
 			}
 
 			
 			while(this.itemTrackers.length > this.runners.length){
 				this.pop('itemTrackers');
+			}
+			
+			while(this.standings.length > this.runners.length){
+				this.pop('standings');
 			}
 		}
 

@@ -6,6 +6,8 @@
 <link rel="import" href="../../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
 <link rel="import" href="../../../node_modules/moment/moment.js">
 <link rel="import" href="../gdq-run-editor/gdq-run-editor.html">
@@ -71,7 +73,7 @@
 				@apply --layout-horizontal;
 				margin-top: 12px;
 			}
-			#extraInfo .row paper-input{
+			#extraInfo .row paper-input, #extraInfo .row paper-dropdown-menu{
 				@apply --layout-flex-3;
 			}
 			#extraInfo .row a{
@@ -129,58 +131,105 @@
 
 		<div id="extraInfo">
 			
-
 				<div class="row">
-					<paper-input
-						label="SRL Room"
-						value="{{srtvPage}}"
-						always-float-label>
-					</paper-input>
+					<paper-dropdown-menu label="Operation mode" always-float-label>
+						<paper-listbox slot="dropdown-content" selected="{{stage}}" >
+								<paper-item>Qualifier stage - No standings, Finished/Forfeit</paper-item>
+								<paper-item>Group stage - No standings, Winner/Forfeit</paper-item>
+								<paper-item>Bracket stage - Standings, Winner/Forfeit</paper-item>
+						</paper-listbox>
+					</paper-dropdown-menu>
 					
 					<!--a href="[[srtvPage]]" target="_blank">View</a-->
 					
 				</div>
-				<div class="row">
-					<paper-input
-						label="Seed page"
-						value="{{seed}}"
-						always-float-label>
-					</paper-input>
-										
-					<a href="[[seed]]" target="_blank">View</a>
-				</div>
 
-				<template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">
+				<fieldset name="raceInfo">
+					<legend>Race information</legend>
 					<div class="row">
-						<paper-input 
-						label$="[[itemTracker.runnerName]]'s Tracker"
-						value="{{itemTracker.url}}"
-						on-input="_updateGenerateButton"
-						always-float-label>
+						<paper-input
+							label="SRL Room"
+							value="{{srtvPage}}"
+							always-float-label>
 						</paper-input>
-
-						<a href="[[baseUrl]]/[[itemTracker.url]]?password=[[password]]" target="_blank">View</a>
+						
+						<!--a href="[[srtvPage]]" target="_blank">View</a-->
+						
 					</div>
-				</template>
+					<div class="row">
+						<paper-input
+							label="Seed page"
+							value="{{seed}}"
+							always-float-label>
+						</paper-input>
+											
+						<a href="[[seed]]" target="_blank">View</a>
+					</div>
+					<div class="row" >
+						<paper-input
+							label="Title Line 1"
+							value="{{title1}}"
+							always-float-label>
+						</paper-input>
+						<template is="dom-if" if="[[showLine2(runners)]]">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<paper-input
+								label="Title Line 2"
+								value="{{title2}}"
+								always-float-label>
+							</paper-input>
+						</template>
+					</div>
+				</fieldset>
 
-				<div class="row">
-					<paper-input
-						label="Password"
-						value="{{password}}"
-						always-float-label>
-					</paper-input>&nbsp;&nbsp;&nbsp;&nbsp;
-					<paper-input
-						label="Round"
-						value="{{round}}"
-						always-float-label>
-					</paper-input>&nbsp;&nbsp;&nbsp;&nbsp;
-					<paper-input
-						label="Standings"
-						value="{{standings}}"
-						always-float-label>
-					</paper-input>
-					
-				</div>
+				<fieldset name="trackerInfo">
+					<legend>Tracker information</legend>
+					<template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">
+						<div class="row">
+							<paper-input 
+							label$="[[itemTracker.runnerName]]'s Tracker"
+							value="{{itemTracker.url}}"
+							on-input="_updateGenerateButton"
+							always-float-label>
+							</paper-input>
+	
+							<a href="[[baseUrl]]/[[itemTracker.url]]?password=[[password]]" target="_blank">View</a>
+						</div>
+					</template>
+	
+					<div class="row">
+						<paper-input
+							label="Password"
+							value="{{password}}"
+							always-float-label>
+						</paper-input>
+						
+					</div>
+
+				</fieldset>
+				<template is="dom-if" if="[[showStandings(stage)]]">
+					<fieldset name="standingInfo">
+							<legend>Standings</legend>
+							
+							<div class="row">
+									<paper-input
+										label="# of matches in this series (Bo3, Bo5)"
+										value="{{seriesMatches}}"
+										always-float-label>
+									</paper-input>
+									
+								</div>
+							<template is="dom-repeat" items="[[standings]]" as="standing">
+								<div class="row">
+									<paper-input 
+									label$="[[standing.runnerName]]'s Standing (eg. 1-0)"
+									value="{{standing.record}}"
+									always-float-label>
+									</paper-input>
+								</div>
+							</template>
+						</fieldset>
+				</template>
 	
 				<div>
 					<h4>Links</h4>
