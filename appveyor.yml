@@ -58,6 +58,7 @@ build_script:
   # Move project files to bundles for use by nodecg
   - ps: Move-Item $env:APPVEYOR_BUILD_FOLDER\make-versioninfo.ps1 .
   - ps: Move-Item $env:APPVEYOR_BUILD_FOLDER bundles/$env:APPVEYOR_PROJECT_SLUG
+  - ps: New-Item -ItemType Directory -Force -Path ./instrumented
   - ps: pkg . --targets $env:TARGET_PLATFORM --public -o $env:TARGET_EXE
   - ps: New-Item -ItemType Directory -Force -Path ./cfg
   - ps: | 
