@@ -26,6 +26,7 @@ install:
       }
   - cmd: choco install reshack --no-progress
   - sh: export PATH="$(yarn global bin):$PATH"
+  - git config --global url.git://github.com/.insteadOf https://github.com/
   - git reset --hard HEAD
   - yarn global add bower pkg
   - npm ci
