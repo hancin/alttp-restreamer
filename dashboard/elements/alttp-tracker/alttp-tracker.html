@@ -140,7 +140,6 @@
 						</paper-listbox>
 					</paper-dropdown-menu>
 					
-					<!--a href="[[srtvPage]]" target="_blank">View</a-->
 					
 				</div>
 
@@ -171,7 +170,7 @@
 							value="{{title1}}"
 							always-float-label>
 						</paper-input>
-						<template is="dom-if" if="[[showLine2(runners)]]">
+						<template is="dom-if" if="[[showLine2(runners, variationsEnabled)]]">
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<paper-input
 								label="Title Line 2"
@@ -230,6 +229,51 @@
 							</template>
 						</fieldset>
 				</template>
+
+				<fieldset name="variationInfo">
+					<legend><paper-checkbox label="Show variations" checked="{{variationsEnabled}}">Show Variations</paper-checkbox></legend>
+					<template is="dom-if" if="[[variationsEnabled]]">
+							<div class="row">
+								<paper-dropdown-menu label="Game state" always-float-label>
+									<paper-listbox attr-for-selected="value" slot="dropdown-content" selected="{{variationsGame}}" >
+											<paper-item value="bg-standard">Standard</paper-item>
+											<paper-item value="bg-open">Open</paper-item>
+											<paper-item value="bg-inverted">Inverted</paper-item>
+									</paper-listbox>
+								</paper-dropdown-menu>&nbsp;&nbsp;&nbsp;&nbsp;
+								<paper-dropdown-menu label="Difficulty" always-float-label>
+									<paper-listbox attr-for-selected="value" slot="dropdown-content" selected="{{variationsDifficulty}}" >
+											<paper-item value="bg-normal">Normal</paper-item>
+											<paper-item value="bg-hard">Hard</paper-item>
+											<paper-item value="bg-expert">Expert</paper-item>
+									</paper-listbox>
+								</paper-dropdown-menu>&nbsp;&nbsp;&nbsp;&nbsp;
+								<paper-dropdown-menu label="Variation" always-float-label>
+									<paper-listbox attr-for-selected="value" slot="dropdown-content" selected="{{variationsMode}}" >
+											<paper-item value="bg-vanilla">No variation</paper-item>
+											<paper-item value="bg-keysanity">Keysanity</paper-item>
+											<paper-item value="bg-enemizer">Enemizer</paper-item>
+											<paper-item value="bg-retro">Retro</paper-item>
+									</paper-listbox>
+								</paper-dropdown-menu>
+							</div>
+							<div class="row">
+								<paper-dropdown-menu label="Goal" always-float-label>
+									<paper-listbox attr-for-selected="value" slot="dropdown-content" selected="{{variationsGoal}}" >
+											<paper-item value="bg-defeatganon">Defeat Ganon</paper-item>
+											<paper-item value="bg-alldungeons">All Dungeons</paper-item>
+									</paper-listbox>
+								</paper-dropdown-menu>&nbsp;&nbsp;&nbsp;&nbsp;
+								<paper-dropdown-menu label="Sword state" always-float-label>
+									<paper-listbox attr-for-selected="value" slot="dropdown-content" selected="{{variationsSword}}" >
+											<paper-item value="bg-uncleassured">Uncle Assured</paper-item>
+											<paper-item value="bg-themysterysword">Randomized Swords</paper-item>
+											<paper-item value="bg-swordless">Swordless</paper-item>
+									</paper-listbox>
+								</paper-dropdown-menu>
+							</div>
+					</template>
+				</fieldset>
 	
 				<div>
 					<h4>Links</h4>

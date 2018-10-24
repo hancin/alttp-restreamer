@@ -16,7 +16,10 @@
 				standings: {type:Array, value: [0,0]},
 				runner: Object,
 				cssClass: {type:String, value:""},
+				stage: {type:Number, value: 0},
+				standing: Object,
 				index: Number,
+				seriesMatches: Number,
 				stream: Object,
 				showTwitch: {type: Boolean, value: false},
 				layoutFlag: {type: String, value: "runner2"},
@@ -66,11 +69,19 @@
 				return this.time;
 			
 		}
+
+		showStandings(stage) {
+			return stage === 2;
+		}
+
+		showRaceStatus(stage) {
+			return true;
+		}
 		
-		calcStatusGraph(results, index, standings, minimum) {
+		calcStatusGraph(results, index, standing, minimum) {
 			let winCount = 0;
-			if(standings[index] !== undefined){
-				winCount = parseInt(standings[index]);
+			if(standing !== undefined){
+				winCount = parseInt(standing.record);
 				if(isNaN(winCount))
 					winCount = 0;
 
@@ -89,7 +100,7 @@
 
 		}
 
-		calcStatusGraph2(results, index) {
+		showRaceStatusImage(results, index, stage) {
 			if (!results) {
 				return "assets/images/standby.png";
 			}
@@ -97,8 +108,13 @@
 			if(results[index] && results[index].forfeit)
 				return "assets/images/forfeit.png"; 
 			
-			if(results[index] && results[index].place === 1)
+			if(results[index] && results[index].place === 1 && stage !== 0)
 				return "assets/images/winner.png"; 
+
+				
+			if(results[index] && results[index].place > 0 && stage === 0)
+			return "assets/images/finished.png"; 
+
 
 			return "assets/images/standby.png";
 

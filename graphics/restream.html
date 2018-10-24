@@ -16,6 +16,7 @@
 	</div>
 
 	<dom-module id="layout-app">
+		<link rel="import" type="css" href="style/sprites.css">
 		<template>
 			<style>
 				*{
@@ -48,7 +49,7 @@
 					width: 1280px;
 					text-align: center;
 					font-size: 24px;
-					line-height: 1.25em;
+					line-height: 1.2em;
 				}
 
 				.textShadow {
@@ -101,7 +102,7 @@
 				<img id="background2" src="assets/backgrounds/fall2018qual.png">
 	
 				<template is="dom-repeat" items="[[runners]]" as="runner">
-					<alttp-runner index="[[index]]" runner="[[runner]]" stream="[[getStream(streams, index)]]" show-twitch="[[showTwitch]]" layout-flag="[[layoutFlag]]"></alttp-runner>
+					<alttp-runner index="[[index]]" runner="[[runner]]" series-matches="[[seriesMatches]]" stream="[[getStream(streams, index)]]" standing="[[getStanding(standings, index)]]" stage="[[stage]]" show-twitch="[[showTwitch]]" layout-flag="[[layoutFlag]]"></alttp-runner>
 				</template>
 	
 				<div id="commentators" class="textShadow">
@@ -109,7 +110,17 @@
 				</div>
 				<div id="matchInfo" class="textShadow">
 					[[title1]]
-					<br /> [[title2]]
+					<template is="dom-if" if="[[variationsEnabled]]">
+						<br />
+						<i class$="sprite [[variationsGame]]"></i><!--
+						--><i class$="sprite [[variationsGoal]]"></i><!--
+						--><i class$="sprite [[variationsDifficulty]]"></i><!--
+						--><i class$="sprite [[variationsSword]]"></i><!--
+						--><template is="dom-if" if="[[showMode(variationsMode)]]"><i class$="sprite [[variationsMode]]"></i></template><!--
+					--></template>
+					<template is="dom-if" if="[[canShowTitle2(variationsEnabled, runners)]]">
+						<br /> [[title2]]
+					</template>
 				</div>
 			</div>
 		</template>
@@ -133,9 +144,18 @@
 					},
 					runners: Array,
 					time: String,
+					stage: Number,
 					commentators: String,
+					standings: Array,
 					title1: String,
 					title2: String,
+					variationsEnabled: Boolean,
+					variationsDifficulty: String,
+					variationsGame: String,
+					variationsGoal: String,
+					variationsMode: String,
+					seriesMatches: Number,
+					variationsSword: String,
 					showTwitch: {
 						type: Boolean,
 						value: false
@@ -167,6 +187,15 @@
 							return;
 						this.title1 = newVal.title1;
 						this.title2 = newVal.title2;
+						this.standings = newVal.standings;
+						this.stage = newVal.stage;
+						this.seriesMatches = newVal.seriesMatches;
+						this.variationsEnabled = newVal.variationsEnabled;
+						this.variationsDifficulty = newVal.variationsDifficulty;
+						this.variationsGame = newVal.variationsGame;
+						this.variationsGoal = newVal.variationsGoal;
+						this.variationsMode = newVal.variationsMode;
+						this.variationsSword = newVal.variationsSword;
 					});			
 
 					experimentalTwitch.on('change', newVal => {
@@ -181,12 +210,25 @@
 					});
 
 				},
+				canShowTitle2(hasVariations, runners){
+					return (!runners || runners.length <= 2) && !hasVariations;
+				},
 
 				getStream(streams, index){
 					if(!streams)
 						return {};
 					
 					return streams[index];
+				},
+				showMode(variationMode){
+					return variationMode !== "bg-vanilla";
+				},
+				getStanding(standings, index){
+					console.log(standings);
+					if(!standings)
+						return {};
+
+					return standings[index];
 				}
 
 			});

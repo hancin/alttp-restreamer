@@ -45,6 +45,30 @@
 				selectedInfoTab: {
 					type: String,
 					value: '0'
+				},
+				variationsEnabled: {
+					type: Boolean,
+					value: false
+				},
+				variationsGame: {
+					type: String,
+					value: "bg-open"
+				},
+				variationsDifficulty: {
+					type: String,
+					value: "bg-normal"
+				},
+				variationsSword: {
+					type: String,
+					value: "bg-themysterysword"
+				},
+				variationsGoal: {
+					type: String,
+					value: "bg-defeatganon"
+				},
+				variationsMode: {
+					type: String,
+					value: "bg-vanilla"
 				}
 			};
 		}
@@ -91,6 +115,12 @@
 				this.title1 = newVal.title1;
 				this.srtvPage = newVal.srtvPage;
 				this.pk = newVal.pk;
+				this.variationsEnabled = newVal.variationsEnabled;
+				this.variationsDifficulty = newVal.variationsDifficulty;
+				this.variationsGame = newVal.variationsGame;
+				this.variationsGoal = newVal.variationsGoal;
+				this.variationsMode = newVal.variationsMode;
+				this.variationsSword = newVal.variationsSword;
 
 				this._updateTrackerLines();
 				this._updateGenerateButton();
@@ -153,8 +183,8 @@
 			return text;
 		}
 
-		showLine2(runners) {
-			return runners.length <= 2;
+		showLine2(runners, variations) {
+			return (!runners || runners.length <= 2) && !variations;
 		}
 		showStandings(stage){
 			return stage === 2;
@@ -178,6 +208,12 @@
 				title2: this.title2,
 				seed: this.seed,
 				title1: this.title1,
+				variationsEnabled: this.variationsEnabled,
+				variationsDifficulty: this.variationsDifficulty,
+				variationsGame: this.variationsGame,
+				variationsGoal: this.variationsGoal,
+				variationsMode: this.variationsMode,
+				variationsSword: this.variationsSword,
 				srtvPage: this.srtvPage,
 				pk: this.pk
 			}, () => {

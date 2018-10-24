@@ -150,6 +150,7 @@
 			}
 			.runnerExtra .status{
 				clear:both;
+				padding-top:5px;
 			}
 			.runnerExtra .wins{
 				position: absolute;
@@ -298,6 +299,7 @@
 				position: absolute;
 				top: 5px;
 				left: 55px;
+				padding-top:0px;
 			}
 			
 			.runner2l.commentary .runnerExtra .runner0.win, .commentary .runnerExtra .runner1.win{
@@ -347,14 +349,19 @@
 			<alttp-tracker item-trackers="[[itemTrackers]]" index="[[index]]" password="[[password]]" layout-flag="[[layoutFlag]]"></alttp-tracker>
 			<div class="runnerStream">
 			</div>
-			<!--div class="runnerExtra">
-				<span class="textShadow wins">Wins</span>
-				<img class$="runner[[index]] win1 win" src="[[calcStatusGraph(results, index, standings, 1)]]" />
-				<img class$="runner[[index]] win2 win" src="[[calcStatusGraph(results, index, standings, 2)]]" />
-				<div class="status">
-					<img src="[[calcStatusGraph2(results, index, standings, 2)]]" />
-				</div>
-			</div-->
+			<div class="runnerExtra">
+			    <template is="dom-if" if="[[showStandings(stage)]]">
+					<div class$="standings bo[[seriesMatches]]">
+						<img class$="runner[[index]] win1 win" src="[[calcStatusGraph(results, index, standing, 1)]]" />
+						<img class$="runner[[index]] win2 win" src="[[calcStatusGraph(results, index, standing, 2)]]" />
+					</div>
+				</template>
+			    <template is="dom-if" if="[[showRaceStatus(stage)]]">
+					<div class="status">
+						<img src="[[showRaceStatusImage(results, index, stage)]]" />
+					</div>
+				</template>
+			</div>
 		</div>
 	</template>
 

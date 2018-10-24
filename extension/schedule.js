@@ -69,6 +69,12 @@ currentRunRep.on('change', newVal => {
 			title1: '',
 			title2: '',
 			seed: '',
+			variationsEnabled: false,
+			variationsDifficulty: 'bg-normal',
+			variationsGame: 'bg-open',
+			variationsGoal: 'bg-defeatganon',
+			variationsMode: 'bg-vanilla',
+			variationsSword: 'bg-themysterysword',
 			srtvPage: '',
 			pk: newVal.pk
 		}
@@ -209,6 +215,12 @@ nodecg.listenFor('modifyRunExtra', (data, cb) => {
 		seed: data.seed,
 		title1: data.title1,
 		stage: data.stage,
+		variationsEnabled: data.variationsEnabled,
+		variationsDifficulty: data.variationsDifficulty,
+		variationsGame: data.variationsGame,
+		variationsGoal: data.variationsGoal,
+		variationsMode: data.variationsMode,
+		variationsSword: data.variationsSword,
 		srtvPage: data.srtvPage,
 		pk: data.pk
 	});
@@ -263,7 +275,7 @@ function prepareInfo() {
 	const startDate = moment().subtract(90, 'minutes');
 	const endDate = moment().add(1, 'hour');
 	
-	const relevantEntries = scheduleRep.value.filter(match => moment(match.time).isBetween(startDate, endDate));
+	const relevantEntries = scheduleRep.value.filter(match => moment(match.time).isBetween(startDate, endDate) && match.pk > 99);
 
 	
 	if(deepEqual(relevantEntries, scheduleInfoRep.value)){
