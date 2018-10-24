@@ -23,7 +23,7 @@
 
 		static get properties() {
 			return {
-				itemTrackers: Array,
+				itemTrackers: {type: Array, value: []},
 				baseUrl: String,
 				password: String,
 				twitchChannel: String,
@@ -33,6 +33,10 @@
 				seed: String,
 				round: String,
 				runName: String,
+				stage: {
+					type: Number,
+					value: 1
+				},
 				selectedInfoTab: {
 					type: String,
 					value: '0'
@@ -72,6 +76,7 @@
 				this.srtvPage = newVal.srtvPage;
 				this.pk = newVal.pk;
 
+				this._updateTrackerLines();
 				this._updateGenerateButton();
 			});
 		}
@@ -108,6 +113,7 @@
 			};
 			this.runPk = run.pk;
 
+			this._updateTrackerLines();
 			this._updateGenerateButton();
 		}
 
@@ -154,23 +160,44 @@
 		}
 
 		generateItemTrackers() {
-			this.password = this.randomIntFromInterval(1, 9999).toString().padStart(4, '0');
+			this.password = this.randomIntFromInterval(1, 99999).toString().padStart(5, '0');
 			for (let i = 0; i < this.runners.length; i++) {
 				if(this.itemTrackers.length <= i){
-					this.itemTrackers[i] = {
+					this.push('itemTrackers', {
 						'runnerName': this.runners[i].name,
 						'url': this.makeID()
-					};
+					});
 				} else {
 					this.set('itemTrackers.' + i + '.runnerName', this.runners[i].name);
 					this.set('itemTrackers.' + i + '.url', this.makeID());
 				}
 			}
 
+			while(this.itemTrackers.length > this.runners.length){
+				this.pop('itemTrackers');
+			}
+
 			this._updateGenerateButton();
 		}
 
+		_updateTrackerLines() {
+			for (let i = 0; i < this.runners.length; i++) {
+				if(this.itemTrackers.length <= i){
+					this.push('itemTrackers', {
+						'runnerName': this.runners[i].name,
+						'url': ''
+					});
+				}
+			}
+
+			
+			while(this.itemTrackers.length > this.runners.length){
+				this.pop('itemTrackers');
+			}
+		}
+
 		_updateGenerateButton() {
+			//this is bugged so this; is intentional right now
 			if (!this.itemTrackers);
 				return true;
 			this.$.generateTrackers.disabled = this.itemTrackers.find(itemThing => {
