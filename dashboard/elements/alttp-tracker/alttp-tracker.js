@@ -131,10 +131,14 @@
 			let text = '';
 			let possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
-			for (var i = 0; i < 12; i++)
+			for (var i = 0; i < 15; i++)
 				text += possible.charAt(Math.floor(Math.random() * possible.length));
 
 			return text;
+		}
+
+		showLine2(runners) {
+			return runners.length <= 2;
 		}
 
 
