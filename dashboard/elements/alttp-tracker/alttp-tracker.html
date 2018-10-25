@@ -192,7 +192,7 @@
 							always-float-label>
 							</paper-input>
 	
-							<a href="[[baseUrl]]/[[itemTracker.url]]?password=[[password]]" target="_blank">View</a>
+							<a href="[[baseUrl]]/[[itemTracker.url]]?password=[[password]]&keysanity=[[isKeysanity(variationsEnabled, variationsMode)]]" target="_blank">View</a>
 						</div>
 					</template>
 	
@@ -323,7 +323,7 @@ SRL Room: [[srtvPage]]
 [[eventShort]] - [[runName]]
 
 Here's the item trackers for the different runners:
-<template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">[[itemTracker.runnerName]]: [[baseUrl]]/[[itemTracker.url]]?password=[[password]]
+<template is="dom-repeat" items="[[itemTrackers]]" as="itemTracker">[[itemTracker.runnerName]]: [[baseUrl]]/[[itemTracker.url]]?password=[[password]]&keysanity=[[isKeysanity(variationsEnabled, variationsMode)]]
 </template>
 Password: [[password]]
 

@@ -242,6 +242,10 @@
 			this._updateGenerateButton();
 		}
 
+		isKeysanity(variationsEnabled, variationsMode){
+			return variationsEnabled && variationsMode === 'bg-keysanity';
+		}
+
 		_updateTrackerLines() {
 			for (let i = 0; i < this.runners.length; i++) {
 				if(this.itemTrackers.length <= i){

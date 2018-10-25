@@ -18,6 +18,7 @@
 				cssClass: {type:String, value:""},
 				stage: {type:Number, value: 0},
 				standing: Object,
+				keysanity: {type: Boolean, value: false},
 				index: Number,
 				seriesMatches: Number,
 				stream: Object,
@@ -40,6 +41,7 @@
 				if(!newVal)
 					return;
 				this.password = newVal.password;
+				this.keysanity = newVal.variationsEnabled && newVal.variationsMode === "bg-keysanity";
 				this.set('itemTrackers', newVal.itemTrackers.slice(0));
 				this.set('standings', [0,0]);
 			});
