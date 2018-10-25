@@ -48,7 +48,7 @@ currentRunRep.on('change', newVal => {
 		
 	if(newVal.pk != currentRunExtraRep.value.pk || currentRunExtraRep.value.itemTrackers === undefined){
 
-		const updatedItem = {
+		let updatedItem = {
 			itemTrackers: newVal.runners.map(runner => {
 				return {
 					'runnerName': runner.name,
@@ -78,7 +78,11 @@ currentRunRep.on('change', newVal => {
 			srtvPage: '',
 			pk: newVal.pk
 		}
-		
+
+		if(newVal.variations){
+			decodeVariations(newVal.variations, updatedItem);
+		}
+
 		updatedItem.mixerChannel = updatedItem.twitchChannel;
 
 		if(updatedItem.twitchChannel == "ALTTPRandomizer")
@@ -189,6 +193,7 @@ nodecg.listenFor('modifyRun', (data, cb) => {
 			}
 			Object.assign(run, data);
 			run.originalValues = calcOriginalValues(run, original);
+
 		} else {
 			nodecg.log.error('[modifyRun] Found current/next run, but couldn\'t find original in schedule. Aborting.');
 		}
@@ -225,6 +230,10 @@ nodecg.listenFor('modifyRunExtra', (data, cb) => {
 		pk: data.pk
 	});
 
+	Object.assign(currentRunRep.value, {
+		variations: encodeVariations(data)
+	});
+
 	if (typeof cb === 'function') {
 		cb();
 	}
@@ -240,6 +249,11 @@ nodecg.listenFor('resetRun', (pk, cb) => {
 
 	if (runRep) {
 		runRep.value = clone(findRunByPk(pk));
+		if(runRep.value.variations){
+			var update = {};
+			decodeVariations(runRep.value.variations, update);
+			Object.assign(currentRunExtraRep.value, update);
+		}
 		if ({}.hasOwnProperty.call(runRep.value, 'originalValues')) {
 			nodecg.log.error(
 				'%s had an `originalValues` property after being reset! This is bad! Deleting it...',
@@ -254,6 +268,83 @@ nodecg.listenFor('resetRun', (pk, cb) => {
 	}
 });
 
+
+function untranslateVariations(item){
+	let maps = {
+		'bg-defeatganon': 'Ganon',
+		'bg-alldungeons': 'All-dungeons',
+
+		'bg-standard': 'Standard',
+		'bg-open': 'Open',
+		'bg-inverted': 'Inverted',
+
+		'bg-themysterysword': 'Randomized',
+		'bg-uncleassured': 'Uncle-Assured',
+		'bg-swordless': 'Swordless',
+
+		'bg-normal': 'Normal',
+		'bg-hard': 'Hard',
+		'bg-expert': 'Expert',
+
+		'bg-vanilla': 'None',
+		'bg-keysanity': 'Key-sanity',
+		'bg-retro': 'Retro',
+		'bg-enemizer': 'Enemizer'
+	};
+
+	return maps[item];
+}
+function translateVariations(item){
+	let maps = {
+		'Ganon': 'bg-defeatganon',
+		'All-dungeons': 'bg-alldungeons',
+
+		'Standard': 'bg-standard',
+		'Open': 'bg-open',
+		'Inverted': 'bg-inverted',
+
+		'Randomized': 'bg-themysterysword',
+		'Uncle-Assured': 'bg-uncleassured',
+		'Swordless': 'bg-swordless',
+
+		'Normal': 'bg-normal',
+		'Hard': 'bg-hard',
+		'Expert': 'bg-expert',
+
+		'None': 'bg-vanilla',
+		'Key-sanity': 'bg-keysanity',
+		'Retro': 'bg-retro',
+		'Enemizer': 'bg-enemizer'
+	};
+
+	return maps[item];
+}
+
+function encodeVariations(item){
+	if(!item.variationsEnabled)
+		return '';
+	
+	return [item.variationsGoal, item.variationsGame, item.variationsSword, item.variationsDifficulty, item.variationsMode].map(untranslateVariations).join(', ');
+}
+
+function decodeVariations(variation, item){
+	let maps = {
+	
+	};
+	if(!variation){
+		item.variationsEnabled = false;
+		return;
+	}
+	item.variationsEnabled = true;
+	
+	let [goal, game, sword, difficulty, mode] = variation.split(', ').map(translateVariations);
+
+	item.variationsGame = game;
+	item.variationsGoal = goal;
+	item.variationsSword = sword;
+	item.variationsDifficulty = difficulty;
+	item.variationsMode = mode;
+}
 
 function parseEntry(entry){
 	let runner = {
@@ -372,6 +463,7 @@ function update() {
 			if(!match.channel){
 				match.channel = match.channels.find(c=> c !== null && !bannedChannels.includes(c.id));
 			}
+			console.log(match);
 
 			let run = {
 				order: order,
@@ -392,6 +484,13 @@ function update() {
 			if(match.match2){
 				run.name += ", " + match.match2.players.map(x=>x.displayName).join(" vs ");
 				run.runners.push(...match.match2.players.map(parseEntry));
+			}
+
+			if(match.match1.title){
+				let parts = match.match1.title.split(', ');
+				if(parts.length === 5){
+					run.variations = match.match1.title;
+				}
 			}
 
 
