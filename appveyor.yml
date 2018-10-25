@@ -68,7 +68,7 @@ build_script:
       }
   - cmd: ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
   - cmd: ResourceHacker -open %TARGET_EXE% -save %TARGET_EXE% -action addoverwrite -resource .\version-info.res
-  - ps: '"{""logging"": {""console"": {""level"": ""info""},""file"": {""enabled"": true,""level"": ""debug""},""replicants"": false}}" | Out-File cfg/nodecg.json -Encoding UTF8'
+  - ps: '"{""logging"": {""console"": {""level"": ""info""},""file"": {""enabled"": true,""level"": ""debug""},""replicants"": false}}" | Out-File cfg/nodecg.json -Encoding ASCII'
   - ps: Start-FileDownload 'https://www.dropbox.com/s/nv229lvugehx8jt/alttp-restreamer-demo.json?dl=1' -FileName 'cfg/alttp-restreamer.json'
 
 after_build:
