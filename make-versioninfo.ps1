@@ -28,4 +28,6 @@ BLOCK "VarFileInfo"
 }
 "@
 
+Write-Host "Writing patched version info $versionInfo. "
+
 $versionInfo | Out-File ./version-info.rc

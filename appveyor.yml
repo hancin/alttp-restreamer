@@ -64,9 +64,10 @@ build_script:
   - ps: | 
       if ($isWindows) {
         .\make-versioninfo.ps1
-        ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
-        ResourceHacker -open dashboard.exe -save dashboard.exe -action addoverwrite -resource .\version-info.res
+        Write-Host "This is obviously a test of sanity"
       }
+  - cmd: ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
+  - cmd: ResourceHacker -open %TARGET_EXE% -save %TARGET_EXE% -action addoverwrite -resource .\version-info.res
   - ps: '"{""logging"": {""console"": {""level"": ""info""},""file"": {""enabled"": true,""level"": ""debug""},""replicants"": false}}" | Out-File cfg/nodecg.json -Encoding UTF8'
   - ps: Start-FileDownload 'https://www.dropbox.com/s/nv229lvugehx8jt/alttp-restreamer-demo.json?dl=1' -FileName 'cfg/alttp-restreamer.json'
 
