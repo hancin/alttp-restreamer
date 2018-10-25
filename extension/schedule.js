@@ -463,7 +463,6 @@ function update() {
 			if(!match.channel){
 				match.channel = match.channels.find(c=> c !== null && !bannedChannels.includes(c.id));
 			}
-			console.log(match);
 
 			let run = {
 				order: order,
