@@ -287,7 +287,7 @@ function untranslateVariations(item){
 		'bg-expert': 'Expert',
 
 		'bg-vanilla': 'None',
-		'bg-keysanity': 'Key-sanity',
+		'bg-keysanity': 'Keysanity',
 		'bg-retro': 'Retro',
 		'bg-enemizer': 'Enemizer'
 	};
@@ -313,6 +313,7 @@ function translateVariations(item){
 
 		'None': 'bg-vanilla',
 		'Key-sanity': 'bg-keysanity',
+		'Keysanity': 'bg-keysanity',
 		'Retro': 'bg-retro',
 		'Enemizer': 'bg-enemizer'
 	};
