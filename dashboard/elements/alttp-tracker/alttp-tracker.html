@@ -309,7 +309,9 @@
 Could I please get these commands run on twitch.tv/[[twitchChannel]]?
 [[commandNames.r]] [[textRunnerStreams]]
 [[commandNames.c]] [[textCommentatorStreams]] [[textTrackerStreams]] [[textBroadcasterStreams]]
-[[commandNames.title]] [[textRunnerNames]]
+[[commandNames.title]] [[textRunnerNames]]<template is="dom-if" if="[[variationsEnabled]]">
+[[commandNames.variations]] [[textVariations]]
+</template>
  </pre>
 
 <!--b>Start the race: (#restreamer)</b>

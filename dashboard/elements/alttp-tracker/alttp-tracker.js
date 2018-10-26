@@ -138,15 +138,18 @@
 			this.textRunnerDiscords = (!run.runners) ? '' : run.runners.map(x=>x.discord).join(', ');
 			this.textTrackerStreams = (!run.trackers) ? '_' : run.trackers.map(x=>x.stream).join(' ');
 			this.textTrackerDiscords = (!run.trackers) ? '' : run.trackers.map(x=>x.discord).join(', ');
+			this.textVariations = run.variations;
 			this.eventShort = run.event;
 			this.commandNames = (run.runners && run.runners.length > 2) ? {
 				c: '!qualc',
 				r: '!qualr',
-				title: '!qualtitle'
+				title: '!qualtitle',
+				variations: '!editmode'
 			} : {
 				c: '!editc',
 				r: '!editr',
-				title: '!falltitle'
+				title: '!falltitle',
+				variations: '!editmode'
 			};
 			this.commandNamesRestream = (run.runners && run.runners.length > 2) ? {
 				c: '!cedit4',
