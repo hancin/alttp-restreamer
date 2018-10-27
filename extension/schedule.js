@@ -279,7 +279,7 @@ function untranslateVariations(item){
 		'bg-inverted': 'Inverted',
 
 		'bg-themysterysword': 'Randomized',
-		'bg-uncleassured': 'Uncle-Assured',
+		'bg-uncleassured': 'Uncle-assured',
 		'bg-swordless': 'Swordless',
 
 		'bg-normal': 'Normal',
@@ -305,6 +305,7 @@ function translateVariations(item){
 
 		'Randomized': 'bg-themysterysword',
 		'Uncle-Assured': 'bg-uncleassured',
+		'Uncle-assured': 'bg-uncleassured',
 		'Swordless': 'bg-swordless',
 
 		'Normal': 'bg-normal',
