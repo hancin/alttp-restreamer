@@ -22,7 +22,7 @@
     "moment-timezone": "^0.5.17",
     "node-cache": "^4.2.0",
     "nodecg-utility-obs": "^4.1.2",
-    "nodecg-widget-obs": "^4.0.0",
+    "nodecg-widget-obs": "^6.0.0",
     "numeral": "^2.0.6",
     "object-path": "^0.11.3",
     "parse-ms": "^1.0.1",
