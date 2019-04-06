@@ -16,7 +16,7 @@ const nodecg = require('./util/nodecg-api-context').get();
 const timer = require('./timekeeping');
 const {calcOriginalValues, mergeChangesFromTracker} = require('./lib/diff-run');
 
-const POLL_INTERVAL = 60 * 60 * 1000 * 24; //HACK: slow this down a lot for now.
+const POLL_INTERVAL = 60 * 60 * 1000 * 24; // HACK: slow this down a lot for now.
 const SD_POLL_INTERVAL = 5 * 60 * 1000;
 
 let updateInterval;
@@ -39,32 +39,31 @@ module.exports.update = update;
 update();
 
 currentRunRep.on('change', newVal => {
-	
-	if(!newVal) 
+	if (!newVal)
 		return;
 
-	if(newVal.pk === undefined)
+	if (newVal.pk === undefined)
 		return;
-		
-	if(newVal.pk != currentRunExtraRep.value.pk || currentRunExtraRep.value.itemTrackers === undefined){
 
-		let updatedItem = {
+	if (newVal.pk !== currentRunExtraRep.value.pk || currentRunExtraRep.value.itemTrackers === undefined) {
+
+		const updatedItem = {
 			itemTrackers: newVal.runners.map(runner => {
 				return {
-					'runnerName': runner.name,
-					'url': ''
-				}
+					runnerName: runner.name,
+					url: ''
+				};
 			}),
 			standings: newVal.runners.map(runner => {
 				return {
-					'runnerName': runner.name,
-					'record': ''
-				}
+					runnerName: runner.name,
+					record: ''
+				};
 			}),
 			seriesMatches: 3,
 			stage: 1,
 			password: '',
-			twitchChannel: newVal.notes.split("\r\n")[0],
+			twitchChannel: newVal.notes.split('\r\n')[0],
 			mixerChannel: '',
 			title1: '',
 			title2: '',
@@ -77,16 +76,17 @@ currentRunRep.on('change', newVal => {
 			variationsSword: 'bg-themysterysword',
 			srtvPage: '',
 			pk: newVal.pk
-		}
+		};
 
-		if(newVal.variations){
+		if (newVal.variations) {
 			decodeVariations(newVal.variations, updatedItem);
 		}
 
 		updatedItem.mixerChannel = updatedItem.twitchChannel;
 
-		if(updatedItem.twitchChannel == "ALTTPRandomizer")
-			updatedItem.mixerChannel += "1";
+		if (updatedItem.twitchChannel === 'ALTTPRandomizer') {
+			updatedItem.mixerChannel += '1';
+		}
 
 		currentRunExtraRep.value = clone(updatedItem);
 	}
@@ -296,27 +296,27 @@ function untranslateVariations(item){
 }
 function translateVariations(item){
 	let maps = {
-		'Ganon': 'bg-defeatganon',
+		Ganon: 'bg-defeatganon',
 		'All-dungeons': 'bg-alldungeons',
 
-		'Standard': 'bg-standard',
-		'Open': 'bg-open',
-		'Inverted': 'bg-inverted',
+		Standard: 'bg-standard',
+		Open: 'bg-open',
+		Inverted: 'bg-inverted',
 
-		'Randomized': 'bg-themysterysword',
+		Randomized: 'bg-themysterysword',
 		'Uncle-Assured': 'bg-uncleassured',
 		'Uncle-assured': 'bg-uncleassured',
-		'Swordless': 'bg-swordless',
+		Swordless: 'bg-swordless',
 
-		'Normal': 'bg-normal',
-		'Hard': 'bg-hard',
-		'Expert': 'bg-expert',
+		Normal: 'bg-normal',
+		Hard: 'bg-hard',
+		Expert: 'bg-expert',
 
-		'None': 'bg-vanilla',
+		None: 'bg-vanilla',
 		'Key-sanity': 'bg-keysanity',
-		'Keysanity': 'bg-keysanity',
-		'Retro': 'bg-retro',
-		'Enemizer': 'bg-enemizer'
+		Keysanity: 'bg-keysanity',
+		Retro: 'bg-retro',
+		Enemizer: 'bg-enemizer'
 	};
 
 	return maps[item];
@@ -399,37 +399,35 @@ function update() {
 			'https://www.dropbox.com/s/fghcrrst55c5qsi/schedule.json' :
 			nodecg.bundleConfig.speedgaming.scheduleNew,
 		qs: {
-			event: 'alttpr',
+			event: nodecg.bundleConfig.speedgaming.event || 'alttpr',
 			from: moment().startOf('hour').subtract(5, 'hours').format(),
 			to: moment().startOf('hour').add(3, 'hours').endOf('day').format(),
 			dl: 1 // For Dropbox only
 		},
 		json: true
-	}).then(entries=> {
-
-		if(!entries){
+	}).then( entries => {
+		if (!entries) {
 			entries = [];
 		}
 
-		//Channels to ignore at all times.
-		const bannedChannels = [31,36];
+		// Channels to ignore at all times.
+		const bannedChannels = [31, 36];
 
 		console.log(`There were ${entries.length} results from search, before any filters.`);
 
 		let valid = [];
 		let order = 1;
 		const filteredResults = entries.filter(m => m.approved && (
-			  (m.channel !== undefined && m.channel !== null && !bannedChannels.includes(m.channel.id))
-		      ||(m.channels !== undefined && m.channels !== null && m.channels.some(c=> c !== null && !bannedChannels.includes(c.id)))
-			)
-		);
-		
+			(m.channel !== undefined && m.channel !== null && !bannedChannels.includes(m.channel.id)) ||
+			(m.channels !== undefined && m.channels !== null && m.channels.some(c => c !== null && !bannedChannels.includes(c.id)))
+		));
+
 		console.log(`After filtering them, ${filteredResults.length} results will be read.`);
-		
-		if(filteredResults.length < 2){
+
+		if (filteredResults.length < 2) {
 			console.log(`Since we have too few matches on schedule, we will create 2 matches for you.`);
 
-			var twoPlayerMatch = {
+			const twoPlayerMatch = {
 				id: filteredResults.length+1,
 				approved: true,
 				match1: {players: [makeDummy('Player 1', 'player1'), makeDummy('Player 2', 'player2')]},
@@ -438,13 +436,13 @@ function update() {
 				trackers: [makeDummy('Tracker','tracker')],
 				commentators: [makeDummy('Commentator 1', 'commentator1'), makeDummy('Commentator 2', 'commentator2')],
 				broadcasters: [makeDummy('You', 'me')],
-				event: { shortName: 'ALTTP Randomizer Fake Tournament', slug: 'alttpr' }
+				event: {shortName: 'ALTTP Randomizer Fake Tournament', slug: 'alttpr'}
 			};
 			filteredResults.push(twoPlayerMatch);
 
 
 			//if(filteredResults.length < 2){
-				var fourPlayerMatch = {
+				const fourPlayerMatch = {
 					id: filteredResults.length+1,
 					approved: true,
 					match1: {players: [makeDummy('Player 1', 'player1'), makeDummy('Player 2', 'player2')]},
@@ -454,7 +452,7 @@ function update() {
 					trackers: [makeDummy('Tracker 1','tracker1'),makeDummy('Tracker 2','tracker2')],
 					commentators: [makeDummy('Commentator 1', 'commentator1'), makeDummy('Commentator 2', 'commentator2')],
 					broadcasters: [makeDummy('You', 'me')],
-					event: { shortName: 'ALTTP Randomizer Fake Tournament', slug: 'alttpr' }
+					event:{ shortName: 'ALTTP Randomizer Fake Tournament', slug: 'alttpr'}
 				};
 				filteredResults.push(fourPlayerMatch);
 			//}
