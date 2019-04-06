@@ -37,6 +37,7 @@
   "resolutions": {
     "vaadin-combo-box": "v2.0.0",
     "polymer": "^2.0.1",
-    "webcomponentsjs": "^v1.0.2"
+    "webcomponentsjs": "^v1.0.2",
+    "test-fixture": "v3.0.0"
   }
 }
