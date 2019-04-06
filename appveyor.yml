@@ -50,7 +50,7 @@ build_script:
   - git clone https://github.com/nodecg/nodecg.git
   - cd nodecg
   - git checkout v1.3.2
-  - ps: '(Get-Content ./package.json).Replace("""main"": ""index.js""","""main"": ""index.js"", ""bin"": ""index.js""") | Out-File ./package.json'
+  - ps: '(Get-Content ./package.json).Replace("""main"": ""index.js""","""main"": ""index.js"", ""bin"": ""index.js""") | Out-File ./package.json -Encoding ASCII'
   - npm ci
   - bower install
   # Delete git directory files so they are not included in the final package.
