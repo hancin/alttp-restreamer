@@ -49,10 +49,9 @@ build_script:
   - cd ..
   - git clone https://github.com/nodecg/nodecg.git
   - cd nodecg
-  - git checkout v1.3.2
+  - git checkout v1.5.0
   - ps: '(Get-Content ./package.json).Replace("""main"": ""index.js""","""main"": ""index.js"", ""bin"": ""index.js""") | Out-File ./package.json -Encoding ASCII'
   - npm ci
-  - bower install
   # Delete git directory files so they are not included in the final package.
   - ps: Remove-Item ./.git -Force -Recurse
   - ps: Remove-Item $env:APPVEYOR_BUILD_FOLDER/.git -Force -Recurse

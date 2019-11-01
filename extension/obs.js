@@ -6,7 +6,7 @@ const path = require('path');
 const {exec} = require('child_process');
 
 // Packages
-const OBSUtility = require('nodecg-utility-obs');
+const {OBSUtility} = require('nodecg-utility-obs');
 
 // Ours
 const nodecg = require('./util/nodecg-api-context').get();
