@@ -27,9 +27,11 @@ install:
   - sh: export PATH="$(yarn global bin):$PATH"
   - git config --global url.git://github.com/.insteadOf https://github.com/
   - git reset --hard HEAD
-  - yarn global add bower pkg
+  - npm install -g bower pkg
   - npm ci
   - bower install
+  - npm build
+  - npm ci --production
 
 before_build:
   - yarn --version
@@ -66,8 +68,8 @@ build_script:
         .\make-versioninfo.ps1
         Write-Host "This is obviously a test of sanity"
       }
-  - cmd: ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
-  - cmd: ResourceHacker -open %TARGET_EXE% -save %TARGET_EXE% -action addoverwrite -resource .\version-info.res
+  #- cmd: ResourceHacker -open .\version-info.rc -save .\version-info.res -action compile
+  #- cmd: ResourceHacker -open %TARGET_EXE% -save %TARGET_EXE% -action addoverwrite -resource .\version-info.res
   - ps: '"{""logging"": {""console"": {""level"": ""info""},""file"": {""enabled"": true,""level"": ""debug""},""replicants"": false}}" | Out-File cfg/nodecg.json -Encoding ASCII'
   - ps: Start-FileDownload 'https://www.dropbox.com/s/nv229lvugehx8jt/alttp-restreamer-demo.json?dl=1' -FileName 'cfg/alttp-restreamer.json'
 
