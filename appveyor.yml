@@ -16,19 +16,18 @@ cache:
   # - '../nodecg/node_modules'
   # - '../nodecg/bundles/%APPVEYOR_PROJECT_SLUG%/node_modules'
 
-stack: node 10
+stack: node 12
 
 install:
   - ps: | 
       if ($isWindows) {
-        Install-Product node 10 x64
+        Install-Product node 12 x64
       }
   - cmd: choco install reshack --no-progress
   - sh: export PATH="$(yarn global bin):$PATH"
   - git config --global url.git://github.com/.insteadOf https://github.com/
   - git reset --hard HEAD
-  - yarn global add bower pkg
-  - npm install -g parcel-bundler
+  - yarn global add bower pkg parcel-bundler
   - npm ci
   - bower install
   - npm build
@@ -43,10 +42,10 @@ build_script:
           $env:RH_PATH = "C:\Program Files (x86)\Resource Hacker"
           $env:PATH = "$env:RH_PATH;$env:PATH"
           $env:TARGET_EXE = "dashboard.exe"
-          $env:TARGET_PLATFORM = "node10-win-x64"
+          $env:TARGET_PLATFORM = "node12-win-x64"
       } else {
           $env:TARGET_EXE = "dashboard"
-          $env:TARGET_PLATFORM = "node10-linux-x64"
+          $env:TARGET_PLATFORM = "node12-linux-x64"
       }
   - cd ..
   - git clone https://github.com/nodecg/nodecg.git
