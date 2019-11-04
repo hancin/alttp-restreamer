@@ -58,10 +58,10 @@ const Game = props => {
               </div>
             )
           }) : ''}
-        <div id='commentators' class='textShadow'>
+        <div id='commentators' className='textShadow'>
           <img src='assets/images/commentator.png' /> {props.currentRun && props.currentRun.commentators.map(x => x.name).join(', ')}
         </div>
-        <div id='matchInfo' class='textShadow'>
+        <div id='matchInfo' className='textShadow'>
           {props.currentRunExtra && props.currentRunExtra.title1}
           {props.currentRunExtra && props.currentRunExtra.variationsEnabled &&
             <div>
