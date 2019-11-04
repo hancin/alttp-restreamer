@@ -28,8 +28,10 @@ install:
   - git config --global url.git://github.com/.insteadOf https://github.com/
   - git reset --hard HEAD
   - yarn global add bower pkg
+  - npm install -g parcel-bundler
   - npm ci
   - bower install
+  - npm build
 
 before_build:
   - yarn --version
