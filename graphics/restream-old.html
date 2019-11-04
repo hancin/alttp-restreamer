@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ALTTP Graphics</title>
+	<link href="https://fonts.googleapis.com/css?family=Teko:600&amp;subset=latin-ext" rel="stylesheet">
+	<link rel="stylesheet" href="style/layout.css">
+
+	<link rel="import" href="elements/molecules/alttp-runner/alttp-runner.html">
+</head>
+
+<body>
+	<div id="container">
+		<layout-app></layout-app>
+	</div>
+
+	<dom-module id="layout-app">
+		<link rel="import" type="css" href="style/sprites.css">
+		<template>
+			<style>
+				*{
+					box-sizing: border-box;
+					font-family: Teko;
+					color: #fff;
+				}
+
+				#commentators {
+					position: absolute;
+					left: 0;
+					top: 669px;
+					font-size: 24px;
+					height: 54px;
+					line-height: 54px;
+					width: 1280px;
+					text-align: center;
+					vertical-align: middle;
+
+				}
+
+				#commentators img {
+					max-height: 24px;
+					vertical-align: middle;
+				}
+
+				#matchInfo {
+					position: absolute;
+					top: 13px;
+					width: 1280px;
+					text-align: center;
+					font-size: 24px;
+					line-height: 1.1em;
+				}
+
+				.textShadow {
+
+					text-shadow: 4px 0px 0 rgba(0, 0, 0, 0.4),
+					4px 1px 0 rgba(0, 0, 0, 0.4),
+					3px 2px 0 rgba(0, 0, 0, 0.4),
+					3px 3px 0 rgba(0, 0, 0, 0.4),
+					2px 3px 0 rgba(0, 0, 0, 0.4),
+					1px 4px 0 rgba(0, 0, 0, 0.4),
+
+					0px 4px 0 rgba(0, 0, 0, 0.4),
+					-1px 4px 0 rgba(0, 0, 0, 0.4),
+					-2px 3px 0 rgba(0, 0, 0, 0.4),
+					-3px 3px 0 rgba(0, 0, 0, 0.4),
+					-3px 2px 0 rgba(0, 0, 0, 0.4),
+					-4px 1px 0 rgba(0, 0, 0, 0.4),
+
+					-4px 0px 0 rgba(0, 0, 0, 0.4),
+					-4px -1px 0 rgba(0, 0, 0, 0.4),
+					-3px -2px 0 rgba(0, 0, 0, 0.4),
+					-3px -3px 0 rgba(0, 0, 0, 0.4),
+					-2px -3px 0 rgba(0, 0, 0, 0.4),
+					-1px -4px 0 rgba(0, 0, 0, 0.4),
+
+					0px -4px 0 rgba(0, 0, 0, 0.4),
+					1px -4px 0 rgba(0, 0, 0, 0.4),
+					2px -3px 0 rgba(0, 0, 0, 0.4),
+					3px -3px 0 rgba(0, 0, 0, 0.4),
+					3px -2px 0 rgba(0, 0, 0, 0.4),
+					4px -1px 0 rgba(0, 0, 0, 0.4);
+
+					letter-spacing: 1px;
+				}
+
+				
+				.runner2l #background2, .runner4l #background{
+					display:none;
+				}
+
+				#background, #background2 {
+					position: absolute;
+					top: 0;
+					left: 0;
+					z-index: -10;
+				}
+			</style>
+			<div class$="[[layoutFlag]]">
+				<img id="background" src="assets/backgrounds/bg2-blank.png">
+				<img id="background2" src="assets/backgrounds/fall2018qual.png">
+	
+				<template is="dom-repeat" items="[[runners]]" as="runner">
+					<alttp-runner index="[[index]]" runner="[[runner]]" series-matches="[[seriesMatches]]" stream="[[getStream(streams, index)]]" standing="[[getStanding(standings, index)]]" stage="[[stage]]" show-twitch="[[showTwitch]]" layout-flag="[[layoutFlag]]"></alttp-runner>
+				</template>
+	
+				<div id="commentators" class="textShadow">
+					<img src="assets/images/commentator.png" /> [[commentators]]
+				</div>
+				<div id="matchInfo" class="textShadow">
+					[[title1]]
+					<template is="dom-if" if="[[variationsEnabled]]">
+						<br />
+						<i class$="sprite [[variationsGoal]]"></i><!--
+						--><i class$="sprite [[variationsGame]]"></i><!--
+						--><i class$="sprite [[variationsSword]]"></i><!--
+						--><i class$="sprite [[variationsDifficulty]]"></i><!--
+						--><template is="dom-if" if="[[showMode(variationsMode)]]"><i class$="sprite [[variationsMode]]"></i></template><!--
+					--></template>
+					<template is="dom-if" if="[[canShowTitle2(variationsEnabled, runners)]]">
+						<br /> [[title2]]
+					</template>
+				</div>
+			</div>
+		</template>
+
+
+
+		<script>
+			const currentRun = nodecg.Replicant('currentRun');
+			const currentRunExtra = nodecg.Replicant('currentRunExtra');
+			const experimentalTwitch = nodecg.Replicant('experimentalTwitch');
+			const twitchPlayerStreams = nodecg.Replicant('twitchPlayerStreams');
+
+			Polymer({
+				is: 'layout-app',
+
+				properties: {
+					numRunners: {
+						type: Number,
+						reflectToAttribute: true,
+						value: 1
+					},
+					runners: Array,
+					time: String,
+					stage: Number,
+					commentators: String,
+					standings: Array,
+					title1: String,
+					title2: String,
+					variationsEnabled: Boolean,
+					variationsDifficulty: String,
+					variationsGame: String,
+					variationsGoal: String,
+					variationsMode: String,
+					seriesMatches: Number,
+					variationsSword: String,
+					showTwitch: {
+						type: Boolean,
+						value: false
+					},
+					streams: {type: Array, value: []}
+				},
+
+				ready() {
+					currentRun.on('change', newVal => {
+						if (!newVal) {
+							return;
+						}
+						this.commentators = newVal.commentators.filter(comm=>comm.name !== '').map(comm => comm.name).join(', ');
+						this.runners = newVal.runners;
+						if(newVal.runners.length <= 2){
+							this.layoutFlag ="runner2l";
+						}
+						else{
+							this.layoutFlag ="runner4l";
+						}
+						if (newVal.runners.length !== 3 && newVal.runners.length <= 4) {
+							this.numRunners = newVal.runners.length;
+						}
+					});
+
+
+					currentRunExtra.on('change', newVal => {
+						if (!newVal)
+							return;
+						this.title1 = newVal.title1;
+						this.title2 = newVal.title2;
+						this.standings = newVal.standings;
+						this.stage = newVal.stage;
+						this.seriesMatches = newVal.seriesMatches;
+						this.variationsEnabled = newVal.variationsEnabled;
+						this.variationsDifficulty = newVal.variationsDifficulty;
+						this.variationsGame = newVal.variationsGame;
+						this.variationsGoal = newVal.variationsGoal;
+						this.variationsMode = newVal.variationsMode;
+						this.variationsSword = newVal.variationsSword;
+					});			
+
+					experimentalTwitch.on('change', newVal => {
+						this.showTwitch = newVal;
+					});
+
+					twitchPlayerStreams.on('change', newVal => {
+						if(!newVal)
+							return;
+
+						this.set("streams", newVal.slice(0));
+					});
+
+				},
+				canShowTitle2(hasVariations, runners){
+					return (!runners || runners.length <= 2) && !hasVariations;
+				},
+
+				getStream(streams, index){
+					if(!streams)
+						return {};
+					
+					return streams[index];
+				},
+				showMode(variationMode){
+					return variationMode !== "bg-vanilla";
+				},
+				getStanding(standings, index){
+					console.log(standings);
+					if(!standings)
+						return {};
+
+					return standings[index];
+				}
+
+			});
+		</script>
+	</dom-module>
+</body>
+
+</html>

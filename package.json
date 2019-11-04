@@ -69,7 +69,7 @@
         "height": 1080
       },
       {
-        "file": "restream.html",
+        "file": "restream-old.html",
         "width": 1280,
         "height": 720
       },
@@ -89,10 +89,9 @@
         "height": 720
       },
       {
-        "file": "index.html",
+        "file": "restream.html",
         "width": 1280,
-        "height": 720,
-        "singleInstance": true
+        "height": 720
       }
     ]
   },
@@ -101,8 +100,8 @@
     "url": "git://github.com/hancin/alttp-restreamer.git"
   },
   "scripts": {
-    "start": "parcel watch src/index.html -d graphics --public-url ./",
+    "start": "parcel watch src/restream.html -d graphics --public-url ./",
     "test": "standard",
-    "build": "parcel build src/index.html -d graphics --public-url ./"
+    "build": "parcel build src/restream.html -d graphics --public-url ./"
   }
 }
