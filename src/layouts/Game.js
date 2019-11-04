@@ -8,6 +8,9 @@ import Tracker from '../components/Tracker'
 import Standings from '../components/Standings'
 
 const Game = props => {
+  if (!props.currentRun) {
+    return null
+  }
   const layout = props.currentRun && props.currentRun.runners && props.currentRun.runners.length > 2 ? 'runner4l' : 'runner2l'
   const showStandings = !!(props.currentRunExtra && props.currentRunExtra.stage && props.currentRunExtra.stage === 2)
   return (
@@ -55,6 +58,24 @@ const Game = props => {
               </div>
             )
           }) : ''}
+        <div id='commentators' class='textShadow'>
+          <img src='assets/images/commentator.png' /> {props.currentRun && props.currentRun.commentators.map(x => x.name).join(', ')}
+        </div>
+        <div id='matchInfo' class='textShadow'>
+          {props.currentRunExtra && props.currentRunExtra.title1}
+          {props.currentRunExtra && props.currentRunExtra.variationsEnabled &&
+            <div>
+              <i className={`sprite ${props.currentRunExtra.variationsGoal}`} />
+              <i className={`sprite ${props.currentRunExtra.variationsGame}`} />
+              <i className={`sprite ${props.currentRunExtra.variationsSword}`} />
+              <i className={`sprite ${props.currentRunExtra.variationsDifficulty}`} />
+              <i className={`sprite ${props.currentRunExtra.variationsMode}`} />
+            </div>}
+          {props.currentRunExtra && !props.currentRunExtra.variationsEnabled &&
+            <div>
+              {props.currentRunExtra && props.currentRunExtra.title2}
+            </div>}
+        </div>
       </div>
     </div>
   )
