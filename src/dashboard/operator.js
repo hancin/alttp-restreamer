@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import NCGStore, { replicateMany } from './stores/NodecgStore'
+import NCGStore, { replicateMany } from '../stores/NodecgStore'
 import Router from './components/Router'
 import { Reset } from 'styled-reset'
 
 const replicantNames = [
-  'layout',
   'currentRun',
   'stopwatch',
   'currentRunExtra'

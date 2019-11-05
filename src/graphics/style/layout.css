@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css?family=Teko:600&subset=latin-ext');
+* {
+    box-sizing: border-box;
+    color: #fff;
+}
+body {
+    font-family: 'Teko' !important;
+	margin: 0;
+}
+
+#container {
+	position: absolute;
+	overflow: hidden;
+}
+
+
+#container {
+	position: relative;
+	width: 1280px;
+	height: 720px;
+}
+
+#container > #background,
+#container > #background2,
+#container > #foreground,
+#container > #addon {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#container > #background, #container > #background2 {
+	z-index: -10;
+}
+
+#container > #foreground {
+	pointer-events: none;
+	z-index: 10;
+}
+
+#container > #addon {
+	pointer-events: none;
+	z-index: -11;
+}
+
+
+/*
+For use in gathering viewport metrics.
+Dump this javascript into your console to make the measuring div appear:
+
+const measuringDiv = document.createElement('div');
+measuringDiv.id = 'measuring';
+measuringDiv.style.left = '0px';
+measuringDiv.style.top = '0px';
+document.body.appendChild(measuringDiv);
+ */
+#measuring {
+	position: absolute;
+	width: 200px;
+	height: 150px;
+	background-color: #464646;
+	z-index: -100;
+}
+
+
+
+.textShadow {
+
+	text-shadow: 4px 0px 0 rgba(0, 0, 0, 0.4),
+	4px 1px 0 rgba(0, 0, 0, 0.4),
+	3px 2px 0 rgba(0, 0, 0, 0.4),
+	3px 3px 0 rgba(0, 0, 0, 0.4),
+	2px 3px 0 rgba(0, 0, 0, 0.4),
+	1px 4px 0 rgba(0, 0, 0, 0.4),
+
+	0px 4px 0 rgba(0, 0, 0, 0.4),
+	-1px 4px 0 rgba(0, 0, 0, 0.4),
+	-2px 3px 0 rgba(0, 0, 0, 0.4),
+	-3px 3px 0 rgba(0, 0, 0, 0.4),
+	-3px 2px 0 rgba(0, 0, 0, 0.4),
+	-4px 1px 0 rgba(0, 0, 0, 0.4),
+
+	-4px 0px 0 rgba(0, 0, 0, 0.4),
+	-4px -1px 0 rgba(0, 0, 0, 0.4),
+	-3px -2px 0 rgba(0, 0, 0, 0.4),
+	-3px -3px 0 rgba(0, 0, 0, 0.4),
+	-2px -3px 0 rgba(0, 0, 0, 0.4),
+	-1px -4px 0 rgba(0, 0, 0, 0.4),
+
+	0px -4px 0 rgba(0, 0, 0, 0.4),
+	1px -4px 0 rgba(0, 0, 0, 0.4),
+	2px -3px 0 rgba(0, 0, 0, 0.4),
+	3px -3px 0 rgba(0, 0, 0, 0.4),
+	3px -2px 0 rgba(0, 0, 0, 0.4),
+	4px -1px 0 rgba(0, 0, 0, 0.4);
+
+	letter-spacing: 1px;
+}
+

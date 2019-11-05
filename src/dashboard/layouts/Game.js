@@ -18,7 +18,7 @@ const Game = props => {
     <div id='container'>
       <div className={layout}>
         <img id='background' src='assets/backgrounds/bg2-blank.png' />
-        <img id='background2' src='assets/backgrounds/fall2018qual.png' />
+        <img id='background2' src='assets/backgrounds/bg4.png' />
         {props.currentRun
           ? props.currentRun.runners.map((runner, index) => {
             const runnerData = props.stopwatch && props.stopwatch.results && props.stopwatch.results[index]

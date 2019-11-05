@@ -12,6 +12,12 @@ pids
 *.seed
 *.pid.lock
 
+dashboard/*.js
+dashboard/*.js.map
+dashboard/*.css
+dashboard/*.css.map
+dashboard/*.png
+
 graphics/*.js
 graphics/*.js.map
 graphics/*.css

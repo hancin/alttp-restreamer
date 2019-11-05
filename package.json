@@ -46,6 +46,7 @@
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "npm-run-all": "^4.1.5",
     "parcel-bundler": "^1.12.3",
     "standard": "^14.2.0"
   },
@@ -58,6 +59,13 @@
         "name": "Operator Dashboard",
         "title": "Operator Dashboard",
         "file": "operator-dashboard.html",
+        "headerColor": "#2d4e8a",
+        "fullbleed": true
+      },
+      {
+        "name": "Restreamer Operator",
+        "title": "Restreamer Operator",
+        "file": "operator.html",
         "headerColor": "#2d4e8a",
         "fullbleed": true
       }
@@ -100,8 +108,13 @@
     "url": "git://github.com/hancin/alttp-restreamer.git"
   },
   "scripts": {
-    "start": "parcel watch src/restream.html -d graphics --public-url ./",
+    "dev:graphics": "parcel watch src/graphics/restream.html -d graphics --public-url ./",
+    "dev:dashboard": "parcel watch src/dashboard/operator.html -d dashboard --public-url ./",
+    "dev": "npm-run-all -p dev:*",
     "test": "standard",
-    "build": "parcel build src/restream.html -d graphics --public-url ./"
-  }
+    "build:graphics": "parcel build src/graphics/restream.html -d graphics --public-url ./",
+    "build:dashboard": "parcel build src/dashboard/operator.html -d dashboard --public-url ./",
+    "build": "npm-run-all build:*"
+  },
+  "browserslist": "last 2 chrome versions"
 }

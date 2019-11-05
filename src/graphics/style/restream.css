@@ -1,0 +1,60 @@
+#commentators {
+    position: absolute;
+    left: 0;
+    top: 669px;
+    font-size: 24px;
+    height: 54px;
+    line-height: 54px;
+    width: 1280px;
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+#commentators img {
+    max-height: 24px;
+    vertical-align: middle;
+}
+
+#matchInfo {
+    position: absolute;
+    top: 13px;
+    width: 1280px;
+    text-align: center;
+    font-size: 24px;
+    line-height: 1.1em;
+}
+
+.runner2l #background2, .runner4l #background{
+    display:none;
+}
+
+#background, #background2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -10;
+}
+
+
+.tracker{
+    position: absolute;
+    width: 320px;
+    height: 128px;
+    font-size: 35px;
+    line-height: 128px;
+    overflow: hidden;
+}
+.runner4l .tracker{
+    width: 160px;
+    height: 256px;
+}
+.tracker iframe{
+    border:none;
+    position: absolute;
+    left: -1px;
+    transform: scaleX(0.5) scaleY(0.5);
+    transform-origin: left top;
+    -webkit-backface-visibility: hidden; /* Chrome, Safari, Opera */
+    backface-visibility: hidden;
+}
