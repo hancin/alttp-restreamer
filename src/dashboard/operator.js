@@ -6,6 +6,7 @@ import { Reset } from 'styled-reset'
 
 const replicantNames = [
   'currentRun',
+  'checklist',
   'stopwatch',
   'currentRunExtra'
 ]
