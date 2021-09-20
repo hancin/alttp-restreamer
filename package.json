@@ -26,7 +26,7 @@
     "nodecg-utility-obs": "^6.1.2",
     "nodecg-widget-obs": "^6.1.0",
     "numeral": "^2.0.6",
-    "object-path": "^0.11.3",
+    "object-path": "^0.11.8",
     "parse-ms": "^1.0.1",
     "q": "^1.4.1",
     "react": "^16.8.6",
