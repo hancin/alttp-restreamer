@@ -20,7 +20,7 @@
     "livesplit-core": "^0.8.1",
     "m3u8": "^0.0.7",
     "milliseconds": "^1.0.3",
-    "moment": "^2.22.1",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.17",
     "node-cache": "^4.2.0",
     "nodecg-utility-obs": "^6.1.2",
